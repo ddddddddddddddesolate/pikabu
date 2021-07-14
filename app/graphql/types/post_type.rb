@@ -4,5 +4,6 @@ module Types
     field :user, UserType, null: false
     field :title, String, null: false
     field :text, String, null: false
+    field :tags, [TagType], null: true
   end
 end
