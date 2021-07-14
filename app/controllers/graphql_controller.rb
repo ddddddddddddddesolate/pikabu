@@ -9,7 +9,6 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-      session: session,
       current_user: current_user
     }
     result = PikabuSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
@@ -22,15 +21,7 @@ class GraphqlController < ApplicationController
   private
 
   def current_user
-    return unless session[:token]
-
-    crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
-    token = crypt.decrypt_and_verify(session[:token])
-    user_id = token.gsub('user:', '').to_i
-
-    User.find user_id
-  rescue ActiveSupport::MessageVerifier::InvalidSignature
-    nil
+    User.first
   end
 
   # Handle variables in form data, JSON body, or a blank value
