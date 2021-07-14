@@ -10,7 +10,7 @@ module Types
     field :posts, [PostType], null: false
 
     def posts
-      Post.all
+      context[:current_user].posts
     end
   end
 end
