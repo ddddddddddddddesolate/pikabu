@@ -8,9 +8,14 @@ module Types
     # They will be entry points for queries on your schema.
 
     field :posts, [PostType], null: false
+    field :tags, [TagType], null: false
 
     def posts
       context[:current_user].posts
+    end
+
+    def tags
+      Tag.all
     end
   end
 end
