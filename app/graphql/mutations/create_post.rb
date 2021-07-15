@@ -1,5 +1,5 @@
 module Mutations
-  class CreatePost < BaseMutation
+  class CreatePost < Mutations::BaseMutation
     argument :title, String, required: true
     argument :text, String, required: true
 
