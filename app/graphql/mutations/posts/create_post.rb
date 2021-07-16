@@ -4,14 +4,21 @@ module Mutations
       argument :title, String, required: true
       argument :text, String, required: false
 
-      type Types::PostType
+      field :post, Types::PostType, null: true
+      field :errors, [String], null: true
 
       def resolve(title: nil, text: nil)
-        Post.create!(
+        post = Post.new(
           title: title,
           text: text,
           user: context[:current_user]
         )
+
+        if post.save
+          { post: post }
+        else
+          { errors: post.errors.full_messages }
+        end
       end
     end
   end
