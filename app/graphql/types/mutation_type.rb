@@ -9,5 +9,6 @@ module Types
     field :create_tag, mutation: Mutations::Tags::CreateTag
     field :update_tag, mutation: Mutations::Tags::UpdateTag
     field :delete_tag, mutation: Mutations::Tags::DeleteTag
+    field :add_tags_to_post, mutation: Mutations::PostsTags::AddTagsToPost
   end
 end
