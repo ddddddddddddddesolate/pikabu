@@ -7,5 +7,6 @@ module Types
     field :update_post, mutation: Mutations::Posts::UpdatePost
     field :delete_post, mutation: Mutations::Posts::DeletePost
     field :create_tag, mutation: Mutations::Tags::CreateTag
+    field :update_tag, mutation: Mutations::Tags::UpdateTag
   end
 end
