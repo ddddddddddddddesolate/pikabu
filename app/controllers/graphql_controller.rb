@@ -9,6 +9,7 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
+      cookies: cookies,
       current_user: current_user
     }
     result = PikabuSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
@@ -21,7 +22,13 @@ class GraphqlController < ApplicationController
   private
 
   def current_user
-    User.first
+    return unless cookies[:token].present?
+
+    token = cookies[:token]
+    decoded_token = JsonWebToken.decode(token)
+    user_id = decoded_token[:user_id]
+
+    User.find(user_id)
   end
 
   # Handle variables in form data, JSON body, or a blank value
