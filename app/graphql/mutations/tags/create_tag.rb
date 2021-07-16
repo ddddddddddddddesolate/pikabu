@@ -3,12 +3,19 @@ module Mutations
     class CreateTag < Mutations::BaseMutation
       argument :name, String, required: true
 
-      type Types::TagType
+      field :tag, Types::TagType, null: true
+      field :errors, [String], null: true
 
       def resolve(name: nil)
-        Tag.create(
+        tag = Tag.new(
           name: name
         )
+
+        if tag.save
+          { tag: tag }
+        else
+          { errors: tag.errors.full_messages }
+        end
       end
     end
   end
