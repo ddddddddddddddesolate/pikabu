@@ -11,7 +11,7 @@ module Types
     field :tags, [TagType], null: false
 
     def posts
-      context[:current_user].posts
+      Post.all
     end
 
     def tags
