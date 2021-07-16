@@ -1,6 +1,6 @@
 module Mutations
   module PostsTags
-    class AddTagsToPost < BaseMutation
+    class RemoveTagsFromPost < BaseMutation
       argument :post_id, ID, required: true
       argument :tags, [String], required: true
 
@@ -14,8 +14,7 @@ module Mutations
         raise GraphQL::ExecutionError, 'Post not found' unless post.present?
 
         tags.each do |tag_name|
-          tag = Tag.find_or_create_by(name: tag_name)
-          post.tags << tag
+          post.tags.find_by(name: tag_name).destroy
         end
 
         { post: post }
