@@ -1,6 +1,6 @@
 module Mutations
   module Posts
-    class UpdatePost < Mutations::BaseMutation
+    class UpdatePost < BaseMutation
       argument :attributes, Types::PostAttributes, required: true
 
       field :post, Types::PostType, null: true

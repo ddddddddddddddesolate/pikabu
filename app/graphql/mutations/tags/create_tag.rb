@@ -1,6 +1,6 @@
 module Mutations
   module Tags
-    class CreateTag < Mutations::BaseMutation
+    class CreateTag < BaseMutation
       argument :attributes, Types::TagAttributes, required: true
 
       field :tag, Types::TagType, null: true

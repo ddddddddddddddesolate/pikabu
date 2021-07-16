@@ -1,6 +1,6 @@
 module Mutations
   module Auth
-    class RegisterUser < Mutations::BaseMutation
+    class RegisterUser < BaseMutation
       argument :name, String, required: true
       argument :email, String, required: true
       argument :password, String, required: true

@@ -1,5 +1,5 @@
 module Types
-  class PostAttributes < Types::BaseInputObject
+  class PostAttributes < BaseInputObject
     argument :title, String, required: true
     argument :text, String, required: false
   end

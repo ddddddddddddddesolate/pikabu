@@ -1,5 +1,5 @@
 module Types
-  class TagAttributes < Types::BaseInputObject
+  class TagAttributes < BaseInputObject
     argument :name, String, required: true
   end
 end

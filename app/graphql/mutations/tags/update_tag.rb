@@ -1,6 +1,6 @@
 module Mutations
   module Tags
-    class UpdateTag < Mutations::BaseMutation
+    class UpdateTag < BaseMutation
       argument :id, ID, required: true
       argument :attributes, Types::TagAttributes, required: true
 

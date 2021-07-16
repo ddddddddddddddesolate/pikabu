@@ -1,10 +1,10 @@
 module Mutations
   module Auth
-    class LogoutUser < Mutations::BaseMutation
+    class LogoutUser < BaseMutation
       field :message, String, null: false
 
       def resolve
-        raise GraphQL::ExecutionError, 'You are not logged in!' unless context[:cookies][:token].present?
+        authenticate_user!
 
         context[:cookies].delete(:token)
         { message: 'success' }
