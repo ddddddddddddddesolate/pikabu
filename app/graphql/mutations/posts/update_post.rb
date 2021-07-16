@@ -2,7 +2,7 @@ module Mutations
   module Posts
     class UpdatePost < Mutations::BaseMutation
       argument :id, ID, required: true
-      argument :title, String, required: false
+      argument :title, String, required: true
       argument :text, String, required: false
 
       field :post, Types::PostType, null: true
