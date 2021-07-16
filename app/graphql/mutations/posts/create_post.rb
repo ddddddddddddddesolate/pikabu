@@ -1,20 +1,15 @@
 module Mutations
   module Posts
     class CreatePost < Mutations::BaseMutation
-      argument :title, String, required: true
-      argument :text, String, required: false
+      argument :attributes, Types::PostAttributes, required: true
 
       field :post, Types::PostType, null: true
       field :errors, [String], null: true
 
-      def resolve(title:, text: nil)
-        raise GraphQL::ExecutionError, 'You need to authenticate to perform this action' unless context[:current_user]
+      def resolve(attributes:)
+        authenticate_user!
 
-        post = Post.new(
-          title: title,
-          text: text,
-          user: context[:current_user]
-        )
+        post = context[:current_user].posts.new(attributes.to_h)
 
         if post.save
           { post: post }
