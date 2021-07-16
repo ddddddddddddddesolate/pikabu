@@ -1,15 +1,15 @@
 module Mutations
   module Tags
     class CreateTag < Mutations::BaseMutation
-      argument :name, String, required: true
+      argument :attributes, Types::TagAttributes, required: true
 
       field :tag, Types::TagType, null: true
       field :errors, [String], null: true
 
-      def resolve(name: nil)
-        tag = Tag.new(
-          name: name
-        )
+      def resolve(attributes:)
+        authenticate_user!
+
+        tag = Tag.new(attributes)
 
         if tag.save
           { tag: tag }
