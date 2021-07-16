@@ -7,7 +7,7 @@ module Mutations
       field :post, Types::PostType, null: true
       field :errors, [String], null: true
 
-      def resolve(title: nil, text: nil)
+      def resolve(title:, text: nil)
         raise GraphQL::ExecutionError, 'You need to authenticate to perform this action' unless context[:current_user]
 
         post = Post.new(
