@@ -1,6 +1,6 @@
 module Mutations
   module Comments
-    class AddCommentToPost < BaseMutation
+    class LeaveComment < BaseMutation
       argument :post_id, ID, required: true
       argument :text, String, required: true
 
