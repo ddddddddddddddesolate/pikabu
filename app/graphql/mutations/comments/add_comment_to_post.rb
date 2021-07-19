@@ -4,7 +4,7 @@ module Mutations
       argument :post_id, ID, required: true
       argument :text, String, required: true
 
-      field :post, Types::PostType, null: true
+      field :comment, Types::CommentType, null: true
       field :errors, [String], null: true
 
       def resolve(post_id:, text:)
@@ -15,7 +15,7 @@ module Mutations
         )
 
         if comment.save
-          { post: post }
+          { comment: comment }
         else
           { errors: comment.errors.full_messages }
         end
