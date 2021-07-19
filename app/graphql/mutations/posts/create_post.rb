@@ -7,7 +7,7 @@ module Mutations
       field :errors, [String], null: true
 
       def resolve(attributes:)
-        post = context[:current_user].posts.new(attributes.to_h)
+        post = current_user.posts.new(attributes.to_h)
 
         if post.save
           { post: post }

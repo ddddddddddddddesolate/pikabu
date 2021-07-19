@@ -7,7 +7,7 @@ module Mutations
       field :errors, [String], null: true
 
       def resolve(id:, attributes:)
-        post = context[:current_user].posts.find(id)
+        post = current_user.posts.find(id)
 
         if post.update(attributes)
           { post: post }

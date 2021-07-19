@@ -10,7 +10,7 @@ module Mutations
       def resolve(post_id:, text:)
         post = Post.find(post_id)
         comment = post.comments.new(
-          user_id: context[:current_user].id,
+          user_id: current_user.id,
           text: text
         )
 
