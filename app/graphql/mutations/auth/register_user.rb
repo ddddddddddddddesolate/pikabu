@@ -6,7 +6,7 @@ module Mutations
       type Types::UserType
 
       def resolve(credentials:)
-        user = User.create!(credentials)
+        user = User.create!(credentials.to_h)
 
         payload = { user_id: user.id }
         token = JsonWebToken.encode(payload)
