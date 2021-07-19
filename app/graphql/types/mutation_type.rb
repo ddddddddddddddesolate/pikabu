@@ -10,6 +10,6 @@ module Types
     field :update_tag, mutation: Mutations::Tags::UpdateTag
     field :delete_tag, mutation: Mutations::Tags::DeleteTag
     field :add_tag_to_post, mutation: Mutations::PostsTags::AddTagToPost
-    field :remove_tags_from_post, mutation: Mutations::PostsTags::RemoveTagsFromPost
+    field :remove_tag_from_post, mutation: Mutations::PostsTags::RemoveTagFromPost
   end
 end
