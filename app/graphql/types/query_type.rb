@@ -9,6 +9,7 @@ module Types
 
     field :posts, [PostType], null: false
     field :tags, [TagType], null: false
+    field :bookmarks, [BookmarkType], null: true
 
     def posts
       Post.all
@@ -16,6 +17,10 @@ module Types
 
     def tags
       Tag.all
+    end
+
+    def bookmarks
+      current_user.bookmarks
     end
   end
 end
