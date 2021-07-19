@@ -5,5 +5,6 @@ module Types
     field :title, String, null: false
     field :text, String, null: true
     field :tags, [TagType], null: true
+    field :comments, [CommentType], null: true
   end
 end
