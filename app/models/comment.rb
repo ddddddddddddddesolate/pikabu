@@ -6,6 +6,7 @@ class Comment < ApplicationRecord
   belongs_to :comment, optional: true
   # replies
   has_many :comments, dependent: :delete_all
+  has_many :bookmarks, as: :bookmarkable
 
   validates :text, presence: true, length: { maximum: 255 }
 end
