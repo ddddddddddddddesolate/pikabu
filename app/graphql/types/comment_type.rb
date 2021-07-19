@@ -1,5 +1,5 @@
 module Types
-  class CommentType < BaseObject
+  class CommentType < VotableObject
     field :id, ID, null: false
     field :user, UserType, null: false
     field :post, PostType, null: false
