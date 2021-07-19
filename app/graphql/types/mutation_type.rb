@@ -21,5 +21,6 @@ module Types
     field :remove_comment_from_bookmarks, mutation: Mutations::Bookmarks::RemoveCommentFromBookmarks
     field :like_post, mutation: Mutations::Votes::LikePost
     field :dislike_post, mutation: Mutations::Votes::DislikePost
+    field :unlike_post, mutation: Mutations::Votes::UnlikePost
   end
 end
