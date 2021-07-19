@@ -37,17 +37,6 @@ ActiveRecord::Schema.define(version: 2021_07_19_121537) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "likes", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.boolean "like"
-    t.string "likable_type"
-    t.bigint "likable_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["likable_type", "likable_id"], name: "index_likes_on_likable"
-    t.index ["user_id"], name: "index_likes_on_user_id"
-  end
-
   create_table "posts", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "title"
@@ -78,12 +67,23 @@ ActiveRecord::Schema.define(version: 2021_07_19_121537) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "votes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "reaction"
+    t.string "votable_type"
+    t.bigint "votable_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_votes_on_user_id"
+    t.index ["votable_type", "votable_id"], name: "index_votes_on_votable"
+  end
+
   add_foreign_key "bookmarks", "users"
   add_foreign_key "comments", "comments"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
-  add_foreign_key "likes", "users"
   add_foreign_key "posts", "users"
   add_foreign_key "posts_tags", "posts"
   add_foreign_key "posts_tags", "tags"
+  add_foreign_key "votes", "users"
 end

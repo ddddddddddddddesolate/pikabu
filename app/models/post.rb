@@ -5,7 +5,7 @@ class Post < ApplicationRecord
 
   has_many :comments, dependent: :destroy
   has_many :bookmarks, as: :bookmarkable
-  has_many :likes, as: :likable
+  has_many :votes, as: :votable
 
   validates :title, presence: true, length: { maximum: 50 }
   validates :text, length: { maximum: 255 }
