@@ -6,6 +6,7 @@ module Types
     field :text, String, null: false
     field :comment, CommentType, null: true
     field :comments, [CommentType], null: true
+    field :replies_count, Integer, null: false, resolver: Resolvers::CommentsCountResolver
   end
 end
 

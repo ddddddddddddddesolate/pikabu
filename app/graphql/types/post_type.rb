@@ -6,5 +6,6 @@ module Types
     field :text, String, null: true
     field :tags, [TagType], null: true
     field :comments, [CommentType], null: true, resolver: Resolvers::PostRootCommentsResolver
+    field :comments_count, Integer, null: false, resolver: Resolvers::CommentsCountResolver
   end
 end
