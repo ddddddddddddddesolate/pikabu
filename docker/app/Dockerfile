@@ -1,4 +1,4 @@
-FROM ruby:latest
+FROM ruby:3.0.1
 
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev 
 ENV RAILS_ROOT /var/www/app
