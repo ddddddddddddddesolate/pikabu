@@ -18,5 +18,6 @@ module Types
     field :add_post_to_bookmarks, mutation: Mutations::Bookmarks::AddPostToBookmarks
     field :remove_post_from_bookmarks, mutation: Mutations::Bookmarks::RemovePostFromBookmarks
     field :add_comment_to_bookmarks, mutation: Mutations::Bookmarks::AddCommentToBookmarks
+    field :remove_comment_from_bookmarks, mutation: Mutations::Bookmarks::RemoveCommentFromBookmarks
   end
 end
