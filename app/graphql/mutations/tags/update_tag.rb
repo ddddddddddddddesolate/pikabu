@@ -8,8 +8,6 @@ module Mutations
       field :errors, [String], null: true
 
       def resolve(id:, attributes:)
-        authenticate_user!
-
         tag = Tag.find(id)
 
         if tag.update(attributes)

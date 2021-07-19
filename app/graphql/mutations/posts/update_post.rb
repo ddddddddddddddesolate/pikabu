@@ -7,8 +7,6 @@ module Mutations
       field :errors, [String], null: true
 
       def resolve(id:, attributes:)
-        authenticate_user!
-
         post = context[:current_user].posts.find(id)
 
         if post.update(attributes)

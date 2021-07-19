@@ -8,8 +8,6 @@ module Mutations
       field :errors, [String], null: true
 
       def resolve(post_id:, text:)
-        authenticate_user!
-
         post = Post.find(post_id)
         comment = post.comments.new(
           user_id: context[:current_user].id,

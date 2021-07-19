@@ -6,8 +6,6 @@ module Mutations
       field :message, String, null: false
 
       def resolve(id:)
-        authenticate_user!
-
         post = context[:current_user].posts.find(id)
 
         post.destroy
