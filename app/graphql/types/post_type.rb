@@ -6,5 +6,9 @@ module Types
     field :text, String, null: true
     field :tags, [TagType], null: true
     field :comments, [CommentType], null: true
+
+    def comments
+      Comment.where(post_id: object.id, comment_id: nil)
+    end
   end
 end
