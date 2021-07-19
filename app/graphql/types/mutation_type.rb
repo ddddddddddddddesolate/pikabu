@@ -16,5 +16,6 @@ module Types
     field :delete_comment, mutation: Mutations::Comments::DeleteComment
     field :reply_to_comment, mutation: Mutations::Comments::ReplyToComment
     field :add_post_to_bookmarks, mutation: Mutations::Bookmarks::AddPostToBookmarks
+    field :remove_post_from_bookmarks, mutation: Mutations::Bookmarks::RemovePostFromBookmarks
   end
 end
