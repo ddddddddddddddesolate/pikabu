@@ -3,7 +3,7 @@ module Mutations
     class RegisterUser < BaseMutation
       argument :credentials, Types::UserRegisterCredentials, required: true
 
-      type Types::UserType
+      field :user, Types::UserType, null: false
 
       def resolve(credentials:)
         user = User.create!(credentials.to_h)
@@ -13,7 +13,7 @@ module Mutations
 
         context[:cookies][:token] = token
 
-        user
+        { user: user }
       end
     end
   end

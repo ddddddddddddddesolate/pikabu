@@ -4,7 +4,7 @@ module Mutations
       argument :email, String, required: true
       argument :password, String, required: true
 
-      type Types::UserType
+      field :user, Types::UserType, null: false
 
       def resolve(email: nil, password: nil)
         user = User.find_by(email: email)
@@ -17,7 +17,7 @@ module Mutations
 
         context[:cookies][:token] = token
 
-        user
+        { user: user }
       end
     end
   end
