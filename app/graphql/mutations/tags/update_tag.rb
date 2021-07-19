@@ -10,9 +10,7 @@ module Mutations
       def resolve(id:, attributes:)
         authenticate_user!
 
-        tag = Tag.find_by(id: id)
-
-        raise GraphQL::ExecutionError, 'Tag not found' unless tag.present?
+        tag = Tag.find(id)
 
         if tag.update(attributes)
           { tag: tag }

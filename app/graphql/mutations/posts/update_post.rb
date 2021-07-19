@@ -9,9 +9,7 @@ module Mutations
       def resolve(id:, attributes:)
         authenticate_user!
 
-        post = context[:current_user].posts.find_by(id: id)
-
-        raise GraphQL::ExecutionError, 'Post not found' unless post.present?
+        post = context[:current_user].posts.find(id)
 
         if post.update(attributes)
           { post: post }

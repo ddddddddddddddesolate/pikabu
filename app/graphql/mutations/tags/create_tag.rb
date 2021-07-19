@@ -9,7 +9,7 @@ module Mutations
       def resolve(attributes:)
         authenticate_user!
 
-        tag = Tag.new(attributes)
+        tag = Tag.new(attributes.to_h)
 
         if tag.save
           { tag: tag }
