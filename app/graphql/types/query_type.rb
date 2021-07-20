@@ -7,13 +7,9 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
 
-    field :posts, [PostType], null: false
+    field :posts, [PostType], null: false, resolver: Resolvers::PostsResolver
     field :tags, [TagType], null: false
     field :me, UserType, null: false
-
-    def posts
-      Post.all
-    end
 
     def tags
       Tag.all
