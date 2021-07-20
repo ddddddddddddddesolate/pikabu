@@ -1,5 +1,5 @@
 module Types
-  class PostType < VotableObject
+  class PostType < BaseObject
     field :id, ID, null: false
     field :user, UserType, null: false
     field :title, String, null: false
@@ -7,5 +7,8 @@ module Types
     field :tags, [TagType], null: true
     field :comments, [CommentType], null: true, resolver: Resolvers::PostRootCommentsResolver
     field :comments_count, Integer, null: false, resolver: Resolvers::CommentsCountResolver
+    field :likes_count, Integer, null: false, resolver: Resolvers::LikesCountResolver
+    field :dislikes_count, Integer, null: false, resolver: Resolvers::DislikesCountResolver
+    field :votes, VoteType, null: false
   end
 end
