@@ -12,7 +12,7 @@ module Types
     field :me, UserType, null: false
 
     def posts
-      current_user.posts
+      Post.all
     end
 
     def tags
