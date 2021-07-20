@@ -11,8 +11,13 @@ class Post < ApplicationRecord
   validates :title, presence: true, length: { maximum: 50 }
   validates :text, length: { maximum: 255 }
 
-  scope :hot, -> { joins(:comments)
+  scope :hot, -> { left_outer_joins(:comments)
                      .group(:id)
-                     .order('COUNT(comments.id) DESC')
-                     .where('comments.created_at > ?', 24.hours.ago) }
+                     .where('comments.created_at > ?', 24.hours.ago)
+                     .order('COUNT(comments.id) DESC') }
+  scope :best, -> { left_outer_joins(:votes)
+                     .group(:id)
+                     .where('votes.reaction' => Vote::LIKE)
+                     .where('votes.created_at > ?', 24.hours.ago)
+                     .order('COUNT(votes.id) DESC') }
 end
