@@ -1,0 +1,34 @@
+require:
+  - rubocop-rails
+  - anycable/rails/compatibility/rubocop
+  - rubocop-performance
+  - rubocop-rspec
+AllCops:
+  Exclude:
+    - 'bin/**/*'
+    - 'log/**/*'
+    - 'public/**/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
+    - 'db/schema.rb'
+  DisplayCopNames: true
+  StyleGuideCopsOnly: false
+  TargetRubyVersion: 2.7
+  NewCops: enable
+Layout/LineLength:
+  Max: 120
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented_relative_to_receiver
+Metrics/BlockLength:
+  Max: 30
+Metrics/MethodLength:
+  Max: 30
+Style/Documentation:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: "[]"
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
