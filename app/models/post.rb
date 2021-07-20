@@ -11,5 +11,8 @@ class Post < ApplicationRecord
   validates :title, presence: true, length: { maximum: 50 }
   validates :text, length: { maximum: 255 }
 
-  scope :hot, -> { joins(:comments).group(:id).order('COUNT(comments.id) DESC') }
+  scope :hot, -> { joins(:comments)
+                     .group(:id)
+                     .order('COUNT(comments.id) DESC')
+                     .where('comments.created_at > ?', 24.hours.ago) }
 end
