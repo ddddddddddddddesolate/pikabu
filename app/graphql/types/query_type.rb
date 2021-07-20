@@ -9,18 +9,18 @@ module Types
 
     field :posts, [PostType], null: false
     field :tags, [TagType], null: false
-    field :bookmarks, [BookmarkType], null: true
+    field :me, UserType, null: false
 
     def posts
-      Post.all
+      current_user.posts
     end
 
     def tags
       Tag.all
     end
 
-    def bookmarks
-      current_user.bookmarks
+    def me
+      current_user
     end
   end
 end
