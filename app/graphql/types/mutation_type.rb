@@ -22,5 +22,6 @@ module Types
     field :like_post, mutation: Mutations::Votes::LikePost
     field :dislike_post, mutation: Mutations::Votes::DislikePost
     field :unlike_post, mutation: Mutations::Votes::UnlikePost
+    field :like_comment, mutation: Mutations::Votes::LikeComment
   end
 end
