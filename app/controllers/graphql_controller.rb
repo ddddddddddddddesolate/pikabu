@@ -28,7 +28,10 @@ class GraphqlController < ApplicationController
     decoded_token = JsonWebToken.decode(token)
     user_id = decoded_token[:user_id]
 
-    User.find(user_id)
+    User.includes(
+      votes: [:votable],
+      bookmarks: [:bookmarkable]
+    ).find(user_id)
   end
 
   # Handle variables in form data, JSON body, or a blank value
