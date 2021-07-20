@@ -82,6 +82,9 @@ GEM
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     graphql (1.12.13)
+    graphql-batch (0.4.3)
+      graphql (>= 1.3, < 2)
+      promise.rb (~> 0.7.2)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.1)
@@ -103,9 +106,10 @@ GEM
     minitest (5.14.4)
     msgpack (1.4.2)
     nio4r (2.5.7)
-    nokogiri (1.11.7-x86_64-linux)
+    nokogiri (1.11.7-x86_64-darwin)
       racc (~> 1.4)
     pg (1.2.3)
+    promise.rb (0.7.4)
     public_suffix (4.0.6)
     puma (5.3.2)
       nio4r (~> 2.0)
@@ -162,7 +166,7 @@ GEM
     zeitwerk (2.4.2)
 
 PLATFORMS
-  x86_64-linux
+  x86_64-darwin-20
 
 DEPENDENCIES
   bcrypt
@@ -170,6 +174,7 @@ DEPENDENCIES
   byebug
   carrierwave
   graphql
+  graphql-batch
   jwt
   listen (~> 3.3)
   pg (~> 1.1)
