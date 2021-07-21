@@ -8,14 +8,14 @@ module Mutations
       field :errors, [String], null: true
 
       def resolve(post_id:, image_url:)
-        post = Post.find(post_id)
+        post = current_user.posts.find(post_id)
 
         image = post.images.new(remote_image_url: image_url)
 
         if image.save
           {post: post}
         else
-          {errors: image.errors}
+          {errors: image.errors.full_messages}
         end
       end
     end
