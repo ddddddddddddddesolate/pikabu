@@ -1,9 +1,18 @@
 module Resolvers
   class BookmarksResolver < BaseResolver
-    type Types::BookmarkableType, null: false
+    type [Types::BookmarkType], null: false
 
-    def resolve
-      Bookmark.where(user_id: current_user.id)
+    argument :paginate, Types::Pagination, required: false
+
+    def resolve(paginate: nil)
+      bookmarks = current_user.bookmarks
+
+      if paginate
+        bookmarks = bookmarks.limit(paginate.limit)
+        bookmarks = bookmarks.offset(paginate.offset)
+      end
+
+      bookmarks
     end
   end
 end
