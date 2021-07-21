@@ -8,5 +8,6 @@ module Types
     # They will be entry points for queries on your schema.
 
     field :posts, [PostType], null: false, resolver: Resolvers::PostsResolver
+    field :comments, [CommentType], null: true, resolver:Resolvers::CommentsResolver
   end
 end
