@@ -27,4 +27,4 @@
 .idea
 
 # Ignore local images
-/public/uploads/images/*
+/public/uploads/image/*
