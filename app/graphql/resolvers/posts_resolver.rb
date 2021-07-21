@@ -13,6 +13,7 @@ module Resolvers
         posts = posts.fresh if filters.fresh
         posts = posts.hot if filters.hot
         posts = posts.best if filters.best
+        posts = posts.tags(filters.tags) if filters.tags
       end
 
       if order

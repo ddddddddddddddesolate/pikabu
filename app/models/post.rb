@@ -21,6 +21,9 @@ class Post < ApplicationRecord
                       .where('votes.reaction = ?', Vote::LIKE)
                       .where('votes.created_at > ?', 24.hours.ago)
                       .order('COUNT(votes.id) DESC') }
+  scope :tags, -> (tag_ids) { joins(:tags)
+                                .group(:id)
+                                .where('tags.id IN (?)', tag_ids) }
   scope :likes, -> (order) { joins(:votes)
                                .group(:id)
                                .order("SUM(votes.reaction) #{order}") }
