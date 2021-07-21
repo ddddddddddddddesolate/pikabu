@@ -8,15 +8,5 @@ module Types
     # They will be entry points for queries on your schema.
 
     field :posts, [PostType], null: false, resolver: Resolvers::PostsResolver
-    field :tags, [TagType], null: false
-    field :me, UserType, null: false
-
-    def tags
-      Tag.all
-    end
-
-    def me
-      current_user
-    end
   end
 end
