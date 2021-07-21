@@ -17,8 +17,8 @@ class Post < ApplicationRecord
                      .where('comments.created_at > ?', 24.hours.ago)
                      .order('COUNT(comments.id) DESC') }
   scope :best, -> { joins(:votes)
-                     .group(:id)
-                     .where('votes.reaction' => Vote::LIKE)
-                     .where('votes.created_at > ?', 24.hours.ago)
-                     .order('COUNT(votes.id) DESC') }
+                      .group(:id)
+                      .where('votes.reaction' => Vote::LIKE)
+                      .where('votes.created_at > ?', 24.hours.ago)
+                      .order('COUNT(votes.id) DESC') }
 end
