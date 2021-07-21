@@ -4,10 +4,9 @@ module Resolvers
 
     argument :filters, Types::PostFilters, required: false
     argument :order, Types::OrderFields, required: false
-    argument :limit, Integer, required: false
-    argument :offset, Integer, required: false
+    argument :paginate, Types::Pagination, required: false
 
-    def resolve(filters: nil, order: nil, limit: nil, offset: nil)
+    def resolve(filters: nil, order: nil, paginate: nil)
       posts = Post.all
 
       if filters
@@ -21,8 +20,10 @@ module Resolvers
         posts = posts.order(created_at: order.date) if order.date
       end
 
-      posts = posts.limit(limit) if limit
-      posts = posts.offset(offset) if offset
+      if paginate
+        posts = posts.limit(paginate.limit) if paginate.limit
+        posts = posts.offset(paginate.offset) if paginate.offset
+      end
 
       posts
     end
