@@ -19,7 +19,7 @@ module Resolvers
 
       if order
         posts = posts.likes(order.likes) if order.likes
-        posts = posts.order(created_at: order.date) if order.date
+        posts = posts.date(order.date) if order.date
       end
 
       if paginate
