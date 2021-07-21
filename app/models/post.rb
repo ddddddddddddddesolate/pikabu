@@ -27,4 +27,5 @@ class Post < ApplicationRecord
   scope :likes, -> (order) { joins(:votes)
                                .group(:id)
                                .order("SUM(votes.reaction) #{order}") }
+  scope :search_by, -> (field, value) { where("LOWER(#{field}) LIKE ?", "%#{value.downcase}%") }
 end
