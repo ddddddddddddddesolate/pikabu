@@ -11,6 +11,7 @@ class Post < ApplicationRecord
   validates :title, presence: true, length: { maximum: 50 }
   validates :text, length: { maximum: 255 }
 
+  scope :fresh, -> { where('created_at > ?', 24.hours.ago) }
   scope :hot, -> { left_outer_joins(:comments)
                      .group(:id)
                      .where('comments.created_at > ?', 24.hours.ago)
