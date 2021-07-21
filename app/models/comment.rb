@@ -11,4 +11,9 @@ class Comment < ApplicationRecord
   has_many :images, as: :imageable, dependent: :delete_all
 
   validates :text, presence: true, length: { maximum: 255 }
+
+  scope :likes, -> (order) { joins(:votes)
+                               .group(:id)
+                               .order("SUM(votes.reaction) #{order}") }
+  scope :date, -> (order) { order(created_at: order) }
 end
