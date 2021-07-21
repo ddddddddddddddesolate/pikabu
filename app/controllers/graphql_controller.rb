@@ -22,7 +22,7 @@ class GraphqlController < ApplicationController
   private
 
   def current_user
-    raise GraphQL::ExecutionError, 'You need to authenticate to perform this action' unless cookies[:token].present?
+    return unless cookies[:token].present?
 
     token = cookies[:token]
     decoded_token = JsonWebToken.decode(token)
