@@ -25,5 +25,6 @@ module Types
     field :like_comment, mutation: Mutations::Votes::LikeComment
     field :dislike_comment, mutation: Mutations::Votes::DislikeComment
     field :unlike_comment, mutation: Mutations::Votes::UnlikeComment
+    field :add_image_to_post, mutation: Mutations::Images::AddImageToPost
   end
 end

@@ -25,3 +25,6 @@
 
 # Ignore IDE folders
 .idea
+
+# Ignore local images
+/public/uploads/images/*
