@@ -18,6 +18,10 @@ class Post < ApplicationRecord
                      .order('COUNT(comments.id) DESC') }
   scope :best, -> { joins(:votes)
                       .group(:id)
+                      .where('votes.reaction = ?', Vote::LIKE)
                       .where('votes.created_at > ?', 24.hours.ago)
-                      .order('SUM(votes.reaction) DESC') }
+                      .order('COUNT(votes.id) DESC') }
+  scope :likes, -> (order) { joins(:votes)
+                               .group(:id)
+                               .order("SUM(votes.reaction) #{order}") }
 end
