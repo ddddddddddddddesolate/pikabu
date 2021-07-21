@@ -10,7 +10,7 @@ module Mutations
 
         current_user.bookmarks.find_by(bookmarkable: comment).destroy
 
-        { message: 'success' }
+        {message: "success"}
       end
     end
   end

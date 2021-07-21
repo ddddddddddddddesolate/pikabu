@@ -14,7 +14,7 @@ module Mutations
           vote.destroy
         end
 
-        { comment: comment }
+        {comment: comment}
       end
     end
   end

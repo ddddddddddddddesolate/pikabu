@@ -10,9 +10,9 @@ module Mutations
         tag = Tag.new(attributes.to_h)
 
         if tag.save
-          { tag: tag }
+          {tag: tag}
         else
-          { errors: tag.errors.full_messages }
+          {errors: tag.errors.full_messages}
         end
       end
     end

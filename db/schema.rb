@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2021_07_20_052601) do
     t.bigint "bookmarkable_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["bookmarkable_type", "bookmarkable_id"], name: "index_bookmarks_on_bookmarkable"
+    t.index %w[bookmarkable_type bookmarkable_id], name: "index_bookmarks_on_bookmarkable"
     t.index ["user_id"], name: "index_bookmarks_on_user_id"
   end
 
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 2021_07_20_052601) do
     t.bigint "imageable_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["imageable_type", "imageable_id"], name: "index_images_on_imageable"
+    t.index %w[imageable_type imageable_id], name: "index_images_on_imageable"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -84,7 +84,7 @@ ActiveRecord::Schema.define(version: 2021_07_20_052601) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_votes_on_user_id"
-    t.index ["votable_type", "votable_id"], name: "index_votes_on_votable"
+    t.index %w[votable_type votable_id], name: "index_votes_on_votable"
   end
 
   add_foreign_key "bookmarks", "users"

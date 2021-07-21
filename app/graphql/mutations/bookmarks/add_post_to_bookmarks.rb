@@ -11,11 +11,11 @@ module Mutations
         bookmark = current_user.bookmarks.new(bookmarkable: post)
 
         if bookmark.save
-          { post: post }
+          {post: post}
         else
-          { errors: bookmark.errors.full_messages }
+          {errors: bookmark.errors.full_messages}
         end
-      end
       end
     end
   end
+end

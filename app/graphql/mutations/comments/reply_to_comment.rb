@@ -17,9 +17,9 @@ module Mutations
         )
 
         if comment.save
-          { comment: comment }
+          {comment: comment}
         else
-          { errors: comment.errors.full_messages }
+          {errors: comment.errors.full_messages}
         end
       end
     end

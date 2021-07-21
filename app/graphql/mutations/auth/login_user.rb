@@ -9,15 +9,15 @@ module Mutations
       def resolve(email: nil, password: nil)
         user = User.find_by(email: email)
 
-        raise GraphQL::ExecutionError, 'Invalid credentials' unless user.present?
-        raise GraphQL::ExecutionError, 'Invalid credentials' unless user.authenticate(password)
+        raise GraphQL::ExecutionError, "Invalid credentials" unless user.present?
+        raise GraphQL::ExecutionError, "Invalid credentials" unless user.authenticate(password)
 
-        payload = { user_id: user.id }
+        payload = {user_id: user.id}
         token = JsonWebToken.encode(payload)
 
         context[:cookies][:token] = token
 
-        { user: user }
+        {user: user}
       end
     end
   end

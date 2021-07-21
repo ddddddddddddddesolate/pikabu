@@ -12,4 +12,3 @@ module Types
     field :votes, VoteType, null: false
   end
 end
-

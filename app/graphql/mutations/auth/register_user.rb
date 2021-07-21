@@ -8,12 +8,12 @@ module Mutations
       def resolve(credentials:)
         user = User.create!(credentials.to_h)
 
-        payload = { user_id: user.id }
+        payload = {user_id: user.id}
         token = JsonWebToken.encode(payload)
 
         context[:cookies][:token] = token
 
-        { user: user }
+        {user: user}
       end
     end
   end

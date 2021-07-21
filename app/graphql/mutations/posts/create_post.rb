@@ -10,9 +10,9 @@ module Mutations
         post = current_user.posts.new(attributes.to_h)
 
         if post.save
-          { post: post }
+          {post: post}
         else
-          { errors: post.errors.full_messages }
+          {errors: post.errors.full_messages}
         end
       end
     end

@@ -10,7 +10,7 @@ module Mutations
 
         post.destroy
 
-        { message: 'success' }
+        {message: "success"}
       end
     end
   end

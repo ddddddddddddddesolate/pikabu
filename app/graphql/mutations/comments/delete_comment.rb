@@ -10,7 +10,7 @@ module Mutations
 
         comment.destroy
 
-        { message: 'success' }
+        {message: "success"}
       end
     end
   end

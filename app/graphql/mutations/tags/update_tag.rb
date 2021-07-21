@@ -11,11 +11,10 @@ module Mutations
         tag = Tag.find(id)
 
         if tag.update(attributes)
-          { tag: tag }
+          {tag: tag}
         else
-          { errors: tag.errors.full_messages }
+          {errors: tag.errors.full_messages}
         end
-
       end
     end
   end

@@ -5,7 +5,7 @@ module Mutations
 
       def resolve
         context[:cookies].delete(:token)
-        { message: 'success' }
+        {message: "success"}
       end
     end
   end

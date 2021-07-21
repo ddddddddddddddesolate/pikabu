@@ -12,7 +12,7 @@ module Mutations
 
         post.tags.delete(tag)
 
-        { post: post }
+        {post: post}
       end
     end
   end

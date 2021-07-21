@@ -10,9 +10,9 @@ module Mutations
         post = current_user.posts.find(id)
 
         if post.update(attributes)
-          { post: post }
+          {post: post}
         else
-          { errors: post.errors.full_messages }
+          {errors: post.errors.full_messages}
         end
       end
     end

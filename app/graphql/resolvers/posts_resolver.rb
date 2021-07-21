@@ -28,7 +28,7 @@ module Resolvers
       end
 
       if search
-        posts = posts.search_by('title', search.title) if search.title
+        posts = posts.search_by("title", search.title) if search.title
       end
 
       posts

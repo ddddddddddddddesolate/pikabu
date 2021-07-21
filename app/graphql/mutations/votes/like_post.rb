@@ -16,7 +16,7 @@ module Mutations
           current_user.votes.create(votable: post, reaction: Vote::LIKE)
         end
 
-        { post: post }
+        {post: post}
       end
     end
   end

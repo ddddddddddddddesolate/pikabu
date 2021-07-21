@@ -8,7 +8,7 @@ module Types
     # They will be entry points for queries on your schema.
 
     field :posts, [PostType], null: true, resolver: Resolvers::PostsResolver
-    field :comments, [CommentType], null: true, resolver:Resolvers::CommentsResolver
-    field :bookmarks, [BookmarkType], null: true, resolver:Resolvers::BookmarksResolver
+    field :comments, [CommentType], null: true, resolver: Resolvers::CommentsResolver
+    field :bookmarks, [BookmarkType], null: true, resolver: Resolvers::BookmarksResolver
   end
 end

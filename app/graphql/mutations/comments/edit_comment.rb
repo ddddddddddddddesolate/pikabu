@@ -11,9 +11,9 @@ module Mutations
         comment = current_user.comments.find(comment_id)
 
         if comment.update(text: text)
-          { comment: comment }
+          {comment: comment}
         else
-          { errors: comment.errors.full_messages }
+          {errors: comment.errors.full_messages}
         end
       end
     end

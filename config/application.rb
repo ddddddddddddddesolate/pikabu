@@ -40,7 +40,7 @@ module Pikabu
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore
 
-    config.autoload_paths << Rails.root.join('lib')
+    config.autoload_paths << Rails.root.join("lib")
 
     config.logger = Logger.new($stdout)
   end

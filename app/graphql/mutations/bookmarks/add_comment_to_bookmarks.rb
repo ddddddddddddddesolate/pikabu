@@ -11,9 +11,9 @@ module Mutations
         bookmark = current_user.bookmarks.new(bookmarkable: comment)
 
         if bookmark.save
-          { comment: comment }
+          {comment: comment}
         else
-          { errors: bookmark.errors.full_messages }
+          {errors: bookmark.errors.full_messages}
         end
       end
     end

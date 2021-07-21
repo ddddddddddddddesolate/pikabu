@@ -16,7 +16,7 @@ module Mutations
           current_user.votes.create(votable: comment, reaction: Vote::LIKE)
         end
 
-        { comment: comment }
+        {comment: comment}
       end
     end
   end
