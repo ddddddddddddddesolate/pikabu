@@ -23,6 +23,7 @@ gem "bcrypt"
 gem "carrierwave"
 gem "graphql"
 gem "jwt"
+gem "rack-attack"
 gem "search_object_graphql"
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
