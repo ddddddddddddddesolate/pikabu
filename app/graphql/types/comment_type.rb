@@ -10,5 +10,6 @@ module Types
     field :likes_count, Integer, null: false, resolver: Resolvers::LikesCountResolver
     field :dislikes_count, Integer, null: false, resolver: Resolvers::DislikesCountResolver
     field :votes, VoteType, null: false
+    field :images, [ImageType], null: false
   end
 end
