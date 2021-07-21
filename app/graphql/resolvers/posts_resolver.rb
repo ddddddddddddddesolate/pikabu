@@ -23,8 +23,8 @@ module Resolvers
       end
 
       if paginate
-        posts = posts.limit(paginate.limit) if paginate.limit
-        posts = posts.offset(paginate.offset) if paginate.offset
+        posts = posts.limit(paginate.limit)
+        posts = posts.offset(paginate.offset)
       end
 
       if search
