@@ -2,7 +2,7 @@ module Resolvers
   class PostsResolver < BaseResolver
     type [Types::PostType], null: false
 
-    argument :filters, Types::PostFilters, required: false
+    argument :filters, Types::PostsFilters, required: false
     argument :order, Types::OrderFields, required: false
     argument :paginate, Types::Pagination, required: false
 
