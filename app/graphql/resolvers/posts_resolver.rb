@@ -10,16 +10,16 @@ module Resolvers
     def resolve(filters: nil, order: nil, paginate: nil, search: nil)
       posts = Post.all
 
-      if filters
-        posts = posts.fresh if filters.fresh
-        posts = posts.hot if filters.hot
-        posts = posts.best if filters.best
-        posts = posts.tags(filters.tags) if filters.tags
-      end
-
       if order
         posts = posts.likes(order.likes) if order.likes
         posts = posts.date(order.date) if order.date
+      end
+
+      if filters
+        posts = posts.fresh if filters.fresh
+        posts = posts.best if filters.best
+        posts = posts.hot if filters.hot
+        posts = posts.tags(filters.tags) if filters.tags
       end
 
       if paginate
