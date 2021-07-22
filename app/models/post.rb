@@ -21,9 +21,8 @@ class Post < ApplicationRecord
   scope :best, -> {
     left_joins(:votes)
       .group(:id)
-      .where("votes.reaction = ?", Vote::LIKE)
       .where("votes.created_at > ?", 24.hours.ago)
-      .order("COUNT(votes.id) DESC")
+      .order("SUM(votes.reaction) DESC")
   }
   scope :tags, ->(tag_ids) {
     joins(:tags)
