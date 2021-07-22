@@ -31,7 +31,7 @@ class Post < ApplicationRecord
       .where("tags.id IN (?)", tag_ids)
   }
   scope :likes, ->(order) {
-    left_joins(:votes)
+    joins(:votes)
       .group(:id)
       .order("SUM(votes.reaction) #{order.upcase}")
   }
