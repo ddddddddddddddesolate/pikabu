@@ -25,12 +25,8 @@ end
   end
 end
 
-# likes / dislikes generator for posts
+# likes / dislikes generator
 20.times do
   Post.all.sample.votes.create(reaction: rand(0..1), user_id: User.all.sample.id)
-end
-
-# likes / dislikes generator for comments
-20.times do
   Comment.all.sample.votes.create(reaction: rand(0..1), user_id: User.all.sample.id)
 end
