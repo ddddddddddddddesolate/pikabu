@@ -26,7 +26,7 @@ end
 end
 
 # likes / dislikes generator
-20.times do
+100.times do
   Post.all.sample.votes.create(reaction: rand(0..1), user_id: User.all.sample.id)
   Comment.all.sample.votes.create(reaction: rand(0..1), user_id: User.all.sample.id)
 end
