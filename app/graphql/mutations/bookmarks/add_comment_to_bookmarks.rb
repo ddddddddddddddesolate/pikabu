@@ -1,6 +1,6 @@
 module Mutations
   module Bookmarks
-    class AddCommentToBookmarks < BaseMutation
+    class AddCommentToBookmarks < AuthorizedMutation
       argument :comment_id, ID, required: true
 
       field :comment, Types::CommentType, null: true

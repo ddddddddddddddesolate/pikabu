@@ -1,6 +1,6 @@
 module Mutations
   module Posts
-    class CreatePost < BaseMutation
+    class CreatePost < AuthorizedMutation
       argument :attributes, Types::PostAttributes, required: true
 
       field :post, Types::PostType, null: true

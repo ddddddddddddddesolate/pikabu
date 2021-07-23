@@ -1,6 +1,6 @@
 module Mutations
   module Votes
-    class DislikePost < BaseMutation
+    class DislikePost < AuthorizedMutation
       argument :post_id, ID, required: true
 
       field :post, Types::PostType, null: true

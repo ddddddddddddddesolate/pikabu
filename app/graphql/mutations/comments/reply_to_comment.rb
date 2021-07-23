@@ -1,6 +1,6 @@
 module Mutations
   module Comments
-    class ReplyToComment < BaseMutation
+    class ReplyToComment < AuthorizedMutation
       argument :comment_id, ID, required: true
       argument :text, String, required: true
 

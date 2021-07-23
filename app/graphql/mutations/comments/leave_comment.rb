@@ -1,6 +1,6 @@
 module Mutations
   module Comments
-    class LeaveComment < BaseMutation
+    class LeaveComment < AuthorizedMutation
       argument :post_id, ID, required: true
       argument :text, String, required: true
 

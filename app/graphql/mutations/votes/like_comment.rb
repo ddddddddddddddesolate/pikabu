@@ -1,6 +1,6 @@
 module Mutations
   module Votes
-    class LikeComment < BaseMutation
+    class LikeComment < AuthorizedMutation
       argument :comment_id, ID, required: true
 
       field :comment, Types::CommentType, null: false

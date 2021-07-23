@@ -1,6 +1,6 @@
 module Mutations
   module Comments
-    class EditComment < BaseMutation
+    class EditComment < AuthorizedMutation
       argument :comment_id, ID, required: true
       argument :text, String, required: true
 

@@ -1,6 +1,6 @@
 module Mutations
   module Images
-    class RemoveImageFromPost < BaseMutation
+    class RemoveImageFromPost < AuthorizedMutation
       argument :post_id, ID, required: true
       argument :image_id, ID, required: true
 

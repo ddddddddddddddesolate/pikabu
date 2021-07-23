@@ -1,6 +1,6 @@
 module Mutations
   module Tags
-    class DeleteTag < BaseMutation
+    class DeleteTag < AuthorizedMutation
       argument :id, ID, required: true
 
       field :message, String, null: false

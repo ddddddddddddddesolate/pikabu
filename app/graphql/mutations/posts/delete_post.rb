@@ -1,6 +1,6 @@
 module Mutations
   module Posts
-    class DeletePost < BaseMutation
+    class DeletePost < AuthorizedMutation
       argument :id, ID, required: true
 
       field :message, String, null: false

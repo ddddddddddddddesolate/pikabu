@@ -1,6 +1,6 @@
 module Mutations
   module Bookmarks
-    class RemoveCommentFromBookmarks < BaseMutation
+    class RemoveCommentFromBookmarks < AuthorizedMutation
       argument :comment_id, ID, required: true
 
       field :message, String, null: false

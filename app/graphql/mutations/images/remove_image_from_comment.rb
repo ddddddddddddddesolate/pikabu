@@ -1,6 +1,6 @@
 module Mutations
   module Images
-    class RemoveImageFromComment < BaseMutation
+    class RemoveImageFromComment < AuthorizedMutation
       argument :comment_id, ID, required: true
       argument :image_id, ID, required: true
 

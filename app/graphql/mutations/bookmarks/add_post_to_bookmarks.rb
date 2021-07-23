@@ -1,6 +1,6 @@
 module Mutations
   module Bookmarks
-    class AddPostToBookmarks < BaseMutation
+    class AddPostToBookmarks < AuthorizedMutation
       argument :post_id, ID, required: true
 
       field :post, Types::PostType, null: true

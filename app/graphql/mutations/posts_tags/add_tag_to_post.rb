@@ -1,6 +1,6 @@
 module Mutations
   module PostsTags
-    class AddTagToPost < BaseMutation
+    class AddTagToPost < AuthorizedMutation
       argument :post_id, ID, required: true
       argument :tag_id, ID, required: true
 

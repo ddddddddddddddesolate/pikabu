@@ -1,6 +1,6 @@
 module Mutations
   module Comments
-    class DeleteComment < BaseMutation
+    class DeleteComment < AuthorizedMutation
       argument :comment_id, ID, required: true
 
       field :message, String, null: false

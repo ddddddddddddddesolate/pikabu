@@ -1,6 +1,6 @@
 module Mutations
   module Images
-    class AddImageToPost < BaseMutation
+    class AddImageToPost < AuthorizedMutation
       argument :post_id, ID, required: true
       argument :image_url, String, required: true
 
