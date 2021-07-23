@@ -6,7 +6,10 @@ module Mutations
       field :message, String, null: false
 
       def resolve(id:)
-        post = current_user.posts.find(id)
+        post = Post.find_by(id: id)
+
+        raise GraphQL::ExecutionError, "Post not found" unless post.present?
+        raise GraphQL::ExecutionError, "You cannot delete this post" unless post.user_id == current_user.id
 
         post.destroy
 

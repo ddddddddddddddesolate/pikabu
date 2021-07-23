@@ -7,7 +7,10 @@ module Mutations
       field :errors, [String], null: true
 
       def resolve(id:, attributes:)
-        post = current_user.posts.find(id)
+        post = Post.find_by(id: id)
+
+        raise GraphQL::ExecutionError, "Post not found" unless post.present?
+        raise GraphQL::ExecutionError, "You cannot edit this post" unless post.user_id == current_user.id
 
         if post.update(attributes)
           {post: post}
