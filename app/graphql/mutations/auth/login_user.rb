@@ -1,21 +1,22 @@
 module Mutations
   module Auth
     class LoginUser < BaseMutation
-      argument :email, String, required: true
-      argument :password, String, required: true
+      argument :credentials, Types::UserCredentials, required: true
 
       field :user, Types::UserType, null: false
 
-      def resolve(email: nil, password: nil)
-        user = User.find_by(email: email)
+      def resolve(credentials:)
+        raise GraphQL::ExecutionError, "You already logged in" if cookies[:token].present?
 
-        raise GraphQL::ExecutionError, "Invalid credentials" unless user.present?
-        raise GraphQL::ExecutionError, "Invalid credentials" unless user.authenticate(password)
+        user = User.find_by(email: credentials.email)
+
+        raise GraphQL::ExecutionError, "Email or password is incorrect" unless user.present?
+        raise GraphQL::ExecutionError, "Email or password is incorrect" unless user.authenticate(credentials.password)
 
         payload = {user_id: user.id}
         token = JsonWebToken.encode(payload)
 
-        context[:cookies][:token] = token
+        cookies[:token] = token
 
         {user: user}
       end
