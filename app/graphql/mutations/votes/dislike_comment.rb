@@ -6,7 +6,9 @@ module Mutations
       field :comment, Types::CommentType, null: false
 
       def resolve(comment_id:)
-        comment = Comment.find(comment_id)
+        comment = Comment.find_by(id: comment_id)
+
+        raise GraphQL::ExecutionError, "Comment not found" unless comment.present?
 
         vote = current_user.votes.find_by(votable: comment)
 
