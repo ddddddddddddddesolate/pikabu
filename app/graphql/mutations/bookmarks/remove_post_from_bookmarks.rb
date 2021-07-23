@@ -6,9 +6,12 @@ module Mutations
       field :message, String, null: false
 
       def resolve(post_id:)
-        post = Post.find(post_id)
+        post = Post.find_by(id: post_id)
 
-        current_user.bookmarks.find_by!(bookmarkable: post).destroy
+        raise GraphQL::ExecutionError, "Post not found" unless post.present?
+        raise GraphQL::ExecutionError, "Post not in bookmarks" unless current_user.bookmarks.exists?(bookmarkable: post)
+
+        current_user.bookmarks.find_by(bookmarkable: post).destroy
 
         {message: "success"}
       end
