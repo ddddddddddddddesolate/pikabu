@@ -8,7 +8,11 @@ module Mutations
       field :errors, [String], null: true
 
       def resolve(comment_id:, image_url:)
-        comment = current_user.comments.find(comment_id)
+        comment = Comment.find_by(id: comment_id)
+
+        raise GraphQL::ExecutionError, "Comment not found" unless comment.present?
+        raise GraphQL::ExecutionError, "You cannot add image to this comment" unless comment.user_id == current_user.id
+
         image = comment.images.new(remote_image_url: image_url)
 
         if image.save

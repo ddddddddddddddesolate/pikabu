@@ -8,8 +8,15 @@ module Mutations
       field :errors, [String], null: true
 
       def resolve(post_id:, image_id:)
-        post = current_user.posts.find(post_id)
-        image = post.images.find(image_id)
+        post = Post.find_by(id: post_id)
+
+        raise GraphQL::ExecutionError, "Post not found" unless post.present?
+        raise GraphQL::ExecutionError, "You cannot remove image from this post" unless post.user_id == current_user.id
+
+        image = Image.find_by(id: image_id)
+
+        raise GraphQL::ExecutionError, "Image not found" unless image.present?
+        raise GraphQL::ExecutionError, "Post doesn't contain this image" unless post.images.exists?(imageable: image)
 
         image.destroy
 
