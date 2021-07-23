@@ -8,7 +8,10 @@ module Mutations
       field :errors, [String], null: true
 
       def resolve(comment_id:, text:)
-        comment = current_user.comments.find(comment_id)
+        comment = Comment.find_by(id: comment_id)
+
+        raise GraphQL::ExecutionError, "Comment not found" unless comment.present?
+        raise GraphQL::ExecutionError, "You cannot edit this comment" unless comment.user_id == current_user.id
 
         if comment.update(text: text)
           {comment: comment}

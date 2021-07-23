@@ -8,7 +8,9 @@ module Mutations
       field :errors, [String], null: true
 
       def resolve(comment_id:, text:)
-        parent_comment = Comment.find(comment_id)
+        parent_comment = Comment.find_by(id: comment_id)
+
+        raise GraphQL::ExecutionError, "Comment not found" unless parent_comment.present?
 
         comment = parent_comment.comments.new(
           text: text,

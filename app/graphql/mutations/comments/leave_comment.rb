@@ -8,7 +8,10 @@ module Mutations
       field :errors, [String], null: true
 
       def resolve(post_id:, text:)
-        post = Post.find(post_id)
+        post = Post.find_by(id: post_id)
+
+        raise GraphQL::ExecutionError, "Post not found" unless post.present?
+
         comment = post.comments.new(
           user_id: current_user.id,
           text: text
