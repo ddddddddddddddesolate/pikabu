@@ -7,7 +7,7 @@ module Mutations
       field :errors, [String], null: true
 
       def resolve(attributes:)
-        tag = Tag.new(attributes.to_h)
+        tag = current_user.tags.new(attributes.to_h)
 
         if tag.save
           {tag: tag}

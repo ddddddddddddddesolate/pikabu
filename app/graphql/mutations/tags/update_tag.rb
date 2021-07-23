@@ -8,7 +8,10 @@ module Mutations
       field :errors, [String], null: true
 
       def resolve(id:, attributes:)
-        tag = Tag.find(id)
+        tag = Tag.find_by(id: id)
+
+        raise GraphQL::ExecutionError, "Tag not found" unless tag.present?
+        raise GraphQL::ExecutionError, "You cannot edit this tag" unless tag.user_id == current_user.id
 
         if tag.update(attributes)
           {tag: tag}
