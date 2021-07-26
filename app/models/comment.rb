@@ -7,16 +7,16 @@ class Comment < ApplicationRecord
   # replies
   has_many :comments, dependent: :destroy
   has_many :bookmarks, as: :bookmarkable, dependent: :delete_all
-  has_many :votes, as: :votable, dependent: :delete_all
+  has_many :reactions, as: :reactionable, dependent: :delete_all
   has_many :images, as: :imageable, dependent: :delete_all
 
   validates :text, presence: true, length: {maximum: 255}
 
   scope :likes, ->(order) {
-    left_joins(:votes)
+    left_joins(:reactions)
       .group(:id)
-      .order("COUNT(votes.id) #{order.upcase}")
-      .order("SUM(votes.reaction) #{order.upcase}")
+      .order("COUNT(reactions.id) #{order.upcase}")
+      .order("SUM(reactions.reaction) #{order.upcase}")
   }
   scope :date, ->(order) { order(created_at: order) }
 end

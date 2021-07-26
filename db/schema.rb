@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_23_043754) do
+ActiveRecord::Schema.define(version: 2021_07_26_084558) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,17 @@ ActiveRecord::Schema.define(version: 2021_07_23_043754) do
     t.index ["tag_id"], name: "index_posts_tags_on_tag_id"
   end
 
+  create_table "reactions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "reaction"
+    t.string "reactionable_type"
+    t.bigint "reactionable_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index %w[reactionable_type reactionable_id], name: "index_votes_on_votable"
+    t.index ["user_id"], name: "index_reactions_on_user_id"
+  end
+
   create_table "tags", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -78,17 +89,6 @@ ActiveRecord::Schema.define(version: 2021_07_23_043754) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "votes", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.integer "reaction"
-    t.string "votable_type"
-    t.bigint "votable_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_votes_on_user_id"
-    t.index %w[votable_type votable_id], name: "index_votes_on_votable"
-  end
-
   add_foreign_key "bookmarks", "users"
   add_foreign_key "comments", "comments"
   add_foreign_key "comments", "posts"
@@ -96,6 +96,6 @@ ActiveRecord::Schema.define(version: 2021_07_23_043754) do
   add_foreign_key "posts", "users"
   add_foreign_key "posts_tags", "posts"
   add_foreign_key "posts_tags", "tags"
+  add_foreign_key "reactions", "users"
   add_foreign_key "tags", "users"
-  add_foreign_key "votes", "users"
 end

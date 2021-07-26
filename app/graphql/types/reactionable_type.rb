@@ -1,5 +1,5 @@
 module Types
-  class VotableType < BaseUnion
+  class ReactionableType < BaseUnion
     possible_types PostType, CommentType
 
     def self.resolve_type(object, _context)

@@ -6,6 +6,6 @@ module Types
     field :posts, [PostType], null: true
     field :comments, [CommentType], null: true
     field :bookmarks, [BookmarkType], null: true
-    field :votes, [VoteType], null: true
+    field :reactions, [ReactionType], null: true
   end
 end

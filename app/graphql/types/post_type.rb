@@ -9,7 +9,7 @@ module Types
     field :comments_count, Integer, null: false, resolver: Resolvers::CommentsCountResolver
     field :likes_count, Integer, null: false, resolver: Resolvers::LikesCountResolver
     field :dislikes_count, Integer, null: false, resolver: Resolvers::DislikesCountResolver
-    field :votes, [VoteType], null: false
+    field :votes, [ReactionType], null: false
     field :images, [ImageType], null: false
   end
 end

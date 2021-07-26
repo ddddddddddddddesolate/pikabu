@@ -5,7 +5,7 @@ class Post < ApplicationRecord
 
   has_many :comments, dependent: :delete_all
   has_many :bookmarks, as: :bookmarkable, dependent: :delete_all
-  has_many :votes, as: :votable, dependent: :delete_all
+  has_many :reactions, as: :reactionable, dependent: :delete_all
   has_many :images, as: :imageable, dependent: :delete_all
 
   validates :title, presence: true, length: {maximum: 50}
@@ -19,10 +19,10 @@ class Post < ApplicationRecord
       .order("COUNT(comments.id) DESC")
   }
   scope :best, -> {
-    left_joins(:votes)
+    left_joins(:reactions)
       .group(:id)
-      .where("votes.created_at > ?", 24.hours.ago)
-      .order("SUM(votes.reaction) DESC")
+      .where("reactions.created_at > ?", 24.hours.ago)
+      .order("SUM(reactions.reaction) DESC")
   }
   scope :tags, ->(tag_ids) {
     joins(:tags)
@@ -30,9 +30,9 @@ class Post < ApplicationRecord
       .where("tags.id IN (?)", tag_ids)
   }
   scope :likes, ->(order) {
-    joins(:votes)
+    joins(:reactions)
       .group(:id)
-      .order("SUM(votes.reaction) #{order.upcase}")
+      .order("SUM(reactions.reaction) #{order.upcase}")
   }
   scope :date, ->(order) { order(created_at: order) }
   scope :search_by, ->(field, value) { where("LOWER(#{field}) LIKE ?", "%#{value.downcase}%") }
