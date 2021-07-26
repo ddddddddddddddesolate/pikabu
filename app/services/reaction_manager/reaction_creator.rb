@@ -1,4 +1,4 @@
-module ReactionsManager
+module ReactionManager
   class ReactionCreator < AuthorizedService
     attr_reader :model, :id, :reaction
 
