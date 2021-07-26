@@ -37,6 +37,7 @@ group :development, :test do
   gem "rspec-rails"
   gem "factory_bot_rails"
   gem "graphiql-rails"
+  gem "activerecord-import"
 end
 
 group :development do
