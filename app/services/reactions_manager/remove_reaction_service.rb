@@ -1,4 +1,4 @@
-module ReactionManager
+module ReactionsManager
   class RemoveReactionService < AuthorizedService
     attr_reader :model, :id
 
