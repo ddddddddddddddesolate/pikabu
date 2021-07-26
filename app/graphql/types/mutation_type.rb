@@ -19,12 +19,10 @@ module Types
     field :remove_post_from_bookmarks, mutation: Mutations::Bookmarks::RemovePostFromBookmarks
     field :add_comment_to_bookmarks, mutation: Mutations::Bookmarks::AddCommentToBookmarks
     field :remove_comment_from_bookmarks, mutation: Mutations::Bookmarks::RemoveCommentFromBookmarks
-    field :like_post, mutation: Mutations::Votes::LikePost
-    field :dislike_post, mutation: Mutations::Votes::DislikePost
-    field :unlike_post, mutation: Mutations::Votes::UnlikePost
-    field :like_comment, mutation: Mutations::Votes::LikeComment
-    field :dislike_comment, mutation: Mutations::Votes::DislikeComment
-    field :unlike_comment, mutation: Mutations::Votes::UnlikeComment
+    field :rate_post, mutation: Mutations::Reactions::RatePost
+    field :rate_comment, mutation: Mutations::Reactions::RateComment
+    field :unrate_post, mutation: Mutations::Reactions::UnratePost
+    field :unrate_comment, mutation: Mutations::Reactions::UnrateComment
     field :add_image_to_post, mutation: Mutations::Images::AddImageToPost
     field :remove_image_from_post, mutation: Mutations::Images::RemoveImageFromPost
     field :add_image_to_comment, mutation: Mutations::Images::AddImageToComment
