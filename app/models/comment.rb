@@ -10,7 +10,7 @@ class Comment < ApplicationRecord
   has_many :reactions, as: :reactionable, dependent: :delete_all
   has_many :images, as: :imageable, dependent: :delete_all
 
-  validates :text, presence: true, length: {maximum: 255}
+  validates :text, presence: true, length: { maximum: 255 }, allow_blank: false
 
   scope :likes, ->(order) {
     left_joins(:reactions)

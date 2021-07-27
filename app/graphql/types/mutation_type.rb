@@ -11,8 +11,8 @@ module Types
     field :delete_tag, mutation: Mutations::Tags::DeleteTag
     field :add_tag_to_post, mutation: Mutations::PostsTags::AddTagToPost
     field :remove_tag_from_post, mutation: Mutations::PostsTags::RemoveTagFromPost
-    field :leave_comment, mutation: Mutations::Comments::LeaveComment
-    field :edit_comment, mutation: Mutations::Comments::EditComment
+    field :add_comment_to_post, mutation: Mutations::Comments::AddCommentToPost
+    field :update_comment, mutation: Mutations::Comments::UpdateComment
     field :delete_comment, mutation: Mutations::Comments::DeleteComment
     field :reply_to_comment, mutation: Mutations::Comments::ReplyToComment
     field :add_post_to_bookmarks, mutation: Mutations::Bookmarks::AddPostToBookmarks
