@@ -14,10 +14,12 @@ class GraphqlController < ApplicationController
     }
     result = PikabuSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
-  rescue Exceptions::ValidationError, Exceptions::NotDestroyedError => e
+  rescue Exceptions::ValidationError, Exceptions::NotDestroyedError, Exceptions::InvalidCredentialsError => e
     render json: { errors: [{ message: e.message }] }, status: :unprocessable_entity
   rescue Exceptions::NotFoundError => e
     render json: { errors: [{ message: e.message }] }, status: :not_found
+  rescue Exceptions::UnauthorizedError => e
+    render json: { errors: [{ message: e.message }] }, status: :unauthorized
   rescue => e
     raise e unless Rails.env.development?
     handle_error_in_development(e)
@@ -30,9 +32,9 @@ class GraphqlController < ApplicationController
 
     token = cookies[:token]
     decoded_token = JsonWebToken.decode(token)
-    user_id = decoded_token[:user_id]
+    email = decoded_token[:user_email]
 
-    User.find(user_id)
+    User.find_by(email: email)
   end
 
   # Handle variables in form data, JSON body, or a blank value
@@ -59,6 +61,6 @@ class GraphqlController < ApplicationController
     logger.error e.message
     logger.error e.backtrace.join("\n")
 
-    render json: {errors: [{message: e.message, backtrace: e.backtrace}], data: {}}, status: 500
+    render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: 500
   end
 end

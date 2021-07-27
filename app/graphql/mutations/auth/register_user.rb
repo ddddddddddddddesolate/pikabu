@@ -3,22 +3,23 @@ module Mutations
     class RegisterUser < BaseMutation
       argument :credentials, Types::UserCredentials, required: true
 
-      field :user, Types::UserType, null: true
-      field :errors, [String], null: true
+      field :user, Types::UserType, null: false
 
       def resolve(credentials:)
         user = User.new(credentials.to_h)
 
         if user.save
-          payload = {user_id: user.id}
+          payload = { user_email: user.email }
           token = JsonWebToken.encode(payload)
 
           cookies[:token] = token
 
-          {user: user}
+          { user: user }
         else
-          {errors: user.errors.full_messages}
+          raise ActiveRecord::RecordInvalid, user
         end
+      rescue ActiveRecord::RecordInvalid => e
+        raise Exceptions::ValidationError, e.message
       end
     end
   end

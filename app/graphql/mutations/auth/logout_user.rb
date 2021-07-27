@@ -1,12 +1,12 @@
 module Mutations
   module Auth
     class LogoutUser < AuthorizedMutation
-      field :message, String, null: false
+      field :success, Boolean, null: false
 
       def resolve
         cookies.delete(:token)
 
-        {message: "success"}
+        { success: true }
       end
     end
   end
