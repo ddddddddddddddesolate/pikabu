@@ -3,17 +3,20 @@ module Mutations
     class DeletePost < AuthorizedMutation
       argument :id, ID, required: true
 
-      field :message, String, null: false
+      field :success, Boolean, null: false
 
       def resolve(id:)
-        post = Post.find_by(id: id)
+        post = current_user.posts.find_by(id: id)
 
-        raise GraphQL::ExecutionError, "Post not found" unless post.present?
-        raise GraphQL::ExecutionError, "You cannot delete this post" unless post.user_id == current_user.id
+        raise Exceptions::NotFoundError, "Post not found" unless post
 
         post.destroy
 
-        {message: "success"}
+        if post.destroyed?
+          { success: true }
+        else
+          raise Exceptions::NotDestroyedError, post.errors.full_messages.join(", ")
+        end
       end
     end
   end
