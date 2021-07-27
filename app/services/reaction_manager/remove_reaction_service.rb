@@ -10,10 +10,7 @@ module ReactionManager
     end
 
     def call
-      object = model.find_by(id: id)
-
-      raise Exceptions::NotFoundError, "#{model} not found" unless object
-
+      object = model.find(id)
       reaction = current_user.reactions.find_by(reactionable: object)
 
       raise Exceptions::NotFoundError, "You didn't rate this #{model}" unless reaction
@@ -21,6 +18,8 @@ module ReactionManager
       reaction.destroy!
 
       object
+    rescue ActiveRecord::RecordNotFound
+      raise Exceptions::NotFoundError, "#{model} not found"
     rescue ActiveRecord::RecordNotDestroyed => e
       raise Exceptions::NotDestroyedError, e.message
     end
