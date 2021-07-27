@@ -20,6 +20,8 @@ class GraphqlController < ApplicationController
     render json: { errors: [{ message: e.message }] }, status: :not_found
   rescue Exceptions::UnauthorizedError => e
     render json: { errors: [{ message: e.message }] }, status: :unauthorized
+  rescue Exceptions::AlreadyExistsError => e
+    render json: { errors: [{ message: e.message }] }, status: :conflict
   rescue => e
     raise e unless Rails.env.development?
     handle_error_in_development(e)

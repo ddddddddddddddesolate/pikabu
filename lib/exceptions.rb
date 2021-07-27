@@ -4,4 +4,5 @@ module Exceptions
   class NotDestroyedError < StandardError; end
   class InvalidCredentialsError < StandardError; end
   class UnauthorizedError < StandardError; end
+  class AlreadyExistsError < StandardError; end
 end

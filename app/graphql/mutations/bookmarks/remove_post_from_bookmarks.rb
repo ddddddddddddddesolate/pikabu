@@ -1,19 +1,12 @@
 module Mutations
   module Bookmarks
     class RemovePostFromBookmarks < AuthorizedMutation
-      argument :post_id, ID, required: true
+      argument :id, ID, required: true
 
-      field :message, String, null: false
+      field :success, Boolean, null: false
 
-      def resolve(post_id:)
-        post = Post.find_by(id: post_id)
-
-        raise GraphQL::ExecutionError, "Post not found" unless post.present?
-        raise GraphQL::ExecutionError, "Post not in bookmarks" unless current_user.bookmarks.exists?(bookmarkable: post)
-
-        current_user.bookmarks.find_by(bookmarkable: post).destroy
-
-        {message: "success"}
+      def resolve(id:)
+        { success: BookmarkManager::RemoveBookmarkService.call(current_user, Post, id) }
       end
     end
   end
