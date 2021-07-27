@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# https://file-examples-com.github.io/uploads/2017/10/file_example_JPG_100kB.jpg
-
 require 'faker'
 
 # users generator

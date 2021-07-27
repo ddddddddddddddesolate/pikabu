@@ -3,10 +3,8 @@
 class Comment < ApplicationRecord
   belongs_to :post
   belongs_to :user
-
-  # parent
   belongs_to :comment, optional: true
-  # replies
+
   has_many :comments, dependent: :destroy
   has_many :bookmarks, as: :bookmarkable, dependent: :delete_all
   has_many :reactions, as: :reactionable, dependent: :delete_all
