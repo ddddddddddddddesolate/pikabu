@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mutations
   module Posts
     class CreatePost < AuthorizedMutation
@@ -23,14 +25,12 @@ module Mutations
             Image.import images
           end
 
-          if tag_names
-            tag_names.each do |name|
-              tag = Tag.find_or_create_by(
-                name: name,
-              )
+          tag_names&.each do |name|
+            tag = Tag.find_or_create_by(
+              name: name
+            )
 
-              post.tags << tag unless post.tags.include?(tag)
-            end
+            post.tags << tag unless post.tags.include?(tag)
           end
 
           { post: post }

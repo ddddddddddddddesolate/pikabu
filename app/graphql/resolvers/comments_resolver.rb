@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Resolvers
   class CommentsResolver < BaseResolver
     type [Types::CommentType], null: false

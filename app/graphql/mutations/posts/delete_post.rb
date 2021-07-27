@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mutations
   module Posts
     class DeletePost < AuthorizedMutation
@@ -8,15 +10,13 @@ module Mutations
       def resolve(id:)
         post = current_user.posts.find_by(id: id)
 
-        raise Exceptions::NotFoundError, "Post not found" unless post
+        raise Exceptions::NotFoundError, 'Post not found' unless post
 
         post.destroy
 
-        if post.destroyed?
-          { success: true }
-        else
-          raise Exceptions::NotDestroyedError, post.errors.full_messages.join(", ")
-        end
+        raise Exceptions::NotDestroyedError, post.errors.full_messages.join(', ') unless post.destroyed?
+
+        { success: true }
       end
     end
   end

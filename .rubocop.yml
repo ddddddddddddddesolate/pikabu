@@ -1,8 +1,3 @@
-require:
-  - rubocop-rails
-  - anycable/rails/compatibility/rubocop
-  - rubocop-performance
-  - rubocop-rspec
 AllCops:
   Exclude:
     - 'bin/**/*'
@@ -26,9 +21,12 @@ Metrics/MethodLength:
 Style/Documentation:
   Enabled: false
 Style/FrozenStringLiteralComment:
-  Enabled: false
+  Enabled: true
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
     default: "[]"
 Style/StringLiterals:
-  EnforcedStyle: double_quotes
+  EnforcedStyle: single_quotes
+Lint/MissingSuper:
+  Exclude:
+    - 'app/services/**/**/*'

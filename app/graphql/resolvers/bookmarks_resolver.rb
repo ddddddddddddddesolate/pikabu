@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Resolvers
   class BookmarksResolver < BaseResolver
     type [Types::BookmarkType], null: false

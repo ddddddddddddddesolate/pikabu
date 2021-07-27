@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Types
   class Pagination < BaseInputObject
     argument :limit, Integer, required: true

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Comment < ApplicationRecord
   belongs_to :post
   belongs_to :user
@@ -12,7 +14,7 @@ class Comment < ApplicationRecord
 
   validates :text, presence: true, length: { maximum: 255 }, allow_blank: false
 
-  scope :likes, ->(order) {
+  scope :likes, lambda { |order|
     left_joins(:reactions)
       .group(:id)
       .order("COUNT(reactions.id) #{order.upcase}")

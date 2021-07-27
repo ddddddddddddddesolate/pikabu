@@ -1,11 +1,14 @@
+# frozen_string_literal: true
+
 module Resolvers
   class CommentsCountResolver < BaseResolver
     type Integer, null: false
 
     def resolve
-      if object.is_a?(Post)
+      case object
+      when Post
         Comment.where(post_id: object.id).count
-      elsif object.is_a?(Comment)
+      when Comment
         Comment.where(comment_id: object.id).count
       end
     end

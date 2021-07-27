@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Reaction < ApplicationRecord
   LIKE = 1
   DISLIKE = 0

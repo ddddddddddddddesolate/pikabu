@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Resolvers
   class PostsResolver < BaseResolver
     type [Types::PostType], null: false
@@ -27,9 +29,7 @@ module Resolvers
         posts = posts.offset(paginate.offset)
       end
 
-      if search
-        posts = posts.search_by("title", search.title) if search.title
-      end
+      posts = posts.search_by('title', search.title) if search&.title
 
       posts
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AuthorizedService < ApplicationService
   attr_reader :current_user
 

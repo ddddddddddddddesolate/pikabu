@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mutations
   module Auth
     class RegisterUser < BaseMutation
@@ -8,16 +10,14 @@ module Mutations
       def resolve(credentials:)
         user = User.new(credentials.to_h)
 
-        if user.save
-          payload = { user_email: user.email }
-          token = JsonWebToken.encode(payload)
+        raise ActiveRecord::RecordInvalid unless user.save
 
-          cookies[:token] = token
+        payload = { user_email: user.email }
+        token = JsonWebToken.encode(payload)
 
-          { user: user }
-        else
-          raise ActiveRecord::RecordInvalid, user
-        end
+        cookies[:token] = token
+
+        { user: user }
       rescue ActiveRecord::RecordInvalid => e
         raise Exceptions::ValidationError, e.message
       end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   has_secure_password
 
@@ -6,6 +8,6 @@ class User < ApplicationRecord
   has_many :bookmarks, dependent: :delete_all
   has_many :reactions, dependent: :delete_all
 
-  validates :name, allow_blank: true, length: {maximum: 100}
+  validates :name, allow_blank: true, length: { maximum: 100 }
   validates :email, presence: true, uniqueness: true
 end

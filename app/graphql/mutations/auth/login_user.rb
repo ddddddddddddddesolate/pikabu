@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mutations
   module Auth
     class LoginUser < BaseMutation
@@ -8,8 +10,12 @@ module Mutations
       def resolve(credentials:)
         user = User.find_by(email: credentials.email)
 
-        raise Exceptions::InvalidCredentialsError, "Email or password is incorrect" unless user
-        raise Exceptions::InvalidCredentialsError, "Email or password is incorrect" unless user.authenticate(credentials.password)
+        raise Exceptions::InvalidCredentialsError, 'Email or password is incorrect' unless user
+
+        unless user.authenticate(credentials.password)
+          raise Exceptions::InvalidCredentialsError,
+                'Email or password is incorrect'
+        end
 
         payload = { user_email: user.email }
         token = JsonWebToken.encode(payload)

@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 # https://file-examples-com.github.io/uploads/2017/10/file_example_JPG_100kB.jpg
 
-require "faker"
+require 'faker'
 
 # users generator
 10.times do
-  User.create(name: Faker::Name.unique.name, email: Faker::Internet.unique.email, password: "123456")
+  User.create(name: Faker::Name.unique.name, email: Faker::Internet.unique.email, password: '123456')
 end
 
 # posts generator
@@ -17,7 +19,7 @@ end
   )
 
   rand(0..3).times do
-    post.images.create(remote_image_url: "https://file-examples-com.github.io/uploads/2017/10/file_example_JPG_100kB.jpg")
+    post.images.create(remote_image_url: 'https://file-examples-com.github.io/uploads/2017/10/file_example_JPG_100kB.jpg')
   end
 end
 
@@ -31,7 +33,7 @@ end
   )
 
   rand(0..2).times do
-    comment.images.create(remote_image_url: "https://file-examples-com.github.io/uploads/2017/10/file_example_JPG_100kB.jpg")
+    comment.images.create(remote_image_url: 'https://file-examples-com.github.io/uploads/2017/10/file_example_JPG_100kB.jpg')
   end
 end
 

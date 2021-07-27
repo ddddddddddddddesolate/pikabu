@@ -1,11 +1,14 @@
+# frozen_string_literal: true
+
 module Types
   class BookmarkableType < BaseUnion
     possible_types PostType, CommentType
 
     def self.resolve_type(object, _context)
-      if object.is_a?(Post)
+      case object
+      when Post
         PostType
-      elsif object.is_a?(Comment)
+      when Comment
         CommentType
       end
     end

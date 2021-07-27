@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ReactionManager
   class AddReactionService < AuthorizedService
     attr_reader :model, :id, :reaction

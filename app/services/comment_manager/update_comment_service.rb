@@ -1,24 +1,26 @@
+# frozen_string_literal: true
+
 module CommentManager
-	class UpdateCommentService < AuthorizedService
-		attr_reader :id, :text
+  class UpdateCommentService < AuthorizedService
+    attr_reader :id, :text
 
-		def initialize(current_user, id, text)
-			super(current_user)
+    def initialize(current_user, id, text)
+      super(current_user)
 
-			@id = id
-			@text = text
-		end
+      @id = id
+      @text = text
+    end
 
-		def call
-			comment = current_user.comments.find(id)
+    def call
+      comment = current_user.comments.find(id)
 
-			raise ActiveRecord::RecordInvalid, comment unless comment.update(text: text)
+      raise ActiveRecord::RecordInvalid, comment unless comment.update(text: text)
 
-			comment
-		rescue ActiveRecord::RecordInvalid => e
-			raise Exceptions::ValidationError, e.message
-		rescue ActiveRecord::RecordNotFound
-			raise Exceptions::NotFoundError, "Comment not found"
-		end
-	end
+      comment
+    rescue ActiveRecord::RecordInvalid => e
+      raise Exceptions::ValidationError, e.message
+    rescue ActiveRecord::RecordNotFound
+      raise Exceptions::NotFoundError, 'Comment not found'
+    end
+  end
 end

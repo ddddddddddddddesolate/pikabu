@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Types
   class UserCredentials < BaseInputObject
     argument :email, String, required: true

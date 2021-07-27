@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Types
   class PostsFilters < BaseInputObject
     argument :fresh, Boolean, required: false
