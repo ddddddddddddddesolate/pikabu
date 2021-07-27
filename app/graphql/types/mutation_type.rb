@@ -24,8 +24,8 @@ module Types
     field :unrate_post, mutation: Mutations::Reactions::UnratePost
     field :unrate_comment, mutation: Mutations::Reactions::UnrateComment
     field :add_image_to_post, mutation: Mutations::Images::AddImageToPost
-    field :remove_image_from_post, mutation: Mutations::Images::RemoveImageFromPost
+    field :delete_image_from_post, mutation: Mutations::Images::DeleteImageFromPost
     field :add_image_to_comment, mutation: Mutations::Images::AddImageToComment
-    field :remove_image_from_comment, mutation: Mutations::Images::RemoveImageFromComment
+    field :delete_image_from_comment, mutation: Mutations::Images::DeleteImageFromComment
   end
 end
