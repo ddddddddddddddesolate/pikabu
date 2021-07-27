@@ -1,19 +1,12 @@
 module Mutations
   module Tags
     class CreateTag < AuthorizedMutation
-      argument :attributes, Types::TagAttributes, required: true
+      argument :name, String, required: true
 
-      field :tag, Types::TagType, null: true
-      field :errors, [String], null: true
+      field :tag, Types::TagType, null: false
 
-      def resolve(attributes:)
-        tag = current_user.tags.new(attributes.to_h)
-
-        if tag.save
-          {tag: tag}
-        else
-          {errors: tag.errors.full_messages}
-        end
+      def resolve(name:)
+        { tag: TagManager::CreateTagService.call(name) }
       end
     end
   end
