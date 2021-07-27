@@ -37,12 +37,12 @@ end
 
 # likes / dislikes generator
 200.times do
-  Post.all.sample.votes.create(
+  Post.all.sample.reactions.create(
     reaction: rand(0..1),
     user_id: User.all.sample.id,
     created_at: rand(1..50).hours.ago
   )
-  Comment.all.sample.votes.create(
+  Comment.all.sample.reactions.create(
     reaction: rand(0..1),
     user_id: User.all.sample.id,
     created_at: rand(1..50).hours.ago
