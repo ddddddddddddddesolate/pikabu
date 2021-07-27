@@ -6,7 +6,7 @@ module Mutations
       field :post, Types::PostType, null: true
 
       def resolve(id:)
-        { post: ReactionManager::ReactionRemover.call(current_user, Post, id) }
+        { post: ReactionManager::RemoveReactionService.call(current_user, Post, id) }
       end
     end
   end

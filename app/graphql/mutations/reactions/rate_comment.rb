@@ -7,7 +7,7 @@ module Mutations
       field :comment, Types::CommentType, null: false
 
       def resolve(id:, reaction:)
-        { comment: ReactionManager::ReactionCreator.call(current_user, Comment, id, reaction) }
+        { comment: ReactionManager::AddReactionService.call(current_user, Comment, id, reaction) }
       end
     end
   end

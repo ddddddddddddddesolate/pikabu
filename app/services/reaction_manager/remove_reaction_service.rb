@@ -1,5 +1,5 @@
 module ReactionManager
-  class ReactionRemover < AuthorizedService
+  class RemoveReactionService < AuthorizedService
     attr_reader :model, :id
 
     def initialize(current_user, model, id)

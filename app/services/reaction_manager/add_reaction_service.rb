@@ -1,5 +1,5 @@
 module ReactionManager
-  class ReactionCreator < AuthorizedService
+  class AddReactionService < AuthorizedService
     attr_reader :model, :id, :reaction
 
     def initialize(current_user, model, id, reaction)
