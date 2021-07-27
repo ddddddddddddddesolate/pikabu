@@ -10,7 +10,7 @@ module Types
     field :rename_tag, mutation: Mutations::Tags::RenameTag
     field :delete_tag, mutation: Mutations::Tags::DeleteTag
     field :add_tags_to_post, mutation: Mutations::PostsTags::AddTagsToPost
-    field :remove_tags_from_post, mutation: Mutations::PostsTags::RemoveTagFromPost
+    field :remove_tags_from_post, mutation: Mutations::PostsTags::RemoveTagsFromPost
     field :add_comment_to_post, mutation: Mutations::Comments::AddCommentToPost
     field :update_comment, mutation: Mutations::Comments::UpdateComment
     field :delete_comment, mutation: Mutations::Comments::DeleteComment
