@@ -23,8 +23,8 @@ module ReactionManager
       end
 
       object
-    rescue ActiveRecord::RecordInvalid
-      raise Exceptions::ValidationError, "Validation failed"
+    rescue ActiveRecord::RecordInvalid => e
+      raise Exceptions::ValidationError, e.message
     rescue ActiveRecord::RecordNotFound
       raise Exceptions::NotFoundError, "#{model} not found"
     end

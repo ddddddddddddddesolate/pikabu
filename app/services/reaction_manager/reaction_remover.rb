@@ -21,8 +21,8 @@ module ReactionManager
       reaction.destroy!
 
       object
-    rescue ActiveRecord::RecordNotDestroyed
-      raise Exceptions::NotDestroyedError, "Failed do destroy reaction to this #{model}"
+    rescue ActiveRecord::RecordNotDestroyed => e
+      raise Exceptions::NotDestroyedError, e.message
     end
   end
 end
