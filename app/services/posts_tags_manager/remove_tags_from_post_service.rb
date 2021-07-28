@@ -12,7 +12,7 @@ module PostsTagsManager
     end
 
     def call
-      post = current_user.posts.find(id)
+      post = current_user.posts.includes(:user, :tags, :images, reactions: [:user]).find(id)
 
       tags = Tag.where(id: tag_ids)
 

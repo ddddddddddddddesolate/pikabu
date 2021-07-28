@@ -9,7 +9,9 @@ module Mutations
       field :post, Types::PostType, null: false
 
       def resolve(id:, tag_names:)
-        { post: PostsTagsManager::AddTagsToPostService.call(current_user, id, tag_names) }
+        post = PostsTagsManager::AddTagsToPostService.call(current_user, id, tag_names)
+
+        { post: post }
       end
     end
   end

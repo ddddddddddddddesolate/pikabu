@@ -8,12 +8,11 @@ module Mutations
       field :comment, Types::CommentType, null: false
 
       def resolve(id:)
-        comment = Comment.find(id)
-        comment = BookmarkManager::CreateBookmarkService.call(current_user, comment)
+        comment = BookmarkManager::CreateBookmarkService.call(
+          current_user, Comment.includes(:user, :images, reactions: [:user]), id
+        )
 
         { comment: comment }
-      rescue ActiveRecord::RecordNotFound
-        raise Exceptions::NotFoundError, 'Comment not found'
       end
     end
   end

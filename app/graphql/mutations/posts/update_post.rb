@@ -9,7 +9,9 @@ module Mutations
       field :post, Types::PostType, null: false
 
       def resolve(id:, attributes:)
-        PostManager::UpdatePostService.call(current_user, id, attributes)
+        post = PostManager::UpdatePostService.call(current_user, id, attributes)
+
+        { post: post }
       end
     end
   end

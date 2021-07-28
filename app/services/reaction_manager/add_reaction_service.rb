@@ -15,20 +15,20 @@ module ReactionManager
     def call
       object = model.find(id)
 
-      vote = current_user.reactions.find_or_initialize_by(reactionable: object)
+      reaction = current_user.reactions.find_or_initialize_by(reactionable: object)
 
-      if vote.new_record?
-        vote.reaction = reaction
-        vote.save
+      if reaction.new_record?
+        reaction.reaction = reaction
+        reaction.save
       else
-        vote.update(reaction: reaction)
+        reaction.update(reaction: reaction)
       end
 
       object
     rescue ActiveRecord::RecordInvalid => e
       raise Exceptions::ValidationError, e.message
-    rescue ActiveRecord::RecordNotFound
-      raise Exceptions::NotFoundError, "#{model} not found"
+    rescue ActiveRecord::RecordNotFound => e
+      raise Exceptions::NotFoundError, e.message
     end
   end
 end

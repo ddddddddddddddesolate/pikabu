@@ -12,7 +12,7 @@ module CommentManager
     end
 
     def call
-      comment = current_user.comments.find(id)
+      comment = current_user.comments.includes(:user, :images, reactions: [:user]).find(id)
 
       raise ActiveRecord::RecordInvalid, comment unless comment.update(text: text)
 

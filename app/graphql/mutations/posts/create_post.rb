@@ -10,7 +10,9 @@ module Mutations
       field :post, Types::PostType, null: true
 
       def resolve(attributes:, image_urls: nil, tag_names: nil)
-        PostManager::CreatePostService.call(current_user, attributes, image_urls, tag_names)
+        post = PostManager::CreatePostService.call(current_user, attributes, image_urls, tag_names)
+
+        { post: post }
       end
     end
   end

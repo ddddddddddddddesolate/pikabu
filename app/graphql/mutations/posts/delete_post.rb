@@ -8,7 +8,9 @@ module Mutations
       field :success, Boolean, null: false
 
       def resolve(id:)
-        PostManager::DeletePostService.call(current_user, id)
+        success = PostManager::DeletePostService.call(current_user, id)
+
+        { success: success }
       end
     end
   end

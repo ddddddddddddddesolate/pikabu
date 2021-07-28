@@ -15,7 +15,7 @@ module PostManager
 
       post.destroy
 
-      { success: post.destroyed? }
+      post.destroyed?
     rescue ActiveRecord::RecordNotFound
       raise Exceptions::NotFoundError, 'Post not found'
     rescue ActiveRecord::RecordNotDestroyed => e

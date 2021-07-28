@@ -14,7 +14,7 @@ module PostManager
 
     def call
       Post.transaction do
-        post = current_user.posts.new(attributes.to_h)
+        post = current_user.posts.includes(:user, :tags, :images, reactions: [:user]).new(attributes.to_h)
 
         raise ActiveRecord::RecordInvalid, post unless post.save
 
@@ -36,7 +36,7 @@ module PostManager
           post.tags << tag unless post.tags.include?(tag)
         end
 
-        { post: post }
+        post
       rescue ActiveRecord::RecordInvalid => e
         raise Exceptions::ValidationError, e.message
       end

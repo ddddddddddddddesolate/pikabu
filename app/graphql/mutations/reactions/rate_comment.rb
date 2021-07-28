@@ -9,7 +9,11 @@ module Mutations
       field :comment, Types::CommentType, null: false
 
       def resolve(id:, reaction:)
-        { comment: ReactionManager::AddReactionService.call(current_user, Comment, id, reaction) }
+        comment = ReactionManager::AddReactionService.call(
+          current_user, Comment.includes(:user, :images, reactions: [:user]), id, reaction
+        )
+
+        { comment: comment }
       end
     end
   end

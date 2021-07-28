@@ -12,7 +12,7 @@ module PostsTagsManager
     end
 
     def call
-      post = current_user.posts.find(id)
+      post = current_user.posts.includes(:user, :tags, :images, reactions: [:user]).find(id)
 
       tag_names.each do |name|
         tag = post.tags.find_or_create_by(name: name)

@@ -9,7 +9,9 @@ module Mutations
       field :comment, Types::CommentType, null: false
 
       def resolve(id:, text:)
-        { comment: CommentManager::ReplyToCommentService.call(current_user, id, text) }
+        comment = CommentManager::ReplyToCommentService.call(current_user, id, text)
+
+        { comment: comment }
       end
     end
   end

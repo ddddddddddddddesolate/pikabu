@@ -14,7 +14,7 @@ module CommentManager
     def call
       parent_comment = Comment.find(id)
 
-      comment = parent_comment.comments.new(
+      comment = parent_comment.comments.includes(:user, :images, reactions: [:user]).new(
         post_id: parent_comment.post_id,
         user_id: current_user.id,
         text: text

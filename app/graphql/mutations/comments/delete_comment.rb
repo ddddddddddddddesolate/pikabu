@@ -8,7 +8,9 @@ module Mutations
       field :success, Boolean, null: false
 
       def resolve(id:)
-        { success: CommentManager::DeleteCommentService.call(current_user, id) }
+        success = CommentManager::DeleteCommentService.call(current_user, id)
+
+        { success: success }
       end
     end
   end

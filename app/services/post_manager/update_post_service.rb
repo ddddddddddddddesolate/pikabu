@@ -12,11 +12,11 @@ module PostManager
     end
 
     def call
-      post = current_user.posts.find(id)
+      post = current_user.posts.includes(:user, :tags, :images, reactions: [:user]).find(id)
 
       raise ActiveRecord::RecordInvalid, post unless post.update(attributes.to_h)
 
-      { post: post }
+      post
     rescue ActiveRecord::RecordNotFound
       raise Exceptions::NotFoundError, 'Post not found'
     rescue ActiveRecord::RecordInvalid, e

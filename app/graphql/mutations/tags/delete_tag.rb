@@ -8,7 +8,9 @@ module Mutations
       field :success, Boolean, null: false
 
       def resolve(id:)
-        { success: TagManager::DeleteTagService.call(id) }
+        success = TagManager::DeleteTagService.call(id)
+
+        { success: success }
       end
     end
   end

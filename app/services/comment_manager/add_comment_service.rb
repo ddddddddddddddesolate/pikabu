@@ -15,7 +15,7 @@ module CommentManager
     def call
       object = model.find(id)
 
-      comment = object.comments.new(
+      comment = object.comments.includes(:user, :images, reactions: [:user]).new(
         user_id: current_user.id,
         text: text
       )
@@ -25,8 +25,8 @@ module CommentManager
       comment
     rescue ActiveRecord::RecordInvalid => e
       raise Exceptions::ValidationError, e.message
-    rescue ActiveRecord::RecordNotFound
-      raise Exceptions::NotFoundError, "#{model} not found"
+    rescue ActiveRecord::RecordNotFound => e
+      raise Exceptions::NotFoundError, e.message
     end
   end
 end
