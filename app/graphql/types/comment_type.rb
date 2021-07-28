@@ -9,7 +9,8 @@ module Types
     field :replies_count, Integer, null: false
     field :likes_count, Integer, null: false
     field :dislikes_count, Integer, null: false
-    field :reactions, ReactionType, null: false
+    field :reactions, [ReactionType], null: false
     field :images, [ImageType], null: false
+    field :created_at, GraphQL::Types::ISO8601DateTime, null: false
   end
 end

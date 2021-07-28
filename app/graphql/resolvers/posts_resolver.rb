@@ -10,7 +10,7 @@ module Resolvers
     argument :search, Types::PostsSearch, required: false
 
     def resolve(filters: nil, order: nil, paginate: nil, search: nil)
-      posts = Post.includes(:comments, :tags, :user, :images, reactions: [:user])
+      posts = Post.includes(:user, :tags, :images, reactions: [:user])
 
       if order
         posts = posts.likes(order.likes) if order.likes
