@@ -13,6 +13,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 gem 'bcrypt'
 gem 'carrierwave'
+gem 'counter_culture'
 gem 'graphql'
 gem 'jwt'
 gem 'rack-attack'
