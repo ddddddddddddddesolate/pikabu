@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ActiveRecord::Schema.define(version: 2021_07_28_030236) do
+ActiveRecord::Schema.define(version: 2021_07_28_054205) do
   enable_extension "plpgsql"
 
   create_table "bookmarks", force: :cascade do |t|
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 2021_07_28_030236) do
     t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "bookmarks_count", default: 0, null: false
   end
 
   add_foreign_key "bookmarks", "users"
