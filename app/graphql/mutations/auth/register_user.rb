@@ -12,7 +12,7 @@ module Mutations
 
         raise ActiveRecord::RecordInvalid unless user.save
 
-        payload = { user_email: user.email }
+        payload = { user_id: user.id }
         token = JsonWebToken.encode(payload)
 
         cookies[:token] = token

@@ -32,9 +32,9 @@ class GraphqlController < ApplicationController
 
     token = cookies[:token]
     decoded_token = JsonWebToken.decode(token)
-    email = decoded_token[:user_email]
+    user_id = decoded_token[:user_id]
 
-    User.find_by(email: email)
+    User.find(user_id)
   end
 
   def prepare_variables(variables_param)
