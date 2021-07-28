@@ -10,33 +10,7 @@ module Mutations
       field :post, Types::PostType, null: true
 
       def resolve(attributes:, image_urls: nil, tag_names: nil)
-        Post.transaction do
-          post = current_user.posts.new(attributes.to_h)
-
-          raise ActiveRecord::RecordInvalid, post unless post.save
-
-          if image_urls
-            images = []
-
-            image_urls.each do |url|
-              images << post.images.new(remote_image_url: url)
-            end
-
-            Image.import images
-          end
-
-          tag_names&.each do |name|
-            tag = Tag.find_or_create_by(
-              name: name
-            )
-
-            post.tags << tag unless post.tags.include?(tag)
-          end
-
-          { post: post }
-        rescue ActiveRecord::RecordInvalid => e
-          raise Exceptions::ValidationError, e.message
-        end
+        PostManager::CreatePostService.call(current_user, attributes, image_urls, tag_names)
       end
     end
   end

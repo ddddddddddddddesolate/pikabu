@@ -8,15 +8,7 @@ module Mutations
       field :success, Boolean, null: false
 
       def resolve(id:)
-        post = current_user.posts.find_by(id: id)
-
-        raise Exceptions::NotFoundError, 'Post not found' unless post
-
-        post.destroy
-
-        raise Exceptions::NotDestroyedError, post.errors.full_messages.join(', ') unless post.destroyed?
-
-        { success: true }
+        PostManager::DeletePostService.call(current_user, id)
       end
     end
   end
