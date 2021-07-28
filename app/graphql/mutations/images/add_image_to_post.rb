@@ -9,7 +9,12 @@ module Mutations
       field :post, Types::PostType, null: false
 
       def resolve(id:, url:)
-        { post: ImageManager::AddImageService.call(current_user, Post, id, url) }
+        post = Post.find(id)
+        post = ImageManager::AddImageService.call(current_user, post, url)
+
+        { post: post }
+      rescue ActiveRecord::RecordNotFound
+        raise Exceptions::NotFoundError, 'Post not found'
       end
     end
   end
