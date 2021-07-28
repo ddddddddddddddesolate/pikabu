@@ -3,6 +3,6 @@
 module Types
   class ReactionType < BaseObject
     field :user, UserType, null: false
-    field :reactionable, ReactionableType, null: false
+    field :reaction, Integer, null: false
   end
 end

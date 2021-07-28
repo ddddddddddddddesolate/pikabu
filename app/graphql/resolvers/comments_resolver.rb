@@ -4,13 +4,11 @@ module Resolvers
   class CommentsResolver < BaseResolver
     type [Types::CommentType], null: false
 
-    argument :post_id, ID, required: true
-
     argument :order, Types::OrderFields, required: false
     argument :paginate, Types::Pagination, required: false
 
-    def resolve(post_id:, order: nil, paginate: nil)
-      comments = Comment.where(post_id: post_id)
+    def resolve(order: nil, paginate: nil)
+      comments = object.comments
 
       if order
         comments = comments.likes(order.likes) if order.likes

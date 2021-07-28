@@ -7,11 +7,11 @@ module Types
     field :title, String, null: false
     field :text, String, null: true
     field :tags, [TagType], null: true
-    field :comments, [CommentType], null: true, resolver: Resolvers::PostRootCommentsResolver
+    field :comments, [CommentType], null: true, resolver: Resolvers::CommentsResolver
     field :comments_count, Integer, null: false
     field :likes_count, Integer, null: false
     field :dislikes_count, Integer, null: false
-    field :votes, [ReactionType], null: false
-    field :images, [ImageType], null: false
+    field :reactions, [ReactionType], null: true
+    field :images, [ImageType], null: true
   end
 end
