@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Resolvers
-  class BookmarksResolver < BaseResolver
+  class BookmarksResolver < AuthorizedResolver
     type [Types::BookmarkType], null: false
 
     argument :paginate, Types::Pagination, required: false
