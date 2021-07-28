@@ -8,7 +8,12 @@ module Mutations
       field :post, Types::PostType, null: false
 
       def resolve(id:)
-        { post: BookmarkManager::CreateBookmarkService.call(current_user, Post, id) }
+        post = Post.find(id)
+        post = BookmarkManager::CreateBookmarkService.call(current_user, post)
+
+        { post: post }
+      rescue ActiveRecord::RecordNotFound
+        raise Exceptions::NotFoundError, 'Post not found'
       end
     end
   end

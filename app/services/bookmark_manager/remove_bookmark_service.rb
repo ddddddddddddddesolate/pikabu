@@ -2,23 +2,18 @@
 
 module BookmarkManager
   class RemoveBookmarkService < AuthorizedService
-    attr_reader :model, :id
+    attr_reader :model
 
-    def initialize(current_user, model, id)
+    def initialize(current_user, model)
       super(current_user)
 
       @model = model
-      @id = id
     end
 
     def call
-      object = model.find_by(id: id)
+      bookmark = current_user.bookmarks.find_by(bookmarkable: model)
 
-      raise Exceptions::NotFoundError, "#{model} not found" unless object
-
-      bookmark = current_user.bookmarks.find_by(bookmarkable: object)
-
-      raise Exceptions::NotFoundError, "#{model} not in bookmarks" unless bookmark
+      raise Exceptions::NotFoundError, "#{model.class.name} not in bookmarks" unless bookmark
 
       bookmark.destroy!
 

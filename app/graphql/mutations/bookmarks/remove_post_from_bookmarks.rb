@@ -8,7 +8,12 @@ module Mutations
       field :success, Boolean, null: false
 
       def resolve(id:)
-        { success: BookmarkManager::RemoveBookmarkService.call(current_user, Post, id) }
+        post = Post.find(id)
+        success = BookmarkManager::RemoveBookmarkService.call(current_user, post)
+
+        { success: success }
+      rescue ActiveRecord::RecordNotFound
+        raise Exceptions::NotFoundError, 'Post not found'
       end
     end
   end
