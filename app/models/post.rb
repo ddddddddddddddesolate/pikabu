@@ -31,11 +31,7 @@ class Post < ApplicationRecord
       .group(:id)
       .where('tags.id IN (?)', tag_ids)
   }
-  scope :likes, lambda { |order|
-    joins(:reactions)
-      .group(:id)
-      .order("SUM(reactions.reaction) #{order.upcase}")
-  }
+  scope :likes, ->(order) { order(likes_count: order) }
   scope :date, ->(order) { order(created_at: order) }
   scope :search_by, ->(field, value) { where("LOWER(#{field}) LIKE ?", "%#{value.downcase}%") }
 end

@@ -8,9 +8,9 @@ module Types
     field :text, String, null: true
     field :tags, [TagType], null: true
     field :comments, [CommentType], null: true, resolver: Resolvers::PostRootCommentsResolver
-    field :comments_count, Integer, null: false, resolver: Resolvers::CommentsCountResolver
-    field :likes_count, Integer, null: false, resolver: Resolvers::LikesCountResolver
-    field :dislikes_count, Integer, null: false, resolver: Resolvers::DislikesCountResolver
+    field :comments_count, Integer, null: false
+    field :likes_count, Integer, null: false
+    field :dislikes_count, Integer, null: false
     field :votes, [ReactionType], null: false
     field :images, [ImageType], null: false
   end

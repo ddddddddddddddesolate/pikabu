@@ -1,5 +1,6 @@
-ActiveRecord::Schema.define(version: 2021_07_27_040119) do
+# frozen_string_literal: true
 
+ActiveRecord::Schema.define(version: 2021_07_28_030236) do
   enable_extension "plpgsql"
 
   create_table "bookmarks", force: :cascade do |t|
@@ -19,6 +20,9 @@ ActiveRecord::Schema.define(version: 2021_07_27_040119) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "comment_id"
+    t.integer "likes_count", default: 0, null: false
+    t.integer "dislikes_count", default: 0, null: false
+    t.integer "replies_count", default: 0, null: false
     t.index ["comment_id"], name: "index_comments_on_comment_id"
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
@@ -39,6 +43,9 @@ ActiveRecord::Schema.define(version: 2021_07_27_040119) do
     t.string "text"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "comments_count", default: 0, null: false
+    t.integer "likes_count", default: 0, null: false
+    t.integer "dislikes_count", default: 0, null: false
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
