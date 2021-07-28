@@ -56,7 +56,7 @@ end
 
 # likes / dislikes for posts
 300.times do
-  Post.all.sample.reactions.upsert(
+  Post.all.sample.reactions.create(
     reaction: rand(0..1),
     user_id: User.all.sample.id,
     created_at: rand(1..50).hours.ago
@@ -65,7 +65,7 @@ end
 
 # likes / dislikes for comments
 1500.times do
-  Comment.all.sample.reactions.upsert(
+  Comment.all.sample.reactions.create(
     reaction: rand(0..1),
     user_id: User.all.sample.id,
     created_at: rand(1..50).hours.ago
