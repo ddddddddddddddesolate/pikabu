@@ -7,6 +7,7 @@ class Reaction < ApplicationRecord
   belongs_to :user
   belongs_to :reactionable, polymorphic: true
 
+  validates :reaction, presence: true, allow_blank: false, numericality: { only_integer: true }
   validates :user_id, uniqueness: { scope: %w[reactionable_id reactionable_type] }
 
   counter_culture :reactionable, column_name: proc { |model|
