@@ -14,6 +14,8 @@ module PostsTagsManager
     def call
       post = current_user.posts.includes(:user, :tags, :images, reactions: [:user]).find(id)
 
+      raise Exceptions::ValidationError, 'Tags must be present' unless tag_ids
+
       tags = Tag.where(id: tag_ids)
 
       post.tags.delete(tags)
