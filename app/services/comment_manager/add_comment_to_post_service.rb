@@ -7,13 +7,12 @@ module CommentManager
     def initialize(current_user, id, text)
       super(current_user)
 
-      @model = model
       @id = id
       @text = text
     end
 
     def call
-      post = current_user.posts.find(id)
+      post = Post.find(id)
 
       comment = post.comments.includes(:user, :images, reactions: [:user]).new(
         user_id: current_user.id,
@@ -25,8 +24,8 @@ module CommentManager
       comment
     rescue ActiveRecord::RecordInvalid => e
       raise Exceptions::ValidationError, e.message
-    rescue ActiveRecord::RecordNotFound
-      raise Exceptions::NotFoundError, 'Post not found'
+    rescue ActiveRecord::RecordNotFound => e
+      raise Exceptions::NotFoundError, e.message
     end
   end
 end
