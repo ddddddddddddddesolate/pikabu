@@ -12,6 +12,8 @@ module ReactionManager
     end
 
     def call
+      raise Exceptions::NotFoundError, 'Model not specified' unless model
+
       object = model.find(id)
       reaction = current_user.reactions.find_by(reactionable: object)
 
