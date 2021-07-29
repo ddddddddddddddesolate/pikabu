@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'faker'
 
 RSpec.describe TagManager::RenameTagService do
   let(:result) { TagManager::RenameTagService.call(id, name) }
