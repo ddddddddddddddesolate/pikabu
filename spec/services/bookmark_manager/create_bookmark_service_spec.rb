@@ -24,46 +24,40 @@ RSpec.describe BookmarkManager::CreateBookmarkService do
       end
     end
 
-    context 'and bookmarked' do
-      context 'post' do
-        let(:model) { Post }
+    context 'and post' do
+      let(:model) { Post }
 
-        context 'not exists' do
-          it 'raise NotFoundError' do
-            expect { result }.to raise_error Exceptions::NotFoundError
-          end
-        end
-
-        context 'exists' do
-          let(:bookmark) { create(:bookmark, :for_post, user: current_user, bookmarkable: create(:post)) }
-          let(:id) { bookmark.bookmarkable_id }
-
-          context 'in bookmarks' do
-            it 'raise AlreadyExistsError' do
-              expect { result }.to raise_error Exceptions::AlreadyExistsError
-            end
-          end
+      context 'not exists' do
+        it 'raise NotFoundError' do
+          expect { result }.to raise_error Exceptions::NotFoundError
         end
       end
 
-      context 'comment' do
-        let(:model) { Comment }
+      context 'exists in bookmarks' do
+        let(:bookmark) { create(:bookmark, :for_post, user: current_user, bookmarkable: create(:post)) }
+        let(:id) { bookmark.bookmarkable_id }
 
-        context 'not exists' do
-          it 'raise NotFoundError' do
-            expect { result }.to raise_error Exceptions::NotFoundError
-          end
+        it 'raise AlreadyExistsError' do
+          expect { result }.to raise_error Exceptions::AlreadyExistsError
         end
+      end
+    end
 
-        context 'exists' do
-          let(:bookmark) { create(:bookmark, :for_comment, user: current_user, bookmarkable: create(:comment)) }
-          let(:id) { bookmark.bookmarkable_id }
+    context 'comment' do
+      let(:model) { Comment }
 
-          context 'in bookmarks' do
-            it 'raise AlreadyExistsError' do
-              expect { result }.to raise_error Exceptions::AlreadyExistsError
-            end
-          end
+      context 'not exists' do
+        it 'raise NotFoundError' do
+          expect { result }.to raise_error Exceptions::NotFoundError
+        end
+      end
+
+      context 'exists in bookmarks' do
+        let(:bookmark) { create(:bookmark, :for_comment, user: current_user, bookmarkable: create(:comment)) }
+        let(:id) { bookmark.bookmarkable_id }
+
+        it 'raise AlreadyExistsError' do
+          expect { result }.to raise_error Exceptions::AlreadyExistsError
         end
       end
     end

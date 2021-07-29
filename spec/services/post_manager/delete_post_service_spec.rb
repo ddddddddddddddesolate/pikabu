@@ -23,14 +23,12 @@ RSpec.describe PostManager::DeletePostService do
       end
     end
 
-    context 'and post' do
-      context 'author is not current user' do
-        let(:other_user) { create(:user) }
-        let(:post) { create(:post, user: other_user).id }
+    context 'and post author is not current user' do
+      let(:other_user) { create(:user) }
+      let(:post) { create(:post, user: other_user).id }
 
-        it 'raise NotFoundError' do
-          expect { result }.to raise_error Exceptions::NotFoundError
-        end
+      it 'raise NotFoundError' do
+        expect { result }.to raise_error Exceptions::NotFoundError
       end
     end
   end

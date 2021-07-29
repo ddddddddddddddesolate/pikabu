@@ -33,13 +33,11 @@ RSpec.describe BookmarkManager::RemoveBookmarkService do
         end
       end
 
-      context 'not exists in' do
+      context 'not exists in bookmarks' do
         let(:id) { create(:post).id }
 
-        context 'bookmarks' do
-          it 'raise NotFoundError' do
-            expect { result }.to raise_error Exceptions::NotFoundError
-          end
+        it 'raise NotFoundError' do
+          expect { result }.to raise_error Exceptions::NotFoundError
         end
       end
     end
@@ -53,13 +51,11 @@ RSpec.describe BookmarkManager::RemoveBookmarkService do
         end
       end
 
-      context 'not exists in' do
+      context 'not exists in bookmarks' do
         let(:id) { create(:comment).id }
 
-        context 'bookmarks' do
-          it 'raise NotFoundError' do
-            expect { result }.to raise_error Exceptions::NotFoundError
-          end
+        it 'raise NotFoundError' do
+          expect { result }.to raise_error Exceptions::NotFoundError
         end
       end
     end
