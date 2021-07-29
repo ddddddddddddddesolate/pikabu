@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module CommentManager
-  class AddCommentService < AuthorizedService
-    attr_reader :model, :id, :text
+  class AddCommentToPostService < AuthorizedService
+    attr_reader :id, :text
 
-    def initialize(current_user, model, id, text)
+    def initialize(current_user, id, text)
       super(current_user)
 
       @model = model
@@ -13,9 +13,9 @@ module CommentManager
     end
 
     def call
-      object = model.find(id)
+      post = current_user.posts.find(id)
 
-      comment = object.comments.includes(:user, :images, reactions: [:user]).new(
+      comment = post.comments.includes(:user, :images, reactions: [:user]).new(
         user_id: current_user.id,
         text: text
       )
@@ -25,8 +25,8 @@ module CommentManager
       comment
     rescue ActiveRecord::RecordInvalid => e
       raise Exceptions::ValidationError, e.message
-    rescue ActiveRecord::RecordNotFound => e
-      raise Exceptions::NotFoundError, e.message
+    rescue ActiveRecord::RecordNotFound
+      raise Exceptions::NotFoundError, 'Post not found'
     end
   end
 end
