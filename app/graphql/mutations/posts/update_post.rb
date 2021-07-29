@@ -4,12 +4,13 @@ module Mutations
   module Posts
     class UpdatePost < AuthorizedMutation
       argument :id, ID, required: true
-      argument :attributes, Types::PostAttributes, required: true
+      argument :title, String, required: true
+      argument :text, String, required: false
 
       field :post, Types::PostType, null: false
 
-      def resolve(id:, attributes:)
-        post = PostManager::UpdatePostService.call(current_user, id, attributes)
+      def resolve(id:, title:, text:)
+        post = PostManager::UpdatePostService.call(current_user, id, title, text)
 
         { post: post }
       end

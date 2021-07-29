@@ -2,19 +2,24 @@
 
 module PostManager
   class CreatePostService < AuthorizedService
-    attr_reader :attributes, :image_urls, :tag_names
+    attr_reader :title, :text, :image_urls, :tag_names
 
-    def initialize(current_user, attributes, image_urls, tag_names)
+    def initialize(current_user, title, text, image_urls, tag_names)
       super(current_user)
 
-      @attributes = attributes
+      @title = title
+      @text = text
       @image_urls = image_urls
       @tag_names = tag_names
     end
 
     def call
       Post.transaction do
-        post = current_user.posts.includes(:user, :tags, :images, reactions: [:user]).new(attributes.to_h)
+        post = Post.includes(:user, :tags, :images, reactions: [:user]).new(
+          title: title,
+          text: text,
+          user_id: current_user.id
+        )
 
         raise ActiveRecord::RecordInvalid, post unless post.save
 
