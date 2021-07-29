@@ -3,14 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe TagManager::DeleteTagService do
-  let :result do
-    TagManager::DeleteTagService.call(id)
-  end
+  let(:result) { TagManager::DeleteTagService.call(id) }
 
   context 'where tag not exists' do
-    let :id do
-      0
-    end
+    let(:id) { nil }
 
     it 'raise NotFoundError' do
       expect { result }.to raise_error Exceptions::NotFoundError
