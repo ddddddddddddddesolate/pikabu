@@ -10,7 +10,7 @@ class Post < ApplicationRecord
   has_many :reactions, as: :reactionable, dependent: :delete_all
   has_many :images, as: :imageable, dependent: :delete_all
 
-  validates :title, presence: true, length: { maximum: 50 }
+  validates :title, presence: true, length: { maximum: 50 }, allow_blank: false
   validates :text, length: { maximum: 255 }
 
   scope :fresh, -> { where('posts.created_at > ?', 24.hours.ago) }
