@@ -5,9 +5,9 @@ require 'rails_helper'
 RSpec.describe TagManager::CreateTagService do
   let(:result) { TagManager::CreateTagService.call(name) }
 
-  context 'when tag name not present' do
-    let(:name) { nil }
+  let(:name) { nil }
 
+  context 'when tag name not present' do
     it 'raise ValidationError' do
       expect { result }.to raise_error Exceptions::ValidationError
     end

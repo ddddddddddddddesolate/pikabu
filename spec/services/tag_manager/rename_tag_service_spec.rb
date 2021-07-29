@@ -5,10 +5,10 @@ require 'rails_helper'
 RSpec.describe TagManager::RenameTagService do
   let(:result) { TagManager::RenameTagService.call(id, name) }
 
-  context 'when tag not exists' do
-    let(:id) { nil }
-    let(:name) { Faker::Lorem.characters(number: 30) }
+  let(:id) { nil }
+  let(:name) { nil }
 
+  context 'when tag not exists' do
     it 'raise NotFoundError' do
       expect { result }.to raise_error Exceptions::NotFoundError
     end
@@ -16,7 +16,6 @@ RSpec.describe TagManager::RenameTagService do
 
   context 'when tag name not present' do
     let(:id) { create(:tag).id }
-    let(:name) { nil }
 
     it 'raise ValidationError' do
       expect { result }.to raise_error Exceptions::ValidationError

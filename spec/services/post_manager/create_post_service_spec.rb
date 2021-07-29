@@ -5,13 +5,13 @@ require 'rails_helper'
 RSpec.describe PostManager::CreatePostService do
   let(:result) { PostManager::CreatePostService.call(current_user, title, text, image_urls, tag_names) }
 
-  context 'when user not logged in' do
-    let(:current_user) { nil }
-    let(:title) { Faker::Lorem.characters(number: 50) }
-    let(:text) { Faker::Lorem.characters(number: 255) }
-    let(:image_urls) { nil }
-    let(:tag_names) { nil }
+  let(:current_user) { nil }
+  let(:title) { nil }
+  let(:text) { nil }
+  let(:image_urls) { nil }
+  let(:tag_names) { nil }
 
+  context 'when user not logged in' do
     it 'raise UnauthorizedError' do
       expect { result }.to raise_error Exceptions::UnauthorizedError
     end
@@ -21,13 +21,7 @@ RSpec.describe PostManager::CreatePostService do
     let(:current_user) { create(:user) }
 
     context 'and post has no images and tags' do
-      let(:image_urls) { nil }
-      let(:tag_names) { nil }
-
       context 'and title not present' do
-        let(:title) { nil }
-        let(:text) { Faker::Lorem.characters(number: 255) }
-
         it 'raise ValidationError' do
           expect { result }.to raise_error Exceptions::ValidationError
         end
@@ -35,7 +29,6 @@ RSpec.describe PostManager::CreatePostService do
 
       context 'and title too long' do
         let(:title) { Faker::Lorem.characters(number: 51) }
-        let(:text) { Faker::Lorem.characters(number: 255) }
 
         it 'raise ValidationError' do
           expect { result }.to raise_error Exceptions::ValidationError
@@ -54,8 +47,6 @@ RSpec.describe PostManager::CreatePostService do
 
     context 'and post has images' do
       let(:title) { Faker::Lorem.characters(number: 50) }
-      let(:text) { Faker::Lorem.characters(number: 255) }
-      let(:tag_names) { nil }
 
       context 'and image url invalid' do
         let(:image_urls) { ['invalid.url'] }
@@ -76,8 +67,6 @@ RSpec.describe PostManager::CreatePostService do
 
     context 'and post has tags' do
       let(:title) { Faker::Lorem.characters(number: 50) }
-      let(:text) { Faker::Lorem.characters(number: 255) }
-      let(:image_urls) { nil }
 
       context 'and tag name not present' do
         let(:tag_names) { [nil] }

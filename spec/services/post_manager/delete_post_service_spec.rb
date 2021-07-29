@@ -5,10 +5,10 @@ require 'rails_helper'
 RSpec.describe PostManager::DeletePostService do
   let(:result) { PostManager::DeletePostService.call(current_user, id) }
 
-  context 'when user not logged in' do
-    let(:current_user) { nil }
-    let(:id) { nil }
+  let(:current_user) { nil }
+  let(:id) { nil }
 
+  context 'when user not logged in' do
     it 'raise UnauthorizedError' do
       expect { result }.to raise_error Exceptions::UnauthorizedError
     end
@@ -18,8 +18,6 @@ RSpec.describe PostManager::DeletePostService do
     let(:current_user) { create(:user) }
 
     context 'and post not exists' do
-      let(:id) { nil }
-
       it 'raise NotFoundError' do
         expect { result }.to raise_error Exceptions::NotFoundError
       end
