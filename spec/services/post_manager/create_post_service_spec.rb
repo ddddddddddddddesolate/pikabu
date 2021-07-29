@@ -20,14 +20,14 @@ RSpec.describe PostManager::CreatePostService do
   context 'when user logged in' do
     let(:current_user) { create(:user) }
 
-    context 'and post has no images and tags' do
-      context 'and title not present' do
+    context 'and post has' do
+      context 'blank title' do
         it 'raise ValidationError' do
           expect { result }.to raise_error Exceptions::ValidationError
         end
       end
 
-      context 'and title too long' do
+      context 'too long title' do
         let(:title) { Faker::Lorem.characters(number: 51) }
 
         it 'raise ValidationError' do
@@ -35,7 +35,7 @@ RSpec.describe PostManager::CreatePostService do
         end
       end
 
-      context 'and text too long' do
+      context 'too long text' do
         let(:title) { Faker::Lorem.characters(number: 50) }
         let(:text) { Faker::Lorem.characters(number: 256) }
 
@@ -45,10 +45,10 @@ RSpec.describe PostManager::CreatePostService do
       end
     end
 
-    context 'and post has images' do
+    context 'image has' do
       let(:title) { Faker::Lorem.characters(number: 50) }
 
-      context 'and image url invalid' do
+      context 'invalid url' do
         let(:image_urls) { ['invalid.url'] }
 
         it 'raise ValidationError' do
@@ -56,7 +56,7 @@ RSpec.describe PostManager::CreatePostService do
         end
       end
 
-      context 'and image url not present' do
+      context 'blank url' do
         let(:image_urls) { [nil] }
 
         it 'raise ValidationError' do
@@ -65,10 +65,10 @@ RSpec.describe PostManager::CreatePostService do
       end
     end
 
-    context 'and post has tags' do
+    context 'tag has' do
       let(:title) { Faker::Lorem.characters(number: 50) }
 
-      context 'and tag name not present' do
+      context 'blank name' do
         let(:tag_names) { [nil] }
 
         it 'raise ValidationError' do
@@ -76,7 +76,7 @@ RSpec.describe PostManager::CreatePostService do
         end
       end
 
-      context 'and tag name too long' do
+      context 'too long name' do
         let(:tag_names) { [Faker::Lorem.characters(number: 31)] }
 
         it 'raise ValidationError' do

@@ -23,7 +23,7 @@ RSpec.describe CommentManager::DeleteCommentService do
       end
     end
 
-    context 'and user not author of comment' do
+    context 'not author of comment' do
       let(:id) { create(:comment).id }
 
       it 'raise NotFoundError' do

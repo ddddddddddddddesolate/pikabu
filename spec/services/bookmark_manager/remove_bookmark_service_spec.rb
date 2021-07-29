@@ -18,49 +18,47 @@ RSpec.describe BookmarkManager::RemoveBookmarkService do
   context 'when user logged in' do
     let(:current_user) { create(:user) }
 
-    context 'and model not exists' do
+    context 'and type of bookmark not set' do
       it 'raise NotFoundError' do
         expect { result }.to raise_error Exceptions::NotFoundError
       end
     end
 
-    context 'and model' do
-      context 'of type post' do
-        let(:model) { Post }
+    context 'and post' do
+      let(:model) { Post }
 
-        context 'not exists' do
-          it 'raise NotFoundError' do
-            expect { result }.to raise_error Exceptions::NotFoundError
-          end
-        end
-
-        context 'exists' do
-          let(:id) { create(:post).id }
-
-          context 'and not in bookmarks' do
-            it 'raise NotFoundError' do
-              expect { result }.to raise_error Exceptions::NotFoundError
-            end
-          end
+      context 'not exists' do
+        it 'raise NotFoundError' do
+          expect { result }.to raise_error Exceptions::NotFoundError
         end
       end
 
-      context 'of type comment' do
-        let(:model) { Comment }
+      context 'not exists in' do
+        let(:id) { create(:post).id }
 
-        context 'not exists' do
+        context 'bookmarks' do
           it 'raise NotFoundError' do
             expect { result }.to raise_error Exceptions::NotFoundError
           end
         end
+      end
+    end
 
-        context 'exists' do
-          let(:id) { create(:comment).id }
+    context 'of type comment' do
+      let(:model) { Comment }
 
-          context 'and not in bookmarks' do
-            it 'raise NotFoundError' do
-              expect { result }.to raise_error Exceptions::NotFoundError
-            end
+      context 'not exists' do
+        it 'raise NotFoundError' do
+          expect { result }.to raise_error Exceptions::NotFoundError
+        end
+      end
+
+      context 'not exists in' do
+        let(:id) { create(:comment).id }
+
+        context 'bookmarks' do
+          it 'raise NotFoundError' do
+            expect { result }.to raise_error Exceptions::NotFoundError
           end
         end
       end

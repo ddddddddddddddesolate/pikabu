@@ -24,16 +24,16 @@ RSpec.describe CommentManager::ReplyToCommentService do
       end
     end
 
-    context 'and comment exists' do
+    context 'and comment has' do
       let(:id) { create(:comment).id }
 
-      context 'and text not present' do
+      context 'blank text' do
         it 'raise ValidationError' do
           expect { result }.to raise_error Exceptions::ValidationError
         end
       end
 
-      context 'and text too long' do
+      context 'too long' do
         let(:text) { Faker::Lorem.characters(number: 256) }
 
         it 'raise ValidationError' do

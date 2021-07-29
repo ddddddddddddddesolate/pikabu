@@ -23,8 +23,8 @@ RSpec.describe PostManager::DeletePostService do
       end
     end
 
-    context 'and post exists' do
-      context 'and user not author of post' do
+    context 'and post' do
+      context 'author is not current user' do
         let(:other_user) { create(:user) }
         let(:post) { create(:post, user: other_user).id }
 

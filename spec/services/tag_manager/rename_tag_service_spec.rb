@@ -14,16 +14,16 @@ RSpec.describe TagManager::RenameTagService do
     end
   end
 
-  context 'when tag exists' do
+  context 'when tag' do
     let(:id) { create(:tag).id }
 
-    context 'and name not present' do
+    context 'name not present' do
       it 'raise ValidationError' do
         expect { result }.to raise_error Exceptions::ValidationError
       end
     end
 
-    context 'and name too long' do
+    context 'name too long' do
       let(:name) { Faker::Lorem.characters(number: 31) }
 
       it 'raise ValidationError' do
@@ -31,7 +31,7 @@ RSpec.describe TagManager::RenameTagService do
       end
     end
 
-    context 'and name already taken' do
+    context 'name already taken' do
       let(:name) { create(:tag).name }
 
       it 'raise ValidationError' do

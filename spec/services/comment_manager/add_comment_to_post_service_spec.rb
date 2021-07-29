@@ -24,16 +24,16 @@ RSpec.describe CommentManager::AddCommentToPostService do
       end
     end
 
-    context 'and post exists' do
+    context 'and post has' do
       let(:id) { create(:post).id }
 
-      context 'and text not present' do
+      context 'blank text' do
         it 'raise ValidationError' do
           expect { result }.to raise_error Exceptions::ValidationError
         end
       end
 
-      context 'and text too long' do
+      context 'too long text' do
         let(:text) { Faker::Lorem.characters(number: 256) }
 
         it 'raise ValidationError' do

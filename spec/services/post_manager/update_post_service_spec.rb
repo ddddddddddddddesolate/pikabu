@@ -25,8 +25,8 @@ RSpec.describe PostManager::UpdatePostService do
       end
     end
 
-    context 'and post exists' do
-      context 'and user not author of post' do
+    context 'and post' do
+      context 'author is not current user' do
         let(:post) { create(:post, user: create(:user)).id }
         let(:title) { Faker::Lorem.characters(number: 50) }
 
@@ -35,16 +35,16 @@ RSpec.describe PostManager::UpdatePostService do
         end
       end
 
-      context 'and user author of post' do
+      context 'of current user has' do
         let(:id) { create(:post, user: current_user).id }
 
-        context 'and title not present' do
+        context 'blank title' do
           it 'raise ValidationError' do
             expect { result }.to raise_error Exceptions::ValidationError
           end
         end
 
-        context 'and title too long' do
+        context 'too long title' do
           let(:title) { Faker::Lorem.characters(number: 51) }
 
           it 'raise ValidationError' do
@@ -52,7 +52,7 @@ RSpec.describe PostManager::UpdatePostService do
           end
         end
 
-        context 'and text too long' do
+        context 'too long text' do
           let(:title) { Faker::Lorem.characters(number: 50) }
           let(:text) { Faker::Lorem.characters(number: 256) }
 

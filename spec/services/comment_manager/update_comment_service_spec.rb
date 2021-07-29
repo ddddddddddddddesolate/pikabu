@@ -24,8 +24,8 @@ RSpec.describe CommentManager::UpdateCommentService do
       end
     end
 
-    context 'and comment exists' do
-      context 'and user not author of comment' do
+    context 'and comment' do
+      context 'author is not current user' do
         let(:id) { create(:comment).id }
 
         it 'raise NotFoundError' do
@@ -33,16 +33,16 @@ RSpec.describe CommentManager::UpdateCommentService do
         end
       end
 
-      context 'and user author of comment' do
+      context 'of current user has' do
         let(:id) { create(:comment, user: current_user).id }
 
-        context 'and text not present' do
+        context 'blank text' do
           it 'raise ValidationError' do
             expect { result }.to raise_error Exceptions::ValidationError
           end
         end
 
-        context 'and text too long' do
+        context 'too long text' do
           let(:text) { Faker::Lorem.characters(number: 256) }
 
           it 'raise ValidationError' do

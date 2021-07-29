@@ -18,27 +18,27 @@ RSpec.describe BookmarkManager::CreateBookmarkService do
   context 'when user logged in' do
     let(:current_user) { create(:user) }
 
-    context 'and model not exists' do
+    context 'and type of bookmark not set' do
       it 'raise NotFoundError' do
         expect { result }.to raise_error Exceptions::NotFoundError
       end
     end
 
-    context 'and model exists' do
-      context 'and model post' do
+    context 'and bookmarked' do
+      context 'post' do
         let(:model) { Post }
 
-        context 'and post not exists' do
+        context 'not exists' do
           it 'raise NotFoundError' do
             expect { result }.to raise_error Exceptions::NotFoundError
           end
         end
 
-        context 'and post exists' do
+        context 'exists' do
           let(:bookmark) { create(:bookmark, :for_post, user: current_user, bookmarkable: create(:post)) }
           let(:id) { bookmark.bookmarkable_id }
 
-          context 'and post already in bookmarks' do
+          context 'in bookmarks' do
             it 'raise AlreadyExistsError' do
               expect { result }.to raise_error Exceptions::AlreadyExistsError
             end
@@ -46,20 +46,20 @@ RSpec.describe BookmarkManager::CreateBookmarkService do
         end
       end
 
-      context 'and model comment' do
+      context 'comment' do
         let(:model) { Comment }
 
-        context 'and comment not exists' do
+        context 'not exists' do
           it 'raise NotFoundError' do
             expect { result }.to raise_error Exceptions::NotFoundError
           end
         end
 
-        context 'and comment exists' do
+        context 'exists' do
           let(:bookmark) { create(:bookmark, :for_comment, user: current_user, bookmarkable: create(:comment)) }
           let(:id) { bookmark.bookmarkable_id }
 
-          context 'and comment already in bookmarks' do
+          context 'in bookmarks' do
             it 'raise AlreadyExistsError' do
               expect { result }.to raise_error Exceptions::AlreadyExistsError
             end
