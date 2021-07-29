@@ -12,6 +12,8 @@ module BookmarkManager
     end
 
     def call
+      raise Exceptions::NotFoundError, 'Model not specified' unless model
+
       object = model.find(id)
       bookmark = current_user.bookmarks.new(bookmarkable: object)
 
