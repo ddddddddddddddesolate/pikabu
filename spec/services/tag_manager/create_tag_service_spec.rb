@@ -3,19 +3,17 @@
 require 'rails_helper'
 
 RSpec.describe TagManager::CreateTagService do
-  describe 'TagManager::CreateTagService' do
-    let :result do
-      TagManager::CreateTagService.call(name)
+  let :result do
+    TagManager::CreateTagService.call(name)
+  end
+
+  context 'where tag name is invalid' do
+    let :name do
+      nil
     end
 
-    context 'where tag name is invalid' do
-      let :name do
-        nil
-      end
-
-      it 'raise ValidationError' do
-        expect { result }.to raise_error Exceptions::ValidationError
-      end
+    it 'raise ValidationError' do
+      expect { result }.to raise_error Exceptions::ValidationError
     end
   end
 end
