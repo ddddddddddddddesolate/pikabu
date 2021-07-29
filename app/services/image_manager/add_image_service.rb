@@ -13,6 +13,8 @@ module ImageManager
     end
 
     def call
+      raise Exceptions::NotFoundError, 'Model not specified' unless model
+
       object = model.find(id)
 
       raise ActiveRecord::RecordNotFound, object unless object.user_id == current_user.id
