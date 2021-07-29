@@ -4,6 +4,6 @@ require 'faker'
 
 FactoryBot.define do
   factory :tag do
-    name { Faker::Lorem.sentence(word_count: 3) }
+    name { Faker::Lorem.characters(number: 30) }
   end
 end
