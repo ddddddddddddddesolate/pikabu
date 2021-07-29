@@ -3,12 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe TagManager::CreateTagService do
-  describe 'create tag' do
+  describe 'TagManager::CreateTagService' do
     let :result do
       TagManager::CreateTagService.call(name)
     end
 
-    describe 'where tag name is invalid' do
+    context 'where tag name is invalid' do
       let :name do
         nil
       end
