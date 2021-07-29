@@ -23,14 +23,10 @@ module PostManager
 
         raise ActiveRecord::RecordInvalid, post unless post.save
 
-        if image_urls
-          images = []
+        image_urls&.each do |url|
+          image = post.images.new(remote_image_url: url)
 
-          image_urls.each do |url|
-            images << post.images.new(remote_image_url: url)
-          end
-
-          Image.import images
+          raise ActiveRecord::RecordInvalid, image unless image.save
         end
 
         tag_names&.each do |name|
