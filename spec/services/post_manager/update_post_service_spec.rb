@@ -28,8 +28,7 @@ RSpec.describe PostManager::UpdatePostService do
     context 'and post exists' do
       context 'and user not author of post' do
         let(:other_user) { create(:user) }
-        let(:post) { create(:post, user: other_user) }
-        let(:id) { post.id }
+        let(:post) { create(:post, user: other_user).id }
         let(:title) { Faker::Lorem.characters(number: 50) }
 
         it 'raise NotFoundError' do
@@ -38,8 +37,7 @@ RSpec.describe PostManager::UpdatePostService do
       end
 
       context 'and user author of post' do
-        let(:post) { create(:post, user: current_user) }
-        let(:id) { post.id }
+        let(:id) { create(:post, user: current_user).id }
 
         context 'and title not present' do
           it 'raise ValidationError' do

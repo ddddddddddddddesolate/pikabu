@@ -26,8 +26,7 @@ RSpec.describe PostManager::DeletePostService do
     context 'and post exists' do
       context 'and user not author of post' do
         let(:other_user) { create(:user) }
-        let(:post) { create(:post, user: other_user) }
-        let(:id) { post.id }
+        let(:post) { create(:post, user: other_user).id }
 
         it 'raise NotFoundError' do
           expect { result }.to raise_error Exceptions::NotFoundError
