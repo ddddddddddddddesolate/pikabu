@@ -15,7 +15,7 @@ RSpec.describe TagManager::RenameTagService do
     end
   end
 
-  context 'when tag name is not present' do
+  context 'when tag name not present' do
     let(:id) { create(:tag).id }
     let(:name) { nil }
 
@@ -24,7 +24,7 @@ RSpec.describe TagManager::RenameTagService do
     end
   end
 
-  context 'when tag name is too long' do
+  context 'when tag name too long' do
     let(:id) { create(:tag).id }
     let(:name) { Faker::Lorem.characters(number: 31) }
 
