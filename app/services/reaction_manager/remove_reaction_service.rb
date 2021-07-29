@@ -22,7 +22,7 @@ module ReactionManager
       reaction.destroy!
 
       object
-    rescue ActiveRecord::RecordNotFound, e
+    rescue ActiveRecord::RecordNotFound => e
       raise Exceptions::NotFoundError, e.message
     rescue ActiveRecord::RecordNotDestroyed => e
       raise Exceptions::NotDestroyedError, e.message
