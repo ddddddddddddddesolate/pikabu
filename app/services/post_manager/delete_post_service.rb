@@ -1,25 +1,17 @@
 # frozen_string_literal: true
 
 module PostManager
-  class DeletePostService < AuthorizedService
-    attr_reader :id
+  class DeletePostService < ApplicationService
+    attr_reader :post
 
-    def initialize(current_user, id)
-      super(current_user)
-
-      @id = id
+    def initialize(post)
+      @post = post
     end
 
     def call
-      post = current_user.posts.find(id)
-
       post.destroy
 
-      post.destroyed?
-    rescue ActiveRecord::RecordNotFound
-      raise Exceptions::NotFoundError, 'Post not found'
-    rescue ActiveRecord::RecordNotDestroyed => e
-      raise Exceptions::NotDestroyedError, e.message
+      OpenStruct.new(success: post.destroyed?, errors: post.errors.full_messages)
     end
   end
 end
