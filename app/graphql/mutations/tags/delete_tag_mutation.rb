@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 module Mutations
-  module Comments
-    class DeleteComment < AuthorizedMutation
+  module Tags
+    class DeleteTagMutation < AuthorizedMutation
       argument :id, ID, required: true
 
       field :success, Boolean, null: false
 
       def resolve(id:)
-        success = CommentManager::DeleteCommentService.call(current_user, id)
+        success = TagManager::DeleteTagService.call(id)
 
         { success: success }
       end

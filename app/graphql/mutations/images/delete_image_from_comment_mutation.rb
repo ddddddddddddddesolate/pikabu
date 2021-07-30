@@ -2,7 +2,7 @@
 
 module Mutations
   module Images
-    class DeleteImageFromComment < AuthorizedMutation
+    class DeleteImageFromCommentMutation < AuthorizedMutation
       argument :id, ID, required: true
       argument :image_id, ID, required: true
 

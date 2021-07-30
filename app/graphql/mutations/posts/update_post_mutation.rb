@@ -2,7 +2,7 @@
 
 module Mutations
   module Posts
-    class UpdatePost < AuthorizedMutation
+    class UpdatePostMutation < AuthorizedMutation
       argument :id, ID, required: true
       argument :title, String, required: true
       argument :text, String, required: false

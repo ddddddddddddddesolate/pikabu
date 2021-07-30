@@ -2,7 +2,7 @@
 
 module Mutations
   module Images
-    class AddImageToPost < AuthorizedMutation
+    class AddImageToPostMutation < AuthorizedMutation
       argument :id, ID, required: true
       argument :url, String, required: true
 

@@ -2,13 +2,14 @@
 
 module Mutations
   module Tags
-    class CreateTag < AuthorizedMutation
+    class RenameTagMutation < AuthorizedMutation
+      argument :id, ID, required: true
       argument :name, String, required: true
 
       field :tag, Types::TagType, null: false
 
-      def resolve(name:)
-        tag = TagManager::CreateTagService.call(name)
+      def resolve(id:, name:)
+        tag = TagManager::RenameTagService.call(id, name)
 
         { tag: tag }
       end

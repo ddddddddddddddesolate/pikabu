@@ -2,7 +2,7 @@
 
 module Mutations
   module PostsTags
-    class AddTagsToPost < AuthorizedMutation
+    class AddTagsToPostMutation < AuthorizedMutation
       argument :id, ID, required: true
       argument :tag_names, [String], required: true
 

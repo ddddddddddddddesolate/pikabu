@@ -2,7 +2,7 @@
 
 module Mutations
   module Comments
-    class AddCommentToPost < AuthorizedMutation
+    class AddCommentToPostMutation < AuthorizedMutation
       argument :id, ID, required: true
       argument :text, String, required: true
 

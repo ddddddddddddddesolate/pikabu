@@ -2,7 +2,7 @@
 
 module Mutations
   module Posts
-    class CreatePost < AuthorizedMutation
+    class CreatePostMutation < AuthorizedMutation
       argument :title, String, required: true
       argument :text, String, required: false
       argument :image_urls, [String], required: false

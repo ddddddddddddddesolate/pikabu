@@ -2,7 +2,7 @@
 
 module Mutations
   module Reactions
-    class RateComment < AuthorizedMutation
+    class RateCommentMutation < AuthorizedMutation
       argument :id, ID, required: true
       argument :reaction, Types::ReactionsType, required: true
 

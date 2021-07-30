@@ -2,7 +2,7 @@
 
 module Mutations
   module Reactions
-    class RatePost < AuthorizedMutation
+    class RatePostMutation < AuthorizedMutation
       argument :id, ID, required: true
       argument :reaction, Types::ReactionsType, required: true
 

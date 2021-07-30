@@ -2,7 +2,7 @@
 
 module Mutations
   module Auth
-    class LogoutUser < AuthorizedMutation
+    class LogoutUserMutation < AuthorizedMutation
       field :success, Boolean, null: false
 
       def resolve

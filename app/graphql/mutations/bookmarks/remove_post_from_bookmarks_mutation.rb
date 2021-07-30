@@ -2,7 +2,7 @@
 
 module Mutations
   module Bookmarks
-    class RemovePostFromBookmarks < AuthorizedMutation
+    class RemovePostFromBookmarksMutation < AuthorizedMutation
       argument :id, ID, required: true
 
       field :success, Boolean, null: false

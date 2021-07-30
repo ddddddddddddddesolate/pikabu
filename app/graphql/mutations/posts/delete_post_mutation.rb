@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 module Mutations
-  module Tags
-    class DeleteTag < AuthorizedMutation
+  module Posts
+    class DeletePostMutation < AuthorizedMutation
       argument :id, ID, required: true
 
       field :success, Boolean, null: false
 
       def resolve(id:)
-        success = TagManager::DeleteTagService.call(id)
+        success = PostManager::DeletePostService.call(current_user, id)
 
         { success: success }
       end

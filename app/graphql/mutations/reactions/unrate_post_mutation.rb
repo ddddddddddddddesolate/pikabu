@@ -2,7 +2,7 @@
 
 module Mutations
   module Reactions
-    class UnratePost < AuthorizedMutation
+    class UnratePostMutation < AuthorizedMutation
       argument :id, ID, required: true
 
       field :post, Types::PostType, null: true

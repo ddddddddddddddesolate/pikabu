@@ -2,15 +2,20 @@
 
 module Mutations
   module Auth
-    class RegisterUser < BaseMutation
+    class LoginUserMutation < BaseMutation
       argument :credentials, Types::UserCredentialsType, required: true
 
       field :user, Types::UserType, null: false
 
       def resolve(credentials:)
-        user = User.new(credentials.to_h)
+        user = User.find_by(email: credentials.email)
 
-        raise ActiveRecord::RecordInvalid unless user.save
+        raise Exceptions::InvalidCredentialsError, 'Email or password is incorrect' unless user
+
+        unless user.authenticate(credentials.password)
+          raise Exceptions::InvalidCredentialsError,
+                'Email or password is incorrect'
+        end
 
         payload = { user_id: user.id }
         token = JsonWebToken.encode(payload)
@@ -18,8 +23,6 @@ module Mutations
         cookies[:token] = token
 
         { user: user }
-      rescue ActiveRecord::RecordInvalid => e
-        raise Exceptions::ValidationError, e.message
       end
     end
   end

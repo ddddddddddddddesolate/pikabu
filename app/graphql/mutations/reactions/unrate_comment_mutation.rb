@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 module Mutations
-  module Bookmarks
-    class AddCommentToBookmarks < AuthorizedMutation
+  module Reactions
+    class UnrateCommentMutation < AuthorizedMutation
       argument :id, ID, required: true
 
       field :comment, Types::CommentType, null: false
 
       def resolve(id:)
-        comment = BookmarkManager::CreateBookmarkService.call(
+        comment = ReactionManager::RemoveReactionService.call(
           current_user, Comment.includes(:user, :images, reactions: [:user]), id
         )
 

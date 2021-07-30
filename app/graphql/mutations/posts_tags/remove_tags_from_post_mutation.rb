@@ -2,7 +2,7 @@
 
 module Mutations
   module PostsTags
-    class RemoveTagsFromPost < AuthorizedMutation
+    class RemoveTagsFromPostMutation < AuthorizedMutation
       argument :id, ID, required: true
       argument :tag_ids, [ID], required: true
 
