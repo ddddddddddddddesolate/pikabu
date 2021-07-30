@@ -1,46 +1,23 @@
 # frozen_string_literal: true
 
 module PostManager
-  class CreatePostService < AuthorizedService
-    attr_reader :title, :text, :image_urls, :tag_names
+  class CreatePostService < ApplicationService
+    attr_reader :current_user, :params, :image_urls, :tag_names
 
-    def initialize(current_user, title, text, image_urls, tag_names)
-      super(current_user)
-
-      @title = title
-      @text = text
+    def initialize(current_user, params, image_urls, tag_names)
+      @current_user = current_user
+      @params = params
       @image_urls = image_urls
       @tag_names = tag_names
     end
 
     def call
-      Post.transaction do
-        post = Post.includes(:user, :tags, :images, reactions: [:user]).new(
-          title: title,
-          text: text,
-          user_id: current_user.id
-        )
+      post = current_user.posts.new(params)
 
-        raise ActiveRecord::RecordInvalid, post unless post.save
+      image_urls&.map { |url| post.images << Image.new(remote_image_url: url) }
+      tag_names&.map { |name| post.tags << Tag.find_or_initialize_by(name: name) }
 
-        image_urls&.each do |url|
-          image = post.images.new(remote_image_url: url)
-
-          raise ActiveRecord::RecordInvalid, image unless image.save
-        end
-
-        tag_names&.each do |name|
-          tag = Tag.find_or_create_by(
-            name: name
-          )
-
-          post.tags << tag unless post.tags.include?(tag)
-        end
-
-        post
-      rescue ActiveRecord::RecordInvalid => e
-        raise Exceptions::ValidationError, e.message
-      end
+      OpenStruct.new(success: post.save, errors: post.errors.full_messages, post: post)
     end
   end
 end

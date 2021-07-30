@@ -3,17 +3,19 @@
 module Mutations
   module Posts
     class CreatePostMutation < AuthorizedMutation
-      argument :title, String, required: true
-      argument :text, String, required: false
+      argument :attributes, Types::PostAttributesType, required: true
       argument :image_urls, [String], required: false
       argument :tag_names, [String], required: false
 
       field :post, Types::PostType, null: true
 
-      def resolve(title:, text:, image_urls: nil, tag_names: nil)
-        post = PostManager::CreatePostService.call(current_user, title, text, image_urls, tag_names)
+      def resolve(attributes:, image_urls: nil, tag_names: nil)
+        params = Hash attributes
+        result = PostManager::CreatePostService.call(current_user, params, image_urls, tag_names)
 
-        { post: post }
+        raise Exceptions::ValidationError, result.errors.join(", ") unless result.success
+
+        { post: result.post }
       end
     end
   end
