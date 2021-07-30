@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module BookmarkManager
-  class CreateBookmarkService < AuthorizedService
+  class CreateBookmarkService < ApplicationService
     attr_reader :current_user, :record
 
     def initialize(current_user, record)

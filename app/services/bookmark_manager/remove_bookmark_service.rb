@@ -1,31 +1,17 @@
 # frozen_string_literal: true
 
 module BookmarkManager
-  class RemoveBookmarkService < AuthorizedService
-    attr_reader :model, :id
+  class RemoveBookmarkService < ApplicationService
+    attr_reader :bookmark
 
-    def initialize(current_user, model, id)
-      super(current_user)
-
-      @model = model
-      @id = id
+    def initialize(bookmark)
+      @bookmark = bookmark
     end
 
     def call
-      raise Exceptions::NotFoundError, 'Model not specified' unless model
+      bookmark.destroy
 
-      object = model.find(id)
-      bookmark = current_user.bookmarks.find_by(bookmarkable: object)
-
-      raise Exceptions::NotFoundError, "#{model} not in bookmarks" unless bookmark
-
-      bookmark.destroy!
-
-      bookmark.destroyed?
-    rescue ActiveRecord::RecordNotFound => e
-      raise Exceptions::NotFoundError, e.message
-    rescue ActiveRecord::RecordNotDestroyed => e
-      raise Exceptions::NotDestroyedError, e.message
+      OpenStruct.new(success: bookmark.destroyed?, errors: bookmark.errors.full_messages)
     end
   end
 end
