@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe BookmarkManager::RemoveBookmarkService do
-  let(:result) { BookmarkManager::RemoveBookmarkService.call(current_user, model, id) }
+  let(:result) { described_class.call(current_user, model, id) }
 
   let(:current_user) { nil }
   let(:model) { nil }

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe ReactionManager::AddReactionService do
-  let(:result) { ReactionManager::AddReactionService.call(current_user, model, id, reaction) }
+  let(:result) { described_class.call(current_user, model, id, reaction) }
 
   let(:current_user) { nil }
   let(:model) { nil }

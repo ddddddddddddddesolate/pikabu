@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe PostManager::CreatePostService do
-  let(:result) { PostManager::CreatePostService.call(current_user, title, text, image_urls, tag_names) }
+  let(:result) { described_class.call(current_user, title, text, image_urls, tag_names) }
 
   let(:current_user) { nil }
   let(:title) { nil }

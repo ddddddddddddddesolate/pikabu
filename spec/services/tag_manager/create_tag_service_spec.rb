@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe TagManager::CreateTagService do
-  let(:result) { TagManager::CreateTagService.call(name) }
+  let(:result) { described_class.call(name) }
 
   let(:name) { nil }
 

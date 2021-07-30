@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe PostManager::UpdatePostService do
-  let(:result) { PostManager::UpdatePostService.call(current_user, id, title, text) }
+  let(:result) { described_class.call(current_user, id, title, text) }
 
   let(:current_user) { nil }
   let(:id) { nil }

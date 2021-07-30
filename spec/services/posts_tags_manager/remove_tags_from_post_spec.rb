@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe PostsTagsManager::RemoveTagsFromPostService do
-  let(:result) { PostsTagsManager::RemoveTagsFromPostService.call(current_user, id, tag_ids) }
+  let(:result) { described_class.call(current_user, id, tag_ids) }
 
   let(:current_user) { nil }
   let(:id) { nil }

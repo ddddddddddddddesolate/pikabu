@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe ImageManager::DeleteImageService do
-  let(:result) { ImageManager::DeleteImageService.call(current_user, model, id, image_id) }
+  let(:result) { described_class.call(current_user, model, id, image_id) }
 
   let(:current_user) { nil }
   let(:model) { nil }

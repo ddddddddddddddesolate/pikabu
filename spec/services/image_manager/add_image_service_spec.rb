@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe ImageManager::AddImageService do
-  let(:result) { ImageManager::AddImageService.call(current_user, model, id, url) }
+  let(:result) { described_class.call(current_user, model, id, url) }
 
   let(:current_user) { nil }
   let(:model) { nil }

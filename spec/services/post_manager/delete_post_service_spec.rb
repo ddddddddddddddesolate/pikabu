@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe PostManager::DeletePostService do
-  let(:result) { PostManager::DeletePostService.call(current_user, id) }
+  let(:result) { described_class.call(current_user, id) }
 
   let(:current_user) { nil }
   let(:id) { nil }

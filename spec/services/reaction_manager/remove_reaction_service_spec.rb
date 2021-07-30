@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe ReactionManager::RemoveReactionService do
-  let(:result) { ReactionManager::RemoveReactionService.call(current_user, model, id) }
+  let(:result) { described_class.call(current_user, model, id) }
 
   let(:current_user) { nil }
   let(:model) { nil }

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe CommentManager::AddCommentToPostService do
-  let(:result) { CommentManager::AddCommentToPostService.call(current_user, id, text) }
+  let(:result) { described_class.call(current_user, id, text) }
 
   let(:current_user) { nil }
   let(:id) { nil }

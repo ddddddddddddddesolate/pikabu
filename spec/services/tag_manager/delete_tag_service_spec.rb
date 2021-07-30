@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe TagManager::DeleteTagService do
-  let(:result) { TagManager::DeleteTagService.call(id) }
+  let(:result) { described_class.call(id) }
 
   let(:id) { nil }
 

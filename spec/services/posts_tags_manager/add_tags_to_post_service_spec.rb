@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe PostsTagsManager::AddTagsToPostService do
-  let(:result) { PostsTagsManager::AddTagsToPostService.call(current_user, id, tag_names) }
+  let(:result) { described_class.call(current_user, id, tag_names) }
 
   let(:current_user) { nil }
   let(:id) { nil }
