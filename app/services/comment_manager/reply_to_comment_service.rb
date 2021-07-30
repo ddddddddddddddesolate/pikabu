@@ -1,32 +1,28 @@
 # frozen_string_literal: true
 
 module CommentManager
-  class ReplyToCommentService < AuthorizedService
-    attr_reader :id, :text
+  class ReplyToCommentService < ApplicationService
+    attr_reader :current_user, :comment, :params
 
-    def initialize(current_user, id, text)
-      super(current_user)
+    def initialize(current_user, comment, params)
+      @current_user = current_user
+      @comment = comment
+      @params = params
 
-      @id = id
-      @text = text
+      initialize_params
     end
 
     def call
-      parent_comment = Comment.find(id)
+      replied = Comment.new(params)
 
-      comment = parent_comment.comments.includes(:user, :images, reactions: [:user]).new(
-        post_id: parent_comment.post_id,
-        user_id: current_user.id,
-        text: text
-      )
+      OpenStruct.new(success: replied.save, errors: replied.errors.full_messages, comment: replied)
+    end
 
-      raise ActiveRecord::RecordInvalid, comment unless comment.save
+    private
 
-      comment
-    rescue ActiveRecord::RecordInvalid => e
-      raise Exceptions::ValidationError, e.message
-    rescue ActiveRecord::RecordNotFound
-      raise Exceptions::NotFoundError, 'Parent comment not found'
+    def initialize_params
+      params[:user_id] = current_user.id
+      params[:comment_id] = comment.id
     end
   end
 end
