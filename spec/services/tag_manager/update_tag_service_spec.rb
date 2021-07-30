@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe TagManager::RenameTagService do
+RSpec.describe TagManager::UpdateTagService do
   let(:result) { described_class.call(id, name) }
 
   let(:id) { nil }

@@ -2,20 +2,16 @@
 
 module TagManager
   class CreateTagService < ApplicationService
-    attr_reader :name
+    attr_reader :params
 
-    def initialize(name)
-      @name = name
+    def initialize(params)
+      @params = params
     end
 
     def call
-      tag = Tag.new(name: name)
+      tag = Tag.new(params)
 
-      raise ActiveRecord::RecordInvalid, tag unless tag.save
-
-      tag
-    rescue ActiveRecord::RecordInvalid => e
-      raise Exceptions::ValidationError, e.message
+      OpenStruct.new(success: tag.save, errors: tag.errors.full_messages, tag: tag)
     end
   end
 end

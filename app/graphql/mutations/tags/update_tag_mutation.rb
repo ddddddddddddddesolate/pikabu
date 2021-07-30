@@ -2,21 +2,23 @@
 
 module Mutations
   module Tags
-    class DeleteTagMutation < AuthorizedMutation
+    class UpdateTagMutation < AuthorizedMutation
       argument :id, ID, required: true
+      argument :attributes, Types::TagAttributesType, required: true
 
-      field :success, Boolean, null: false
+      field :tag, Types::TagType, null: false
 
-      def resolve(id:)
+      def resolve(id:, attributes:)
         tag = Tag.find_by(id: id)
 
         raise Exceptions::NotFoundError, "Tag not found" unless tag
 
-        result = TagManager::DeleteTagService.call(tag)
+        params = Hash attributes
+        result = TagManager::UpdateTagService.call(tag, params)
 
         raise Exceptions::ValidationError, result.errors.join(", ") unless result.success
 
-        { success: result.success }
+        { tag: result.tag }
       end
     end
   end

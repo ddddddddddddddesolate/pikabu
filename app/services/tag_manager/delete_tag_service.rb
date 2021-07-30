@@ -2,21 +2,16 @@
 
 module TagManager
   class DeleteTagService < ApplicationService
-    attr_reader :id
+    attr_reader :tag
 
-    def initialize(id)
-      @id = id
+    def initialize(tag)
+      @tag = tag
     end
 
     def call
-      tag = Tag.find(id)
-      tag.destroy!
+      tag.destroy
 
-      tag.destroyed?
-    rescue ActiveRecord::RecordNotFound
-      raise Exceptions::NotFoundError, 'Tag not found'
-    rescue ActiveRecord::RecordNotDestroyed => e
-      raise Exceptions::NotDestroyedError, e.message
+      OpenStruct.new(success: tag.destroyed?, errors: tag.errors)
     end
   end
 end
