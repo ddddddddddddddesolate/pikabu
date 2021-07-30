@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe ImageManager::DeleteImageService do
-  let(:result) { described_class.call(current_user, model, id, image_id) }
+RSpec.describe ImageManager::AddImagesToRecordService do
+  let(:result) { described_class.call(current_user, model, id, url) }
 
   let(:current_user) { nil }
   let(:model) { nil }
   let(:id) { nil }
-  let(:image_id) { nil }
+  let(:url) { nil }
 
   context 'when user not logged in' do
     it 'raise UnauthorizedError' do
@@ -42,11 +42,21 @@ RSpec.describe ImageManager::DeleteImageService do
         end
       end
 
-      context 'does not contain this image' do
+      context 'image has' do
         let(:id) { create(:post, user: current_user).id }
 
-        it 'raise NotFoundError' do
-          expect { result }.to raise_error Exceptions::NotFoundError
+        context 'blank url' do
+          it 'raise ValidationError' do
+            expect { result }.to raise_error Exceptions::ValidationError
+          end
+        end
+
+        context 'invalid url' do
+          let(:url) { 'invalid.url' }
+
+          it 'raise ValidationError' do
+            expect { result }.to raise_error Exceptions::ValidationError
+          end
         end
       end
     end
@@ -68,11 +78,21 @@ RSpec.describe ImageManager::DeleteImageService do
         end
       end
 
-      context 'does not contain this image' do
+      context 'image has' do
         let(:id) { create(:comment, user: current_user).id }
 
-        it 'raise NotFoundError' do
-          expect { result }.to raise_error Exceptions::NotFoundError
+        context 'blank url' do
+          it 'raise ValidationError' do
+            expect { result }.to raise_error Exceptions::ValidationError
+          end
+        end
+
+        context 'invalid url' do
+          let(:url) { 'invalid.url' }
+
+          it 'raise ValidationError' do
+            expect { result }.to raise_error Exceptions::ValidationError
+          end
         end
       end
     end
