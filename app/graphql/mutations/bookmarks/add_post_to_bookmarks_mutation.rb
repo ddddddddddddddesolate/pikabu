@@ -3,16 +3,20 @@
 module Mutations
   module Bookmarks
     class AddPostToBookmarksMutation < AuthorizedMutation
-      argument :id, ID, required: true
+      argument :post_id, ID, required: true
 
-      field :post, Types::PostType, null: false
+      field :success, Boolean, null: false
 
-      def resolve(id:)
-        post = BookmarkManager::CreateBookmarkService.call(
-          current_user, Post.includes(:user, :tags, :images, reactions: [:user]), id
-        )
+      def resolve(post_id:)
+        post = Post.find_by(id: post_id)
 
-        { post: post }
+        raise Exceptions::NotFoundError, "Post not found" unless post
+
+        result = BookmarkManager::CreateBookmarkService.call(current_user, post)
+
+        raise Exceptions::ValidationError, result.errors.join(", ") unless result.success
+
+        { success: result.success }
       end
     end
   end

@@ -3,16 +3,20 @@
 module Mutations
   module Bookmarks
     class AddCommentToBookmarksMutation < AuthorizedMutation
-      argument :id, ID, required: true
+      argument :comment_id, ID, required: true
 
-      field :comment, Types::CommentType, null: false
+      field :success, Boolean, null: false
 
-      def resolve(id:)
-        comment = BookmarkManager::CreateBookmarkService.call(
-          current_user, Comment.includes(:user, :images, reactions: [:user]), id
-        )
+      def resolve(comment_id:)
+        comment = Comment.find_by(id: comment_id)
 
-        { comment: comment }
+        raise Exceptions::NotFoundError, "Comment not found" unless comment
+
+        result = BookmarkManager::CreateBookmarkService.call(current_user, comment)
+
+        raise Exceptions::ValidationError, result.errors.join(", ") unless result.success
+
+        { success: result.success }
       end
     end
   end

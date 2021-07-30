@@ -2,26 +2,17 @@
 
 module BookmarkManager
   class CreateBookmarkService < AuthorizedService
-    attr_reader :model, :id
+    attr_reader :current_user, :record
 
-    def initialize(current_user, model, id)
-      super(current_user)
-
-      @model = model
-      @id = id
+    def initialize(current_user, record)
+      @current_user = current_user
+      @record = record
     end
 
     def call
-      raise Exceptions::NotFoundError, 'Model not specified' unless model
+      bookmark = current_user.bookmarks.new(bookmarkable: record)
 
-      object = model.find(id)
-      bookmark = current_user.bookmarks.new(bookmarkable: object)
-
-      raise Exceptions::AlreadyExistsError, "#{object.class.name} already exists in bookmarks" unless bookmark.save
-
-      object
-    rescue ActiveRecord::RecordNotFound => e
-      raise Exceptions::NotFoundError, e.message
+      OpenStruct.new(success: bookmark.save, errors: bookmark.errors.full_messages)
     end
   end
 end
