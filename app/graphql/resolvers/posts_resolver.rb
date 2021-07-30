@@ -4,10 +4,10 @@ module Resolvers
   class PostsResolver < BaseResolver
     type [Types::PostType], null: false
 
-    argument :filters, Types::PostsFilters, required: false
-    argument :order, Types::OrderFields, required: false
-    argument :paginate, Types::Pagination, required: false
-    argument :search, Types::PostsSearch, required: false
+    argument :filters, Types::PostsFiltersType, required: false
+    argument :order, Types::OrderFieldsType, required: false
+    argument :paginate, Types::PaginationType, required: false
+    argument :search, Types::PostsSearchType, required: false
 
     def resolve(filters: nil, order: nil, paginate: nil, search: nil)
       posts = Post.includes(:user, :tags, :images, reactions: [:user])

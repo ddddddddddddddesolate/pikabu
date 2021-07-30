@@ -3,7 +3,7 @@
 module Mutations
   module Auth
     class LoginUser < BaseMutation
-      argument :credentials, Types::UserCredentials, required: true
+      argument :credentials, Types::UserCredentialsType, required: true
 
       field :user, Types::UserType, null: false
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Types
-  class PostsSearch < BaseInputObject
+  class PostsSearchType < BaseInputObject
     argument :title, String, required: false
   end
 end

@@ -4,7 +4,7 @@ module Resolvers
   class BookmarksResolver < AuthorizedResolver
     type [Types::BookmarkType], null: false
 
-    argument :paginate, Types::Pagination, required: false
+    argument :paginate, Types::PaginationType, required: false
 
     def resolve(paginate: nil)
       bookmarks = current_user.bookmarks.includes(:bookmarkable)

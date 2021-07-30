@@ -5,8 +5,8 @@ module Resolvers
     type [Types::CommentType], null: false
 
     argument :post_id, ID, required: true
-    argument :order, Types::OrderFields, required: false
-    argument :paginate, Types::Pagination, required: false
+    argument :order, Types::OrderFieldsType, required: false
+    argument :paginate, Types::PaginationType, required: false
 
     def resolve(post_id:, order: nil, paginate: nil)
       comments = Comment.includes(:user, :images, reactions: [:user]).where(post_id: post_id)
