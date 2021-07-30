@@ -2,30 +2,16 @@
 
 module ReactionManager
   class RemoveReactionService < AuthorizedService
-    attr_reader :model, :id
+    attr_reader :reaction
 
-    def initialize(current_user, model, id)
-      super(current_user)
-
-      @model = model
-      @id = id
+    def initialize(reaction)
+      @reaction = reaction
     end
 
     def call
-      raise Exceptions::NotFoundError, 'Model not specified' unless model
+      reaction.destroy
 
-      object = model.find(id)
-      reaction = current_user.reactions.find_by(reactionable: object)
-
-      raise Exceptions::NotFoundError, "You didn't rate this #{model}" unless reaction
-
-      reaction.destroy!
-
-      object
-    rescue ActiveRecord::RecordNotFound => e
-      raise Exceptions::NotFoundError, e.message
-    rescue ActiveRecord::RecordNotDestroyed => e
-      raise Exceptions::NotDestroyedError, e.message
+      OpenStruct.new(success: reaction.destroyed?, errors: reaction.errors.full_messages)
     end
   end
 end

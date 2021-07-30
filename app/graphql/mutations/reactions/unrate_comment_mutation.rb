@@ -3,16 +3,24 @@
 module Mutations
   module Reactions
     class UnrateCommentMutation < AuthorizedMutation
-      argument :id, ID, required: true
+      argument :comment_id, ID, required: true
 
-      field :comment, Types::CommentType, null: false
+      field :success, Boolean, null: false
 
-      def resolve(id:)
-        comment = ReactionManager::RemoveReactionService.call(
-          current_user, Comment.includes(:user, :images, reactions: [:user]), id
-        )
+      def resolve(comment_id:)
+        comment = Comment.find_by(id: comment_id)
 
-        { comment: comment }
+        raise Exceptions::NotFoundError, "Comment not found" unless comment
+
+        reaction = current_user.reactions.find_by(reactionable: comment)
+
+        raise Exceptions::NotFoundError, "Reaction not found" unless reaction
+
+        result = ReactionManager::RemoveReactionService.call(reaction)
+
+        raise Exceptions::ValidationError, result.errors.join(", ") unless result.success
+
+        { success: result.success }
       end
     end
   end

@@ -3,17 +3,21 @@
 module Mutations
   module Reactions
     class RatePostMutation < AuthorizedMutation
-      argument :id, ID, required: true
+      argument :post_id, ID, required: true
       argument :reaction, Types::ReactionsType, required: true
 
-      field :post, Types::PostType, null: true
+      field :success, Boolean, null: true
 
-      def resolve(id:, reaction:)
-        post = ReactionManager::AddReactionService.call(
-          current_user, Post.includes(:user, :tags, :images, reactions: [:user]), id, reaction
-        )
+      def resolve(post_id:, reaction:)
+        post = Post.find_by(id: post_id)
 
-        { post: post }
+        raise Exceptions::NotFoundError, "Post not found" unless post
+
+        result = ReactionManager::AddReactionService.call(current_user, post, reaction)
+
+        raise Exceptions::ValidationError, result.errors.join(", ") unless result.success
+
+        { success: result.success }
       end
     end
   end

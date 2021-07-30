@@ -3,16 +3,24 @@
 module Mutations
   module Reactions
     class UnratePostMutation < AuthorizedMutation
-      argument :id, ID, required: true
+      argument :post_id, ID, required: true
 
-      field :post, Types::PostType, null: true
+      field :success, Boolean, null: false
 
-      def resolve(id:)
-        post = ReactionManager::RemoveReactionService.call(
-          current_user, Post.includes(:user, :tags, :images, reactions: [:user]), id
-        )
+      def resolve(post_id:)
+        post = Post.find_by(id: post_id)
 
-        { post: post }
+        raise Exceptions::NotFoundError, "Post not found" unless post
+
+        reaction = current_user.reactions.find_by(reactionable: post)
+
+        raise Exceptions::NotFoundError, "Reaction not found" unless reaction
+
+        result = ReactionManager::RemoveReactionService.call(reaction)
+
+        raise Exceptions::ValidationError, result.errors.join(", ") unless result.success
+
+        { success: result.success }
       end
     end
   end
