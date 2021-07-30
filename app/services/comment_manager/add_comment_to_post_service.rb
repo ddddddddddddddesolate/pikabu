@@ -1,31 +1,28 @@
 # frozen_string_literal: true
 
 module CommentManager
-  class AddCommentToPostService < AuthorizedService
-    attr_reader :id, :text
+  class AddCommentToPostService < ApplicationService
+    attr_reader :current_user, :post, :params
 
-    def initialize(current_user, id, text)
-      super(current_user)
+    def initialize(current_user, post, params)
+      @current_user = current_user
+      @post = post
+      @params = params
 
-      @id = id
-      @text = text
+      initialize_params
     end
 
     def call
-      post = Post.find(id)
+      comment = Comment.new(params)
 
-      comment = post.comments.includes(:user, :images, reactions: [:user]).new(
-        user_id: current_user.id,
-        text: text
-      )
+      OpenStruct.new(success: comment.save, errors: comment.errors.full_messages, comment: comment)
+    end
 
-      raise ActiveRecord::RecordInvalid, comment unless comment.save
+    private
 
-      comment
-    rescue ActiveRecord::RecordInvalid => e
-      raise Exceptions::ValidationError, e.message
-    rescue ActiveRecord::RecordNotFound => e
-      raise Exceptions::NotFoundError, e.message
+    def initialize_params
+      params[:user_id] = current_user.id
+      params[:post_id] = post.id
     end
   end
 end

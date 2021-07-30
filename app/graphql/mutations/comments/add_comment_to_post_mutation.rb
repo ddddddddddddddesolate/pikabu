@@ -3,15 +3,22 @@
 module Mutations
   module Comments
     class AddCommentToPostMutation < AuthorizedMutation
-      argument :id, ID, required: true
-      argument :text, String, required: true
+      argument :post_id, ID, required: true
+      argument :attributes, Types::CommentAttributesType, required: true
 
       field :comment, Types::CommentType, null: false
 
-      def resolve(id:, text:)
-        comment = CommentManager::AddCommentToPostService.call(current_user, id, text)
+      def resolve(post_id:, attributes:)
+        post = Post.find_by(id: post_id)
 
-        { comment: comment }
+        raise Exceptions::NotFoundError, "Post not found" unless post
+
+        params = Hash attributes
+        result = CommentManager::AddCommentToPostService.call(current_user, post, params)
+
+        raise Exceptions::ValidationError, result.errors.join(", ") unless result.success
+
+        { comment: result.comment }
       end
     end
   end
