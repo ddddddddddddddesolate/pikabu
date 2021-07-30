@@ -1,24 +1,17 @@
 # frozen_string_literal: true
 
 module CommentManager
-  class DeleteCommentService < AuthorizedService
-    attr_reader :id
+  class DeleteCommentService < ApplicationService
+    attr_reader :comment
 
-    def initialize(current_user, id)
-      super(current_user)
-
-      @id = id
+    def initialize(comment)
+      @comment = comment
     end
 
     def call
-      comment = current_user.comments.find(id)
-      comment.destroy!
+      comment.destroy
 
-      comment.destroyed?
-    rescue ActiveRecord::RecordNotFound
-      raise Exceptions::NotFoundError, 'Comment not found'
-    rescue ActiveRecord::RecordNotDestroyed => e
-      raise Exceptions::NotDestroyedError, e.message
+      OpenStruct.new(success: comment.destroyed?, errors: comment.errors.full_messages)
     end
   end
 end

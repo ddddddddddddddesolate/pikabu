@@ -8,9 +8,15 @@ module Mutations
       field :success, Boolean, null: false
 
       def resolve(id:)
-        success = CommentManager::DeleteCommentService.call(current_user, id)
+        comment = current_user.comments.find_by(id: id)
 
-        { success: success }
+        raise Exceptions::NotFoundError, "Comment not found" unless comment
+
+        result = CommentManager::DeleteCommentService.call(comment)
+
+        raise Exceptions::ValidationError, result.errors.join(", ") unless result.success
+
+        { success: result.success }
       end
     end
   end
