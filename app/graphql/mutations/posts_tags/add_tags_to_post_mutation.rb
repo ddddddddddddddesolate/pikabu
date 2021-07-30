@@ -3,15 +3,21 @@
 module Mutations
   module PostsTags
     class AddTagsToPostMutation < AuthorizedMutation
-      argument :id, ID, required: true
+      argument :post_id, ID, required: true
       argument :tag_names, [String], required: true
 
       field :post, Types::PostType, null: false
 
-      def resolve(id:, tag_names:)
-        post = PostsTagsManager::AddTagsToPostService.call(current_user, id, tag_names)
+      def resolve(post_id:, tag_names:)
+        post = current_user.posts.find_by(id: post_id)
 
-        { post: post }
+        raise Exceptions::NotFoundError, "Pot not found" unless post
+
+        result = PostsTagsManager::AddTagsToPostService.call(post, tag_names)
+
+        raise Exceptions::ValidationError, result.errors.join(", ") unless result.success
+
+        { post: result.post }
       end
     end
   end

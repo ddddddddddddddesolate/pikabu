@@ -1,30 +1,21 @@
 # frozen_string_literal: true
 
 module PostsTagsManager
-  class AddTagsToPostService < AuthorizedService
-    attr_reader :id, :tag_names
+  class AddTagsToPostService < ApplicationService
+    attr_reader :post, :tag_names
 
-    def initialize(current_user, id, tag_names)
-      super(current_user)
-
-      @id = id
+    def initialize(post, tag_names)
+      @post = post
       @tag_names = tag_names
     end
 
     def call
-      post = current_user.posts.includes(:user, :tags, :images, reactions: [:user]).find(id)
-
-      tag_names.each do |name|
-        tag = post.tags.find_or_create_by(name: name)
-
-        raise ActiveRecord::RecordInvalid, tag unless tag.errors.empty?
+      tag_names&.map do |name|
+        tag = Tag.find_or_initialize_by(name: name)
+        post.tags << tag unless post.tags.exists?(tag.id)
       end
 
-      post
-    rescue ActiveRecord::RecordNotFound
-      raise Exceptions::NotFoundError, 'Post not found'
-    rescue ActiveRecord::RecordInvalid => e
-      raise Exceptions::ValidationError, e.message
+      OpenStruct.new(success: post.save, errors: post.errors.full_messages, post: post)
     end
   end
 end
