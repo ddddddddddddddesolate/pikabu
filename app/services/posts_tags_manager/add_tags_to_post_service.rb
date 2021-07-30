@@ -10,10 +10,12 @@ module PostsTagsManager
     end
 
     def call
-      tag_names&.map do |name|
-        tag = Tag.find_or_initialize_by(name: name)
-        post.tags << tag unless post.tags.exists?(tag.id)
-      end
+      existed_tags = Tag.pluck(:name)
+      new_tags = []
+
+      tag_names.uniq.excluding(existed_tags)&.each { |name| new_tags << Tag.new(name: name) }
+
+      post.tags << Tag.where(id: Tag.import(new_tags).ids)
 
       OpenStruct.new(success: post.save, errors: post.errors.full_messages, post: post)
     end
