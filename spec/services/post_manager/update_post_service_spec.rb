@@ -14,6 +14,8 @@ RSpec.describe PostManager::UpdatePostService do
       }
     end
 
-    expect(result.success).eql? false
+    it 'result not successful' do
+      expect(result.success).eql? false
+    end
   end
 end
