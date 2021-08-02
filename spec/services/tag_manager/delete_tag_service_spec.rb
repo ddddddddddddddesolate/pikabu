@@ -3,13 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe TagManager::DeleteTagService do
-  let(:result) { described_class.call(id) }
+  let(:result) { described_class.call(tag) }
 
-  let(:id) { nil }
+  context 'when tag exists' do
+    let(:tag) { create(:tag) }
 
-  context 'where tag not exists' do
-    it 'raise NotFoundError' do
-      expect { result }.to raise_error Exceptions::NotFoundError
+    it 'result successful' do
+      expect(result.success).eql? true
     end
   end
 end
