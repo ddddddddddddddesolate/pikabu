@@ -2,7 +2,7 @@
 
 module Types
   class SortOrdersType < BaseEnum
-    value 'ASC', value: :asc
-    value 'DESC', value: :desc
+    value "ASC", value: :asc
+    value "DESC", value: :desc
   end
 end

@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'faker'
+require "faker"
 
-image = File.open(Rails.root.join('data', 'sample.jpeg'))
+image = File.open(Rails.root.join("data", "sample.jpeg"))
 
 # users generator
 10.times do
-  User.create(name: Faker::Name.unique.name, email: Faker::Internet.unique.email, password: '123456')
+  User.create(name: Faker::Name.unique.name, email: Faker::Internet.unique.email, password: "123456")
 end
 
 # posts generator

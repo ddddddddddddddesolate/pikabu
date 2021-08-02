@@ -11,7 +11,7 @@ class Comment < ApplicationRecord
   has_many :images, as: :imageable, dependent: :delete_all
 
   counter_culture :post, touch: true
-  counter_culture :comment, column_name: 'replies_count'
+  counter_culture :comment, column_name: "replies_count"
 
   validates :text, presence: true, length: { maximum: 255 }, allow_blank: false
 

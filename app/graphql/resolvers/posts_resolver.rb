@@ -29,7 +29,7 @@ module Resolvers
         posts = posts.offset(paginate.offset)
       end
 
-      posts = posts.search_by('title', search.title) if search&.title
+      posts = posts.search_by("title", search.title) if search&.title
 
       posts
     end

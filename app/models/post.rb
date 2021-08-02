@@ -13,23 +13,23 @@ class Post < ApplicationRecord
   validates :title, presence: true, length: { maximum: 50 }, allow_blank: false
   validates :text, length: { maximum: 255 }
 
-  scope :fresh, -> { where('posts.created_at > ?', 24.hours.ago) }
+  scope :fresh, -> { where("posts.created_at > ?", 24.hours.ago) }
   scope :hot, lambda {
     left_joins(:comments)
       .group(:id)
-      .where('comments.created_at > ?', 24.hours.ago)
-      .order('COUNT(comments.id) DESC')
+      .where("comments.created_at > ?", 24.hours.ago)
+      .order("COUNT(comments.id) DESC")
   }
   scope :best, lambda {
     left_joins(:reactions)
       .group(:id)
-      .where('reactions.created_at > ?', 24.hours.ago)
-      .order('SUM(reactions.reaction) DESC')
+      .where("reactions.created_at > ?", 24.hours.ago)
+      .order("SUM(reactions.reaction) DESC")
   }
   scope :tags, lambda { |tag_ids|
     joins(:tags)
       .group(:id)
-      .where('tags.id IN (?)', tag_ids)
+      .where("tags.id IN (?)", tag_ids)
   }
   scope :likes, ->(order) { order(likes_count: order) }
   scope :date, ->(order) { order(created_at: order) }

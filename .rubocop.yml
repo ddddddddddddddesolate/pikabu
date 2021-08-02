@@ -26,7 +26,7 @@ Style/PercentLiteralDelimiters:
   PreferredDelimiters:
     default: "[]"
 Style/StringLiterals:
-  EnforcedStyle: single_quotes
+  EnforcedStyle: double_quotes
 Lint/MissingSuper:
   Exclude:
     - 'app/services/**/**/*'
