@@ -3,61 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe ReactionManager::RemoveReactionService do
-  let(:result) { described_class.call(current_user, model, id) }
+  let(:result) { described_class.call(reaction) }
 
-  let(:current_user) { nil }
-  let(:model) { nil }
-  let(:id) { nil }
+  context 'when reaction exists' do
+    let(:reaction) { create(:reaction) }
 
-  context 'when user not logged in' do
-    it 'raise UnauthorizedError' do
-      expect { result }.to raise_error Exceptions::UnauthorizedError
-    end
-  end
-
-  context 'when user logged in' do
-    let(:current_user) { create(:user) }
-
-    context 'and ratable type not set' do
-      it 'raise NotFoundError' do
-        expect { result }.to raise_error Exceptions::NotFoundError
-      end
-    end
-
-    context 'and post' do
-      let(:model) { Post }
-
-      context 'not exists' do
-        it 'raise NotFoundError' do
-          expect { result }.to raise_error Exceptions::NotFoundError
-        end
-      end
-
-      context 'not rated' do
-        let(:id) { create(:post).id }
-
-        it 'raise NotFoundError' do
-          expect { result }.to raise_error Exceptions::NotFoundError
-        end
-      end
-    end
-
-    context 'and comment' do
-      let(:model) { Comment }
-
-      context 'not exists' do
-        it 'raise NotFoundError' do
-          expect { result }.to raise_error Exceptions::NotFoundError
-        end
-      end
-
-      context 'not rated' do
-        let(:id) { create(:comment).id }
-
-        it 'raise NotFoundError' do
-          expect { result }.to raise_error Exceptions::NotFoundError
-        end
-      end
+    it 'result successful' do
+      expect(result.success).eql? true
     end
   end
 end
