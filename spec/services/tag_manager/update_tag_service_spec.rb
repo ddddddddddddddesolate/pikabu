@@ -3,40 +3,19 @@
 require 'rails_helper'
 
 RSpec.describe TagManager::UpdateTagService do
-  let(:result) { described_class.call(id, name) }
+  let(:result) { described_class.call(tag, params) }
 
-  let(:id) { nil }
-  let(:name) { nil }
+  let(:tag) { create(:tag) }
 
-  context 'when tag not exists' do
-    it 'raise NotFoundError' do
-      expect { result }.to raise_error Exceptions::NotFoundError
-    end
-  end
-
-  context 'when tag' do
-    let(:id) { create(:tag).id }
-
-    context 'name not present' do
-      it 'raise ValidationError' do
-        expect { result }.to raise_error Exceptions::ValidationError
-      end
+  context 'when params is invalid' do
+    let(:params) do
+      {
+        name: nil
+      }
     end
 
-    context 'name too long' do
-      let(:name) { Faker::Lorem.characters(number: 31) }
-
-      it 'raise ValidationError' do
-        expect { result }.to raise_error Exceptions::ValidationError
-      end
-    end
-
-    context 'name already taken' do
-      let(:name) { create(:tag).name }
-
-      it 'raise ValidationError' do
-        expect { result }.to raise_error Exceptions::ValidationError
-      end
+    it 'result not successful' do
+      expect(result.success).eql? false
     end
   end
 end
