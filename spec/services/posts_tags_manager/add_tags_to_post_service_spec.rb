@@ -2,6 +2,10 @@
 
 require "rails_helper"
 
+def tags_count
+  result.post.tags.count
+end
+
 RSpec.describe PostsTagsManager::AddTagsToPostService do
   let(:result) { described_class.call(post, tag_names) }
 
@@ -11,7 +15,7 @@ RSpec.describe PostsTagsManager::AddTagsToPostService do
     let(:tag_names) { [nil] }
 
     it "skip invalid tags and result successful" do
-      expect { result.post.tags.count }.to_not change { result.post.tags.count }
+      expect { tags_count }.to_not change(&method(:tags_count))
       expect(result.success).eql? true
     end
   end
