@@ -3,98 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe ImageManager::AddImagesToRecordService do
-  let(:result) { described_class.call(current_user, model, id, url) }
+  let(:result) { described_class.call(record, image_urls) }
 
-  let(:current_user) { nil }
-  let(:model) { nil }
-  let(:id) { nil }
-  let(:url) { nil }
+  let(:record) { create(:post) }
 
-  context 'when user not logged in' do
-    it 'raise UnauthorizedError' do
-      expect { result }.to raise_error Exceptions::UnauthorizedError
-    end
-  end
+  context 'when images has invalid urls' do
+    let(:image_urls) { [nil] }
 
-  context 'when user logged in' do
-    let(:current_user) { create(:user) }
-
-    context 'and imageable object not specified' do
-      it 'raise NotFoundError' do
-        expect { result }.to raise_error Exceptions::NotFoundError
-      end
-    end
-
-    context 'and post' do
-      let(:model) { Post }
-
-      context 'not exists' do
-        it 'raise NotFoundError' do
-          expect { result }.to raise_error Exceptions::NotFoundError
-        end
-      end
-
-      context 'author is not current user' do
-        let(:id) { create(:post).id }
-
-        it 'raise NotFoundError' do
-          expect { result }.to raise_error Exceptions::NotFoundError
-        end
-      end
-
-      context 'image has' do
-        let(:id) { create(:post, user: current_user).id }
-
-        context 'blank url' do
-          it 'raise ValidationError' do
-            expect { result }.to raise_error Exceptions::ValidationError
-          end
-        end
-
-        context 'invalid url' do
-          let(:url) { 'invalid.url' }
-
-          it 'raise ValidationError' do
-            expect { result }.to raise_error Exceptions::ValidationError
-          end
-        end
-      end
-    end
-
-    context 'and comment' do
-      let(:model) { Comment }
-
-      context 'not exists' do
-        it 'raise NotFoundError' do
-          expect { result }.to raise_error Exceptions::NotFoundError
-        end
-      end
-
-      context 'author is not current user' do
-        let(:id) { create(:comment).id }
-
-        it 'raise NotFoundError' do
-          expect { result }.to raise_error Exceptions::NotFoundError
-        end
-      end
-
-      context 'image has' do
-        let(:id) { create(:comment, user: current_user).id }
-
-        context 'blank url' do
-          it 'raise ValidationError' do
-            expect { result }.to raise_error Exceptions::ValidationError
-          end
-        end
-
-        context 'invalid url' do
-          let(:url) { 'invalid.url' }
-
-          it 'raise ValidationError' do
-            expect { result }.to raise_error Exceptions::ValidationError
-          end
-        end
-      end
+    it 'result not successful' do
+      expect(result.success).eql? false
     end
   end
 end
