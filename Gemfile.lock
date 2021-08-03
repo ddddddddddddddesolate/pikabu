@@ -84,6 +84,10 @@ GEM
       activesupport (>= 4.2)
     crass (1.0.6)
     daemons (1.4.0)
+    database_cleaner-active_record (2.0.1)
+      activerecord (>= 5.a)
+      database_cleaner-core (~> 2.0.0)
+    database_cleaner-core (2.0.1)
     diff-lcs (1.4.4)
     erubi (1.10.0)
     eventmachine (1.2.7)
@@ -283,6 +287,7 @@ DEPENDENCIES
   byebug
   carrierwave
   counter_culture
+  database_cleaner-active_record
   factory_bot_rails
   faker
   graphiql-rails
