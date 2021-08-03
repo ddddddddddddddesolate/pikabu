@@ -2,6 +2,8 @@
 
 require "active_support/core_ext/integer/time"
 
+MAILER_CREDENTIALS = Rails.application.credentials.mailer
+
 Rails.application.configure do
   config.hosts << "www.example.com"
   config.cache_classes = false
@@ -22,7 +24,13 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = { address: "mail", port: 1025 }
+  config.action_mailer.smtp_settings = {
+    address: "mail",
+    port: 1025,
+    authentication: "plain",
+    user_name: MAILER_CREDENTIALS[:user_name],
+    password: MAILER_CREDENTIALS[:password]
+  }
 
   config.active_support.deprecation = :log
   config.active_support.disallowed_deprecation = :raise
