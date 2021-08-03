@@ -29,14 +29,11 @@ group :development, :test do
   gem "mailcatcher"
   gem "rspec-rails"
   gem "rubocop"
+  gem "database_cleaner-active_record"
 end
 
 group :development do
   gem "listen", "~> 3.3"
-end
-
-group :test do
-  gem 'database_cleaner-active_record'
 end
 
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
