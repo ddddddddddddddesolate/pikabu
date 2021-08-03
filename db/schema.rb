@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ActiveRecord::Schema.define(version: 2021_08_03_112939) do
+ActiveRecord::Schema.define(version: 2021_08_03_115509) do
   enable_extension "plpgsql"
 
   create_table "bookmarks", force: :cascade do |t|
@@ -10,6 +10,7 @@ ActiveRecord::Schema.define(version: 2021_08_03_112939) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index %w[bookmarkable_type bookmarkable_id], name: "index_bookmarks_on_bookmarkable"
+    t.index %w[user_id bookmarkable_id bookmarkable_type], name: "index_unique_user_bookmarks", unique: true
     t.index ["user_id"], name: "index_bookmarks_on_user_id"
   end
 
@@ -65,6 +66,7 @@ ActiveRecord::Schema.define(version: 2021_08_03_112939) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index %w[reactionable_type reactionable_id], name: "index_votes_on_votable"
+    t.index %w[user_id reactionable_id reactionable_type], name: "index_unique_user_reactions", unique: true
     t.index ["user_id"], name: "index_reactions_on_user_id"
   end
 
@@ -72,6 +74,7 @@ ActiveRecord::Schema.define(version: 2021_08_03_112939) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_unique_tag_name", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -81,6 +84,7 @@ ActiveRecord::Schema.define(version: 2021_08_03_112939) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "bookmarks_count", default: 0, null: false
+    t.index ["email"], name: "index_unique_user_email", unique: true
   end
 
   add_foreign_key "bookmarks", "users"
