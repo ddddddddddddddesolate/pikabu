@@ -30,5 +30,6 @@ services:
     image: yappabe/mailcatcher
     ports:
       - 1080:1080
+      - 1025:1025
 volumes:
   postgres_data:
