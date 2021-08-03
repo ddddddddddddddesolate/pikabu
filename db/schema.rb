@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ActiveRecord::Schema.define(version: 2021_07_28_054205) do
+ActiveRecord::Schema.define(version: 2021_08_03_112939) do
   enable_extension "plpgsql"
 
   create_table "bookmarks", force: :cascade do |t|
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 2021_07_28_054205) do
     t.integer "comments_count", default: 0, null: false
     t.integer "likes_count", default: 0, null: false
     t.integer "dislikes_count", default: 0, null: false
+    t.integer "tags_count", default: 0, null: false
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
