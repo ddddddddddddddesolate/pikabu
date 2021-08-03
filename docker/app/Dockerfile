@@ -1,6 +1,6 @@
 FROM ruby:3.0.1
 
-RUN apt-get update -qq && apt-get install -y build-essential libpq-dev 
+RUN apt-get update -qq && apt-get install -y build-essential libpq-dev vim
 ENV RAILS_ROOT /var/www/app
 RUN mkdir -p $RAILS_ROOT 
 
