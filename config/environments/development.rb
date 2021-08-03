@@ -25,9 +25,9 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: "mail",
-    port: 1025,
-    authentication: "plain",
+    address: MAILER_CREDENTIALS[:address],
+    port: MAILER_CREDENTIALS[:port],
+    authentication: MAILER_CREDENTIALS[:authentication],
     user_name: MAILER_CREDENTIALS[:user_name],
     password: MAILER_CREDENTIALS[:password]
   }
