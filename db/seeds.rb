@@ -40,7 +40,7 @@ end
 
   # replies
   rand(0..3).times do
-    reply = comment.comments.create(
+    comment.comments.create(
       post_id: Post.all.sample.id,
       user_id: User.all.sample.id,
       text: Faker::Lorem.sentence(word_count: 5),

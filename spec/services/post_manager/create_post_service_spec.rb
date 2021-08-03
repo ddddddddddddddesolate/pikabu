@@ -19,7 +19,7 @@ RSpec.describe PostManager::CreatePostService do
   context "when params is valid" do
     let(:params) { { title: Faker::Lorem.characters(number: 50) } }
 
-    context "and images has invalid urls" do
+    context "when images has invalid urls" do
       let(:image_urls) { [nil] }
 
       it "result not successful" do
@@ -27,7 +27,7 @@ RSpec.describe PostManager::CreatePostService do
       end
     end
 
-    context "and tags has invalid names" do
+    context "when tags has invalid names" do
       let(:tag_names) { [nil] }
 
       it "result not successful" do

@@ -14,8 +14,11 @@ RSpec.describe PostsTagsManager::AddTagsToPostService do
   context "when tags has invalid names" do
     let(:tag_names) { [nil] }
 
-    it "skip invalid tags and result successful" do
-      expect { tags_count }.to_not change(&method(:tags_count))
+    it "skip invalid tags" do
+      expect { post.tags.count }.not_to change(post.tags, :count)
+    end
+
+    it "has successful result" do
       expect(result.success).eql? true
     end
   end

@@ -28,7 +28,7 @@ class GraphqlController < ApplicationController
   private
 
   def current_user
-    return unless cookies[:token].present?
+    return if cookies[:token].blank?
 
     token = cookies[:token]
     decoded_token = JsonWebToken.decode(token)
@@ -60,6 +60,7 @@ class GraphqlController < ApplicationController
     logger.error error.message
     logger.error error.backtrace.join("\n")
 
-    render json: { errors: [{ message: error.message, backtrace: error.backtrace }], data: {} }, status: 500
+    render json: { errors: [{ message: error.message, backtrace: error.backtrace }], data: {} },
+           status: :internal_server_error
   end
 end

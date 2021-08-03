@@ -5,12 +5,12 @@ RSpec.configure do |config|
     DatabaseCleaner[:active_record].clean_with :truncation, except: %w[ar_internal_metadata]
   end
 
-  config.before :each do
+  config.before do
     DatabaseCleaner[:active_record].strategy = :transaction
     DatabaseCleaner[:active_record].start
   end
 
-  config.after :each do
+  config.after do
     DatabaseCleaner[:active_record].clean
   end
 end
