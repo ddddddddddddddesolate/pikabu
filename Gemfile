@@ -25,6 +25,7 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "faker"
   gem "graphiql-rails"
+  gem "mailcatcher"
   gem "rspec-rails"
   gem "rubocop"
 end
