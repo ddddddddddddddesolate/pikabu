@@ -17,6 +17,7 @@ gem "carrierwave"
 gem "counter_culture"
 gem "graphql"
 gem "jwt"
+gem "kaminari"
 gem "rack-attack"
 gem "search_object_graphql"
 
