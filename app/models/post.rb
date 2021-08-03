@@ -3,7 +3,8 @@
 class Post < ApplicationRecord
   belongs_to :user
 
-  has_and_belongs_to_many :tags
+  has_many :post_tags
+  has_many :tags, through: :post_tags
 
   has_many :comments, dependent: :delete_all
   has_many :bookmarks, as: :bookmarkable, dependent: :delete_all
@@ -29,7 +30,7 @@ class Post < ApplicationRecord
   scope :tags, lambda { |tag_ids|
     joins(:tags)
       .group(:id)
-      .where("tags.id IN (?)", tag_ids)
+      .where(tags: { id: tag_ids })
   }
   scope :likes, ->(order) { order(likes_count: order) }
   scope :date, ->(order) { order(created_at: order) }

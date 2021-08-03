@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ActiveRecord::Schema.define(version: 2021_08_03_115509) do
+ActiveRecord::Schema.define(version: 2021_08_03_122240) do
   enable_extension "plpgsql"
 
   create_table "bookmarks", force: :cascade do |t|
@@ -38,6 +38,15 @@ ActiveRecord::Schema.define(version: 2021_08_03_115509) do
     t.index %w[imageable_type imageable_id], name: "index_images_on_imageable"
   end
 
+  create_table "post_tags", force: :cascade do |t|
+    t.bigint "post_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", precision: 6
+    t.datetime "updated_at", precision: 6
+    t.index ["post_id"], name: "index_post_tags_on_post_id"
+    t.index ["tag_id"], name: "index_post_tags_on_tag_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "title"
@@ -49,13 +58,6 @@ ActiveRecord::Schema.define(version: 2021_08_03_115509) do
     t.integer "dislikes_count", default: 0, null: false
     t.integer "tags_count", default: 0, null: false
     t.index ["user_id"], name: "index_posts_on_user_id"
-  end
-
-  create_table "posts_tags", id: false, force: :cascade do |t|
-    t.bigint "post_id", null: false
-    t.bigint "tag_id", null: false
-    t.index ["post_id"], name: "index_posts_tags_on_post_id"
-    t.index ["tag_id"], name: "index_posts_tags_on_tag_id"
   end
 
   create_table "reactions", force: :cascade do |t|
@@ -91,8 +93,8 @@ ActiveRecord::Schema.define(version: 2021_08_03_115509) do
   add_foreign_key "comments", "comments"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
+  add_foreign_key "post_tags", "posts"
+  add_foreign_key "post_tags", "tags"
   add_foreign_key "posts", "users"
-  add_foreign_key "posts_tags", "posts"
-  add_foreign_key "posts_tags", "tags"
   add_foreign_key "reactions", "users"
 end

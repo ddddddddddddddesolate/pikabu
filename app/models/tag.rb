@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class Tag < ApplicationRecord
-  has_and_belongs_to_many :posts
+  has_many :post_tags
+  has_many :posts, through: :post_tags
 
   validates :name, presence: true, uniqueness: true, length: { maximum: 30 }, allow_blank: false
 end
