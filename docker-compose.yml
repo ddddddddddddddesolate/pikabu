@@ -26,5 +26,9 @@ services:
       - app
     ports:
       - 80:80
+  mail:
+    image: yappabe/mailcatcher
+    ports:
+      - 1080:1080
 volumes:
   postgres_data:
