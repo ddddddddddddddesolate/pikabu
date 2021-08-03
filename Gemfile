@@ -11,6 +11,7 @@ gem "rails", "~> 6.1.4"
 
 gem "bootsnap", ">= 1.4.4", require: false
 
+gem "activerecord-import"
 gem "bcrypt"
 gem "carrierwave"
 gem "counter_culture"
@@ -20,7 +21,6 @@ gem "rack-attack"
 gem "search_object_graphql"
 
 group :development, :test do
-  gem "activerecord-import"
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "factory_bot_rails"
   gem "faker"
