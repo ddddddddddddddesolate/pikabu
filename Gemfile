@@ -19,7 +19,6 @@ gem "graphql"
 gem "jwt"
 gem "kaminari"
 gem "rack-attack"
-gem "search_object_graphql"
 
 group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]

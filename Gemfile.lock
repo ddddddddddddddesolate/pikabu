@@ -238,10 +238,6 @@ GEM
     ruby-vips (2.1.2)
       ffi (~> 1.12)
     ruby2_keywords (0.0.5)
-    search_object (1.2.4)
-    search_object_graphql (1.0.1)
-      graphql (~> 1.8)
-      search_object (~> 1.2.2)
     sinatra (2.1.0)
       mustermann (~> 1.0)
       rack (~> 2.2)
@@ -302,7 +298,6 @@ DEPENDENCIES
   rails (~> 6.1.4)
   rspec-rails
   rubocop
-  search_object_graphql
   tzinfo-data
 
 RUBY VERSION
