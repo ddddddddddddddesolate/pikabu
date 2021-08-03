@@ -2,7 +2,7 @@
 
 module Types
   class PaginationType < BaseInputObject
-    argument :limit, Integer, required: true
-    argument :offset, Integer, required: true
+    argument :page, Integer, required: false
+    argument :per, Integer, required: false
   end
 end

@@ -10,7 +10,7 @@ module Resolvers
     argument :search, Types::PostsSearchType, required: false
 
     def resolve(filters: nil, order: nil, paginate: nil, search: nil)
-      posts = Post.includes(:user, :tags, :images, reactions: [:user])
+      posts = Post.includes(:user, :tags, :images, reactions: [:user]).page(1)
 
       if order
         posts = posts.likes(order.likes) if order.likes
@@ -24,11 +24,7 @@ module Resolvers
         posts = posts.tags(filters.tags) if filters.tags
       end
 
-      if paginate
-        posts = posts.limit(paginate.limit)
-        posts = posts.offset(paginate.offset)
-      end
-
+      posts = posts.page(paginate.page).per(paginate.per) if paginate
       posts = posts.search_by("title", search.title) if search&.title
 
       posts

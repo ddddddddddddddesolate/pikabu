@@ -9,17 +9,14 @@ module Resolvers
     argument :paginate, Types::PaginationType, required: false
 
     def resolve(post_id:, order: nil, paginate: nil)
-      comments = Comment.includes(:user, :images, reactions: [:user]).where(post_id: post_id)
+      comments = Comment.includes(:user, :images, reactions: [:user]).where(post_id: post_id).page(1)
 
       if order
         comments = comments.likes(order.likes) if order.likes
         comments = comments.date(order.date) if order.date
       end
 
-      if paginate
-        comments = comments.limit(paginate.limit)
-        comments = comments.offset(paginate.offset)
-      end
+      comments = comments.page(paginate.page).per(paginate.per) if paginate
 
       comments
     end

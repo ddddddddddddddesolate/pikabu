@@ -7,12 +7,8 @@ module Resolvers
     argument :paginate, Types::PaginationType, required: false
 
     def resolve(paginate: nil)
-      bookmarks = current_user.bookmarks.includes(:bookmarkable)
-
-      if paginate
-        bookmarks = bookmarks.limit(paginate.limit)
-        bookmarks = bookmarks.offset(paginate.offset)
-      end
+      bookmarks = current_user.bookmarks.includes(:bookmarkable).page(1)
+      bookmarks = bookmarks.page(paginate.page).per(paginate.per) if paginate
 
       bookmarks
     end
