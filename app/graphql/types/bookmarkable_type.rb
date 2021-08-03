@@ -5,12 +5,8 @@ module Types
     possible_types PostType, CommentType
 
     def self.resolve_type(object, _context)
-      case object
-      when Post
-        PostType
-      when Comment
-        CommentType
-      end
+      return PostType if object.is_a?(Post)
+      return CommentType if object.is_a?(Comment)
     end
   end
 end
