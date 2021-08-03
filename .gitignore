@@ -22,3 +22,5 @@
 
 # Ignore local images
 /public/uploads/image/*
+
+/config/credentials/development.key
