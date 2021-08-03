@@ -23,13 +23,13 @@ gem "search_object_graphql"
 
 group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
+  gem "database_cleaner-active_record"
   gem "factory_bot_rails"
   gem "faker"
   gem "graphiql-rails"
   gem "mailcatcher"
   gem "rspec-rails"
   gem "rubocop"
-  gem "database_cleaner-active_record"
 end
 
 group :development do
