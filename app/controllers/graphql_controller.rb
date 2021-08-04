@@ -1,26 +1,25 @@
 # frozen_string_literal: true
 
 class GraphqlController < ApplicationController
-  def execute
-    variables = prepare_variables(params[:variables])
-    query = params[:query]
-    operation_name = params[:operationName]
-    context = {
-      cookies: cookies,
-      current_user: current_user
-    }
-    result = PikabuSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
-    render json: result
-  rescue Exceptions::ValidationError => e
-    render json: { errors: [{ message: e.message }] }, status: :unprocessable_entity
-  rescue Exceptions::NotFoundError => e
-    render json: { errors: [{ message: e.message }] }, status: :not_found
-  rescue Exceptions::UnauthorizedError => e
-    render json: { errors: [{ message: e.message }] }, status: :unauthorized
-  rescue StandardError => e
-    raise e unless Rails.env.development?
+  include Exceptions
 
-    handle_error_in_development(e)
+  def execute
+    query = params[:query]
+    variables = prepare_variables(params[:variables])
+    context = prepare_context
+    operation_name = params[:operationName]
+
+    result = PikabuSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
+
+    render json: result
+  rescue ValidationError => e
+    render_error(e, :unprocessable_entity)
+  rescue NotFoundError => e
+    render_error(e, :not_found)
+  rescue UnauthorizedError => e
+    render_error(e, :unauthorized)
+  rescue StandardError => e
+    render_error(e, :internal_server_error)
   end
 
   private
@@ -35,30 +34,34 @@ class GraphqlController < ApplicationController
     User.find(user_id)
   end
 
-  def prepare_variables(variables_param)
-    case variables_param
+  def prepare_context
+    { cookies: cookies, current_user: current_user }
+  end
+
+  def prepare_variables(variables)
+    case variables
     when String
-      if variables_param.present?
-        JSON.parse(variables_param) || {}
+      if variables.present?
+        JSON.parse(variables) || {}
       else
         {}
       end
     when Hash
-      variables_param
+      variables
     when ActionController::Parameters
-      variables_param.to_unsafe_hash
+      variables.to_unsafe_hash
     when nil
       {}
     else
-      raise ArgumentError, "Unexpected parameter: #{variables_param}"
+      raise ArgumentError, "Unexpected parameter: #{variables}"
     end
   end
 
-  def handle_error_in_development(error)
+  def render_error(error, status)
     logger.error error.message
     logger.error error.backtrace.join("\n")
 
-    render json: { errors: [{ message: error.message, backtrace: error.backtrace }], data: {} },
-           status: :internal_server_error
+    render json: { errors: [{ message: error.message }], data: {} },
+           status: status
   end
 end
