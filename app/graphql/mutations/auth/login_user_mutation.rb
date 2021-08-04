@@ -10,10 +10,10 @@ module Mutations
       def resolve(credentials:)
         user = User.find_by(email: credentials.email)
 
-        raise Exceptions::InvalidCredentialsError, "Email or password is incorrect" unless user
+        raise Exceptions::ValidationError, "Email or password is incorrect" unless user
 
         unless user.authenticate(credentials.password)
-          raise Exceptions::InvalidCredentialsError,
+          raise Exceptions::ValidationError,
                 "Email or password is incorrect"
         end
 
