@@ -18,8 +18,6 @@ module Mutations
         cookies[:token] = token
 
         { user: user }
-      rescue ActiveRecord::RecordInvalid => e
-        raise Exceptions::ValidationError, e.message
       end
     end
   end
