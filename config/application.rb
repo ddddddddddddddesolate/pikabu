@@ -21,6 +21,7 @@ Bundler.require(*Rails.groups)
 
 module Pikabu
   class Application < Rails::Application
+    config.assets.precompile = false
     config.assets.initialize_on_precompile = false
     config.load_defaults 6.1
     config.api_only = true
