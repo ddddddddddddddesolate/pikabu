@@ -11,7 +11,7 @@ class GraphqlController < ApplicationController
     }
     result = PikabuSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
-  rescue Exceptions::ValidationError, Exceptions::NotDestroyedError, Exceptions::InvalidCredentialsError => e
+  rescue Exceptions::ValidationError, Exceptions::InvalidCredentialsError => e
     render json: { errors: [{ message: e.message }] }, status: :unprocessable_entity
   rescue Exceptions::NotFoundError => e
     render json: { errors: [{ message: e.message }] }, status: :not_found
