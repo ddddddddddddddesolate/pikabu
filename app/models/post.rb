@@ -34,5 +34,5 @@ class Post < ApplicationRecord
   }
   scope :likes, ->(order) { order(likes_count: order) }
   scope :date, ->(order) { order(created_at: order) }
-  scope :search_by, ->(field, value) { where("LOWER(#{field}) LIKE ?", "%#{value.downcase}%") }
+  scope :search, ->(value) { where("lower(title) like ?", "%#{value.downcase}%") }
 end
